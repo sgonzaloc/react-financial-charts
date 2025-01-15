@@ -4,7 +4,7 @@
   "license": "MIT",
   "version": "2.0.3",
   "scripts": {
-    "postinstall": "npm run bootstrap",
+    
     "build": "npm run build --workspaces",
     "build:annotations": "npm run build --workspace='*/annotations'",
     "build:axes": "npm run build --workspace='*/axes'",
@@ -20,7 +20,7 @@
     "clean": "run-s clean:packages clean:modules",
     "clean:packages": "npm run clean --workspaces",
     "clean:modules": "npm run clean --workspaces",
-    "convert": "run-s link bootstrap",
+    "convert": "npm run link",
     "docs": "run-s build docs:stories",
     "docs:stories": "npm run docs --workspaces",
     "link": "npm link",
