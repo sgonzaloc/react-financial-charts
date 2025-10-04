@@ -49,7 +49,7 @@ export class GroupTooltip extends React.Component<GroupTooltipProps> {
 
         const dx = 20;
         const dy = 40;
-        let textAnchor: string | undefined;
+        let textAnchor: "start" | "middle" | "end" | "inherit" | undefined;
         let xyPos: (number | null)[] | null = null;
 
         if (position !== undefined) {

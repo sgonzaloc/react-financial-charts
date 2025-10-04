@@ -111,7 +111,7 @@ function helper(props: any) {
     }
     let coordinateBase;
     let coordinate;
-    const textAnchor = "middle";
+    let textAnchor: "start" | "middle" | "end" | "inherit" | undefined = "middle";
     if (displayCoordinate !== undefined) {
         coordinateBase = {
             edgeXRect,

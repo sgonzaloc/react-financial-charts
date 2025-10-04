@@ -20,7 +20,7 @@ export interface LabelAnnotationProps {
     readonly plotData: any[];
     readonly rotate?: number;
     readonly text?: string | ((datum: any) => string);
-    readonly textAnchor?: string;
+    readonly textAnchor?: "start" | "middle" | "end" | "inherit";
     readonly tooltip?: string | ((datum: any) => string);
     readonly xAccessor?: (datum: any) => any;
     readonly xScale?: ScaleContinuousNumeric<number, number>;

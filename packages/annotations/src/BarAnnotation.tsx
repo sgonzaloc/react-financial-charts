@@ -22,7 +22,7 @@ export interface BarAnnotationProps {
     readonly opacity?: number;
     readonly plotData: any[];
     readonly text?: string;
-    readonly textAnchor?: string;
+    readonly textAnchor?: "start" | "middle" | "end" | "inherit";
     readonly fontFamily?: string;
     readonly fontSize?: number;
     readonly textOpacity?: number;
@@ -37,7 +37,7 @@ export interface BarAnnotationProps {
     readonly textIconRotate?: number;
     readonly textIconXOffset?: number;
     readonly textIconYOffset?: number;
-    readonly textIconAnchor?: string;
+    readonly textIconAnchor?: "start" | "middle" | "end" | "inherit";
     readonly tooltip?: string | ((datum: any) => string);
     readonly x?:
         | number

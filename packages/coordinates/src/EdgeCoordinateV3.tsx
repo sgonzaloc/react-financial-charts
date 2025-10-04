@@ -121,7 +121,7 @@ const helper = (props: any) => {
     let coordinateBase;
     let coordinate;
     if (displayCoordinate !== undefined) {
-        const textAnchor = "middle";
+        let textAnchor: "start" | "middle" | "end" | "inherit" | undefined = "middle";
 
         let edgeXRect;
         let edgeYRect;
