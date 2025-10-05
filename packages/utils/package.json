@@ -1,6 +1,6 @@
 {
     "name": "@react-financial-charts/utils",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Utils for react-financial-charts",
     "publishConfig": {
         "access": "public"
@@ -41,7 +41,8 @@
         "react-virtualized-auto-sizer": "^1.0.26"
     },
     "peerDependencies": {
-        "react": "^16.0.0 || ^17.0.0 || ^18.0.0",
-        "react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0"
-    }
+        "react": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+        "react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
+    },
+    "gitHead": "13d16789601b834208d9d14ecc362a2c1690383d"
 }
