@@ -3,10 +3,19 @@
 > **Note:** this repo is a fork of [react-stockcharts](https://github.com/rrag/react-stockcharts), renamed, converted to typescript and bug fixes applied due to the original project being unmaintained.
 
 > **Note:** v1 is a fully breaking change with large parts, if not all, rewritten. Do not expect the same API! although the same features should exist.
-
-![ci](https://github.com/react-financial/react-financial-charts/workflows/ci/badge.svg)
-[![codecov](https://codecov.io/gh/reactivemarkets/react-financial-charts/branch/master/graph/badge.svg)](https://codecov.io/gh/reactivemarkets/react-financial-charts)
- [![GitHub license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://github.com/react-financial/react-financial-charts/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/react-financial-charts.svg?style=flat)](https://www.npmjs.com/package/react-financial-charts)
+> 
+---
+![React](https://img.shields.io/badge/React-16%7C17%7C18%7C19-61DAFB?logo=react&logoColor=white)
+![React-DOM](https://img.shields.io/badge/React--DOM-16%7C17%7C18%7C19-61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?logo=typescript&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-4.4.1-F9A03C?logo=chart.js&logoColor=white)
+![D3.js](https://img.shields.io/badge/D3.js-2.9.1-F9A03C?logo=d3.js&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-5.15.10-007FFF?logo=mui&logoColor=white)
+![Redux](https://img.shields.io/badge/Redux-9.1.0-764ABC?logo=redux&logoColor=white)
+![Redux Toolkit](https://img.shields.io/badge/Redux--Toolkit-2.2.1-764ABC?logo=redux&logoColor=white)
+![Redux-Saga](https://img.shields.io/badge/Redux--Saga-1.3.0-764ABC)
+![MIT License](https://img.shields.io/badge/License-MIT-green)
+---
 
 Charts dedicated to finance.
 
