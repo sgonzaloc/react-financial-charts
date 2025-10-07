@@ -3,17 +3,14 @@
 > **Note:** this repo is a fork of [react-stockcharts](https://github.com/rrag/react-stockcharts), renamed, converted to typescript and bug fixes applied due to the original project being unmaintained.
 
 > **Note:** v1 is a fully breaking change with large parts, if not all, rewritten. Do not expect the same API! although the same features should exist.
-> 
+
 ---
 ![React](https://img.shields.io/badge/React-16%7C17%7C18%7C19-61DAFB?logo=react&logoColor=white)
-![React-DOM](https://img.shields.io/badge/React--DOM-16%7C17%7C18%7C19-61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?logo=typescript&logoColor=white)
-![Chart.js](https://img.shields.io/badge/Chart.js-4.4.1-F9A03C?logo=chart.js&logoColor=white)
 ![D3.js](https://img.shields.io/badge/D3.js-2.9.1-F9A03C?logo=d3.js&logoColor=white)
-![MUI](https://img.shields.io/badge/MUI-5.15.10-007FFF?logo=mui&logoColor=white)
-![Redux](https://img.shields.io/badge/Redux-9.1.0-764ABC?logo=redux&logoColor=white)
-![Redux Toolkit](https://img.shields.io/badge/Redux--Toolkit-2.2.1-764ABC?logo=redux&logoColor=white)
-![Redux-Saga](https://img.shields.io/badge/Redux--Saga-1.3.0-764ABC)
+![Storybook](https://img.shields.io/badge/Storybook-6.1.20-FF4785?logo=storybook&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-8.40.0-4B32C3?logo=eslint&logoColor=white)
+![Prettier](https://img.shields.io/badge/Prettier-2.8.8-F7B93E?logo=prettier&logoColor=white)
 ![MIT License](https://img.shields.io/badge/License-MIT-green)
 ---
 
