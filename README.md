@@ -5,15 +5,22 @@
 > **Note:** v1 is a fully breaking change with large parts, if not all, rewritten. Do not expect the same API! although the same features should exist.
 
 ---
-![React](https://img.shields.io/badge/React-16%7C17%7C18%7C19-61DAFB?logo=react&logoColor=white)
+
+![React](https://img.shields.io/badge/React-16%7C17%7C18%7C19-4B32C3?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?logo=typescript&logoColor=white)
-![D3.js](https://img.shields.io/badge/D3.js-2.9.1-F9A03C?logo=d3.js&logoColor=white)
-![Storybook](https://img.shields.io/badge/Storybook-6.1.20-FF4785?logo=storybook&logoColor=white)
-![ESLint](https://img.shields.io/badge/ESLint-8.40.0-4B32C3?logo=eslint&logoColor=white)
-![Prettier](https://img.shields.io/badge/Prettier-2.8.8-F7B93E?logo=prettier&logoColor=white)
-![MIT License](https://img.shields.io/badge/License-MIT-green)
+![D3.js](https://img.shields.io/badge/D3.js-2.9.1-E3FF00?logo=d3.js&logoColor=white)
+![Storybook](https://img.shields.io/badge/Storybook-6.1.20-5B8CD6?logo=storybook&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-8.40.0-61DAFB?logo=eslint&logoColor=white)
+![Prettier](https://img.shields.io/badge/Prettier-2.8.8-FDE2C6?logo=prettier&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-C0C0C0)
+
 ---
 
+🚀 **Want to contribute?**
+
+We welcome collaborators who wish to contribute and help enhance this trading tool. Feel free to reach out to the maintainers to get involved.
+
+---
 Charts dedicated to finance.
 
 The aim with this project is create financial charts that work out of the box.
