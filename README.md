@@ -113,6 +113,7 @@ npm start
 - [x] Correct all class props
 - [x] Migrate to new React Context API
 - [x] Remove all UNSAFE methods
+- [x] Allow to select trends
 - [ ] Add documentation to storybook
 - [ ] Add full test suite
 
