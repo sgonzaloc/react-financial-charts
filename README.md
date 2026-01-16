@@ -59,6 +59,24 @@ The aim with this project is create financial charts that work out of the box.
 npm install react-financial-charts
 ```
 
+### React Version Support
+
+This library supports React 16.x, 17.x, 18.x, and **19.x**.
+
+#### React 19 Compatibility
+
+The library is fully compatible with React 19. If you're using TypeScript, you may need to update your configuration to use the new JSX transform:
+
+```json
+{
+  "compilerOptions": {
+    "jsx": "react-jsx"
+  }
+}
+```
+
+For detailed information about the React 19 migration, including all changes and potential issues, see the [React 19 Migration Guide](./REACT_19_MIGRATION.md).
+
 ## Documentation
 
 [Stories](https://react-financial.github.io/react-financial-charts/)
