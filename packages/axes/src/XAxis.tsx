@@ -67,6 +67,7 @@ export class XAxis<T extends number | Date> extends React.Component<XAxisProps<T
     };
 
     public static contextType = ChartContext;
+    public context!: React.ContextType<typeof ChartContext>;
 
     public render() {
         const {
@@ -99,7 +100,9 @@ export class XAxis<T extends number | Date> extends React.Component<XAxisProps<T
     private readonly axisZoomCallback = (newXDomain: number[]) => {
         const { xAxisZoom } = this.context;
 
-        xAxisZoom(newXDomain);
+        if (xAxisZoom) {
+            xAxisZoom(newXDomain);
+        }
     };
 
     private readonly helper = () => {
@@ -108,7 +111,7 @@ export class XAxis<T extends number | Date> extends React.Component<XAxisProps<T
             chartConfig: { width, height },
         } = this.context;
 
-        let axisLocation;
+        let axisLocation: number;
         const x = 0;
         const w = width;
         const h = xZoomHeight;
@@ -124,13 +127,13 @@ export class XAxis<T extends number | Date> extends React.Component<XAxisProps<T
                 axisLocation = height / 2;
                 break;
             default:
-                axisLocation = axisAt;
+                axisLocation = axisAt ?? height;
         }
 
         const y = orient === "top" ? -xZoomHeight : 0;
 
         return {
-            transform: [0, axisLocation],
+            transform: [0, axisLocation] as [number, number],
             range: [0, width],
             getScale: this.getXScale,
             bg: { x, y, h, w },

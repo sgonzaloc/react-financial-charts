@@ -67,6 +67,7 @@ export class YAxis extends React.Component<YAxisProps> {
     };
 
     public static contextType = ChartContext;
+    public context!: React.ContextType<typeof ChartContext>;
 
     public render() {
         const {
@@ -97,7 +98,9 @@ export class YAxis extends React.Component<YAxisProps> {
     private readonly axisZoomCallback = (newYDomain: number[]) => {
         const { chartId, yAxisZoom } = this.context;
 
-        yAxisZoom(chartId, newYDomain);
+        if (yAxisZoom) {
+            yAxisZoom(String(chartId), newYDomain);
+        }
     };
 
     private readonly helper = () => {
@@ -106,7 +109,7 @@ export class YAxis extends React.Component<YAxisProps> {
             chartConfig: { width, height },
         } = this.context;
 
-        let axisLocation;
+        let axisLocation: number;
         const y = 0;
         const w = yZoomWidth;
         const h = height;
@@ -122,13 +125,13 @@ export class YAxis extends React.Component<YAxisProps> {
                 axisLocation = width / 2;
                 break;
             default:
-                axisLocation = axisAt;
+                axisLocation = axisAt ?? width;
         }
 
         const x = orient === "left" ? -yZoomWidth : 0;
 
         return {
-            transform: [axisLocation, 0],
+            transform: [axisLocation, 0] as [number, number],
             range: [0, height],
             getScale: this.getYScale,
             bg: { x, y, h, w },

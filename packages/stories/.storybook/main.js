@@ -1,18 +1,28 @@
-/** @type {import('@storybook/react/types').StorybookConfig} */
+/** @type {import('@storybook/react-webpack5').StorybookConfig} */
 module.exports = {
-    addons: ["@storybook/addon-essentials"],
-    stories: ["../src/**/*.stories.(ts|tsx|mdx)"],
-    webpackFinal: async (config) => {
-        config.module.rules.push({
-            test: /\.(js|map)$/,
-            use: "source-map-loader",
-            enforce: "pre",
-        });
-
-        return config;
+    addons: [
+        "@storybook/addon-essentials",
+        "@storybook/addon-webpack5-compiler-babel",
+    ],
+    stories: ["../src/**/*.stories.@(ts|tsx|mdx)"],
+    framework: {
+        name: "@storybook/react-webpack5",
+        options: {
+            strictMode: true,
+        },
     },
-    reactOptions: {
-        strictMode: true,
-        fastRefresh: true,
+    typescript: {
+        check: false,
+        reactDocgen: false,
+    },
+    babel: async (options) => {
+        return {
+            ...options,
+            presets: [
+                '@babel/preset-typescript',
+                ['@babel/preset-react', { runtime: 'automatic' }],
+                ['@babel/preset-env', { targets: { node: 'current' } }],
+            ],
+        };
     },
 };
