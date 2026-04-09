@@ -44,6 +44,7 @@ class FibonacciRetracementInteractive extends React.Component<
     };
 
     private handleSelect = (e: any, newRetracements: any[]) => {
+        console.log("handleSelect");
         if (this.state.mode !== "select") return;
         this.setState({ retracements: newRetracements });
     };
@@ -209,7 +210,7 @@ class FibonacciRetracementInteractive extends React.Component<
                                 enabled={mode === "draw"}
                                 retracements={retracements}
                                 onComplete={this.handleDrawComplete}
-                                onSelect={this.handleSelect}
+                                onSelect={mode === "select" ? this.handleSelect : undefined}
                             />
                         </Chart>
                     </ChartCanvas>

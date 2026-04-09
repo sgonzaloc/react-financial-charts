@@ -41,10 +41,12 @@ export interface EachFibRetracementProps {
     readonly index?: number;
     readonly onDrag: (e: React.MouseEvent, index: number | undefined, moreProps: any) => void;
     readonly onDragComplete?: (e: React.MouseEvent, moreProps: any) => void;
+    readonly onSelect?: (e: React.MouseEvent, index: number | undefined, moreProps: any) => void;
 }
 
 interface EachFibRetracementState {
     hover: boolean;
+    anchor?: string;
 }
 
 export class EachFibRetracement extends React.Component<EachFibRetracementProps, EachFibRetracementState> {
@@ -65,6 +67,7 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
         },
         selected: false,
         onDrag: noop,
+        onSelect: noop,
         hoverText: {
             enable: false,
         },
@@ -93,8 +96,8 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
         const { fontFamily, fontSize, fontFill } = appearance;
         const { edgeStroke, edgeFill, nsEdgeFill, edgeStrokeWidth, r } = appearance;
         const { hoverText, selected } = this.props;
-        const { hover } = this.state;
-        const { onDragComplete } = this.props;
+        const { hover, anchor } = this.state;
+        const { onDragComplete, onSelect, index } = this.props;
         const lines = helper({ x1, x2, y1, y2 });
 
         const {
@@ -162,6 +165,22 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
                             : this.handleEdge2Drag;
 
                     const hoverHandler = interactive ? { onHover: this.handleHover, onUnHover: this.handleHover } : {};
+
+                    const handleEdge1DragStart = (e: React.MouseEvent, moreProps: any) => {
+                        this.setState({ anchor: "edge1" });
+                        if (onSelect) onSelect(e, index, moreProps);
+                    };
+
+                    const handleEdge2DragStart = (e: React.MouseEvent, moreProps: any) => {
+                        this.setState({ anchor: "edge2" });
+                        if (onSelect) onSelect(e, index, moreProps);
+                    };
+
+                    const handleLineDragStart = (e: React.MouseEvent, moreProps: any) => {
+                        this.dragStart = { x1: line.x1, y1: line.y, x2: line.x2, y2: line.y };
+                        if (onSelect) onSelect(e, index, moreProps);
+                    };
+
                     return (
                         <g key={j}>
                             <InteractiveStraightLine
@@ -176,7 +195,7 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
                                 strokeStyle={strokeStyle}
                                 strokeWidth={hover || selected ? strokeWidth + 1 : strokeWidth}
                                 interactiveCursorClass={interactiveCursorClass}
-                                onDragStart={this.handleLineDragStart}
+                                onDragStart={handleLineDragStart}
                                 onDrag={dragHandler}
                                 onDragComplete={onDragComplete}
                             />
@@ -190,30 +209,32 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
                                 {text}
                             </Text>
                             <ClickableCircle
-                                ref={this.saveNodeType("edge1")}
+                                ref={this.saveNodeType(`edge1_${j}`)}
                                 show={selected || hover}
                                 cx={line.x1}
                                 cy={line.y}
                                 r={r}
                                 fillStyle={firstOrLast ? nsEdgeFill : edgeFill}
-                                strokeStyle={edgeStroke}
+                                strokeStyle={anchor === `edge1_${j}` ? strokeStyle : edgeStroke}
                                 strokeWidth={edgeStrokeWidth}
                                 interactiveCursorClass={interactiveEdgeCursorClass}
+                                onDragStart={handleEdge1DragStart}
                                 onDrag={edge1DragHandler}
-                                onDragComplete={onDragComplete}
+                                onDragComplete={this.handleDragComplete}
                             />
                             <ClickableCircle
-                                ref={this.saveNodeType("edge2")}
+                                ref={this.saveNodeType(`edge2_${j}`)}
                                 show={selected || hover}
                                 cx={line.x2}
                                 cy={line.y}
                                 r={r}
                                 fillStyle={firstOrLast ? nsEdgeFill : edgeFill}
-                                strokeStyle={edgeStroke}
+                                strokeStyle={anchor === `edge2_${j}` ? strokeStyle : edgeStroke}
                                 strokeWidth={edgeStrokeWidth}
                                 interactiveCursorClass={interactiveEdgeCursorClass}
+                                onDragStart={handleEdge2DragStart}
                                 onDrag={edge2DragHandler}
-                                onDragComplete={onDragComplete}
+                                onDragComplete={this.handleDragComplete}
                             />
                         </g>
                     );
@@ -227,61 +248,38 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
         );
     }
 
+    private readonly handleDragComplete = (e: React.MouseEvent, moreProps: any) => {
+        this.setState({ anchor: undefined });
+        const { onDragComplete } = this.props;
+        if (onDragComplete) onDragComplete(e, moreProps);
+    };
+
     private readonly handleEdge2Drag = (e: React.MouseEvent, moreProps: any) => {
         const { index, onDrag, x1, y1, y2 } = this.props;
-
         const [x2] = getNewXY(moreProps);
-
-        onDrag(e, index, {
-            x1,
-            y1,
-            x2,
-            y2,
-        });
+        onDrag(e, index, { x1, y1, x2, y2 });
     };
 
     private readonly handleEdge1Drag = (e: React.MouseEvent, moreProps: any) => {
         const { index, onDrag, y1, x2, y2 } = this.props;
-
         const [x1] = getNewXY(moreProps);
-
-        onDrag(e, index, {
-            x1,
-            y1,
-            x2,
-            y2,
-        });
+        onDrag(e, index, { x1, y1, x2, y2 });
     };
 
     private readonly handleLineNSResizeBottom = (e: React.MouseEvent, moreProps: any) => {
         const { index, onDrag, x1, y1, x2 } = this.props;
-
         const [, y2] = getNewXY(moreProps);
-
-        onDrag(e, index, {
-            x1,
-            y1,
-            x2,
-            y2,
-        });
+        onDrag(e, index, { x1, y1, x2, y2 });
     };
 
     private readonly handleLineNSResizeTop = (e: React.MouseEvent, moreProps: any) => {
         const { index, onDrag, x1, x2, y2 } = this.props;
-
         const [, y1] = getNewXY(moreProps);
-
-        onDrag(e, index, {
-            x1,
-            y1,
-            x2,
-            y2,
-        });
+        onDrag(e, index, { x1, y1, x2, y2 });
     };
 
     private readonly handleLineMove = (e: React.MouseEvent, moreProps: any) => {
         const { index, onDrag } = this.props;
-
         const { x1: x1Value, y1: y1Value, x2: x2Value, y2: y2Value } = this.dragStart;
 
         const {
@@ -313,22 +311,9 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
         });
     };
 
-    private readonly handleLineDragStart = () => {
-        const { x1, y1, x2, y2 } = this.props;
-
-        this.dragStart = {
-            x1,
-            y1,
-            x2,
-            y2,
-        };
-    };
-
     private readonly handleHover = (_: React.MouseEvent, moreProps: any) => {
         if (this.state.hover !== moreProps.hovering) {
-            this.setState({
-                hover: moreProps.hovering,
-            });
+            this.setState({ hover: moreProps.hovering });
         }
     };
 }
@@ -341,6 +326,5 @@ function helper({ x1, y1, x2, y2 }: any) {
         x2,
         y: y2 - (each / 100) * dy,
     }));
-
     return retracements;
 }
