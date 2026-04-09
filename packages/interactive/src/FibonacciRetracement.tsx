@@ -144,6 +144,7 @@ export class FibonacciRetracement extends React.Component<FibonacciRetracementPr
                             appearance={eachAppearance}
                             onDrag={this.handleDrag}
                             onDragComplete={this.handleDragComplete}
+                            onSelect={this.handleSelect}
                         />
                     );
                 })}
@@ -291,6 +292,15 @@ export class FibonacciRetracement extends React.Component<FibonacciRetracementPr
                     }
                 },
             );
+        }
+    };
+
+    private readonly handleSelect = (e: React.MouseEvent, index: number | undefined, moreProps: any) => {
+        const { retracements, onSelect } = this.props;
+        const newRetracements = retracements.map((d, dIdx) => ({ ...d, selected: dIdx === index }));
+
+        if (onSelect !== undefined) {
+            onSelect(e, newRetracements, moreProps);
         }
     };
 }
