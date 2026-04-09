@@ -5,7 +5,7 @@ module.exports = {
     framework: {
         name: "@storybook/react-webpack5",
         options: {
-            strictMode: true,
+            strictMode: false,
         },
     },
     typescript: {
