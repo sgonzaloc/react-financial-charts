@@ -15,11 +15,6 @@
         "strict": true,
         "target": "es2017"
     },
-    "include": [
-        "src"
-    ],
-    "exclude": [
-        "lib",
-        "**/__tests__/**"
-    ]
+    "include": ["src"],
+    "exclude": ["lib", "**/__tests__/**"]
 }

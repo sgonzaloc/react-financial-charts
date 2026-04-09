@@ -1,7 +1,11 @@
-/** @type {import('@storybook/react/types').StorybookConfig} */
+import { dirname, join } from "path";
+
+/** @type {import('@storybook/react-webpack5').StorybookConfig} */
 module.exports = {
-    addons: ["@storybook/addon-essentials"],
-    stories: ["../src/**/*.stories.(ts|tsx|mdx)"],
+    addons: [getAbsolutePath("@storybook/addon-essentials"), getAbsolutePath("@storybook/addon-docs")],
+
+    stories: ["../src/**/*.stories.@(ts|tsx|mdx)"],
+
     webpackFinal: async (config) => {
         config.module.rules.push({
             test: /\.(js|map)$/,
@@ -9,10 +13,49 @@ module.exports = {
             enforce: "pre",
         });
 
+        // 👇 AGREGÁ ESTO (es lo que falta)
+        config.module.rules.push({
+            test: /\.(jsx|tsx|ts|js)$/,
+            exclude: /node_modules/,
+            use: {
+                loader: "babel-loader",
+                options: {
+                    presets: ["@babel/preset-react", "@babel/preset-typescript"],
+                },
+            },
+        });
+
+        const isProd = process.env.NODE_ENV === "production";
+        if (!isProd) {
+            const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+            config.plugins.push(
+                new ReactRefreshWebpackPlugin({
+                    overlay: {
+                        sockIntegration: "whm",
+                    },
+                }),
+            );
+        }
+
         return config;
     },
-    reactOptions: {
-        strictMode: true,
-        fastRefresh: true,
+
+    framework: {
+        name: getAbsolutePath("@storybook/react-webpack5"),
+        options: {
+            strictMode: true,
+        },
+    },
+
+    docs: {
+        autodocs: true,
+    },
+
+    typescript: {
+        reactDocgen: "react-docgen",
     },
 };
+
+function getAbsolutePath(value) {
+    return dirname(require.resolve(join(value, "package.json")));
+}
