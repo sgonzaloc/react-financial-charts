@@ -272,14 +272,17 @@ export class FibonacciRetracement extends React.Component<FibonacciRetracementPr
         const { current } = this.state;
 
         if (this.mouseMoved && isDefined(current) && isDefined(current.x1)) {
-            const newRetracements = retracements.concat({
-                ...current,
-                x2: xyValue[0],
-                y2: xyValue[1],
-                selected: true,
-                appearance,
-                type,
-            });
+            const newRetracements = [
+                ...retracements.map((d) => ({ ...d, selected: false })), // <- esto deselecciona todos los anteriores
+                {
+                    ...current,
+                    x2: xyValue[0],
+                    y2: xyValue[1],
+                    selected: true,
+                    appearance,
+                    type,
+                },
+            ];
 
             this.setState(
                 {
