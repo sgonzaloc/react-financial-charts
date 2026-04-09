@@ -1,9 +1,6 @@
 /** @type {import('@storybook/react-webpack5').StorybookConfig} */
 module.exports = {
-    addons: [
-        "@storybook/addon-essentials",
-        "@storybook/addon-webpack5-compiler-babel",
-    ],
+    addons: ["@storybook/addon-essentials", "@storybook/addon-webpack5-compiler-babel"],
     stories: ["../src/**/*.stories.@(ts|tsx|mdx)"],
     framework: {
         name: "@storybook/react-webpack5",
@@ -19,9 +16,9 @@ module.exports = {
         return {
             ...options,
             presets: [
-                '@babel/preset-typescript',
-                ['@babel/preset-react', { runtime: 'automatic' }],
-                ['@babel/preset-env', { targets: { node: 'current' } }],
+                "@babel/preset-typescript",
+                ["@babel/preset-react", { runtime: "automatic" }],
+                ["@babel/preset-env", { targets: { node: "current" } }],
             ],
         };
     },

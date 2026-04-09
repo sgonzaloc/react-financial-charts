@@ -85,6 +85,7 @@
         "@react-financial-charts/series": "file:packages/series",
         "@react-financial-charts/stories": "file:packages/stories",
         "@react-financial-charts/tooltip": "file:packages/tooltip",
-        "@react-financial-charts/utils": "file:packages/utils"
+        "@react-financial-charts/utils": "file:packages/utils",
+        "@storybook/addon-interactions": "^8.6.14"
     }
 }
