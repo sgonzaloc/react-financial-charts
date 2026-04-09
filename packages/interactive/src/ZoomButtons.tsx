@@ -27,6 +27,7 @@ export class ZoomButtons extends React.Component<ZoomButtonsProps> {
     };
 
     public static contextType = ChartContext;
+    public context!: React.ContextType<typeof ChartContext>;
 
     private interval?: number;
 
@@ -135,17 +136,18 @@ export class ZoomButtons extends React.Component<ZoomButtonsProps> {
     private readonly zoom = (direction: number) => {
         const { xAxisZoom, xScale, plotData, xAccessor } = this.context;
 
-        const cx = xScale(xAccessor(last(plotData)));
+        const scale = xScale as any; // Scale type from d3
+        const cx = scale(xAccessor(last(plotData)));
 
         const { zoomMultiplier } = this.props;
 
         const c = direction > 0 ? 1 * zoomMultiplier : 1 / zoomMultiplier;
 
-        const [start, end] = xScale.domain();
-        const [newStart, newEnd] = xScale
+        const [start, end] = scale.domain();
+        const [newStart, newEnd] = scale
             .range()
             .map((x: number) => cx + (x - cx) * c)
-            .map(xScale.invert);
+            .map(scale.invert);
 
         const left = interpolateNumber(start, newStart);
         const right = interpolateNumber(end, newEnd);
@@ -155,7 +157,9 @@ export class ZoomButtons extends React.Component<ZoomButtonsProps> {
         });
 
         this.interval = window.setInterval(() => {
-            xAxisZoom(foo.shift());
+            if (xAxisZoom) {
+                xAxisZoom(foo.shift());
+            }
             if (foo.length === 0) {
                 clearInterval(this.interval);
                 delete this.interval;

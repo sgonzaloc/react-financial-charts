@@ -1,39 +1,32 @@
 {
-  "name": "@react-financial-charts/stories",
-  "version": "2.0.2",
-  "description": "Stories for react financial charts",
-  "private": true,
-  "author": "Reactive Markets",
-  "license": "MIT",
-  "scripts": {
-    "clean": "rimraf ../docs lib",
-    "docs": "storybook build -c .storybook -o ../../docs",
-    "start": "storybook dev -p 4444"
-  },
-  "dependencies": {
-    "d3-dsv": "^2.0.0",
-    "d3-format": "^2.0.0",
-    "d3-time-format": "^3.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-financial-charts": "file:../charts"
-  },
-  "devDependencies": {
-    "@babel/preset-react": "^7.28.5",
-    "@babel/preset-typescript": "^7.28.5",
-    "@chromatic-com/storybook": "^3.2.7",
-    "@mdx-js/react": "^3.1.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.6.2",
-    "@storybook/addon-essentials": "^8.6.18",
-    "@storybook/addon-interactions": "^8.6.18",
-    "@storybook/addon-links": "^8.6.18",
-    "@storybook/addon-mdx-gfm": "^8.6.18",
-    "@storybook/addon-webpack5-compiler-babel": "^3.0.6",
-    "@storybook/blocks": "^8.6.18",
-    "@storybook/react": "^8.6.18",
-    "@storybook/react-webpack5": "^8.6.18",
-    "@storybook/theming": "^8.6.18",
-    "react-refresh": "^0.18.0",
-    "storybook": "^8.6.18"
-  }
+    "name": "@react-financial-charts/stories",
+    "version": "2.0.2",
+    "description": "Stories for react financial charts",
+    "private": true,
+    "author": "Reactive Markets",
+    "license": "MIT",
+    "scripts": {
+        "clean": "rimraf ../docs lib",
+        "docs": "storybook build -c .storybook -o ../../docs",
+        "start": "storybook dev -p 4444"
+    },
+    "dependencies": {
+        "d3-dsv": "^2.0.0",
+        "d3-format": "^2.0.0",
+        "d3-time-format": "^3.0.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-financial-charts": "file:../charts"
+    },
+    "devDependencies": {
+        "@babel/preset-react": "^7.28.5",
+        "@babel/preset-typescript": "^7.28.5",
+        "@mdx-js/react": "^3.1.0",
+        "@storybook/addon-essentials": "^8.6.18",
+        "@storybook/addon-webpack5-compiler-babel": "^3.0.6",
+        "@storybook/react": "^8.6.18",
+        "@storybook/react-webpack5": "^8.6.18",
+        "react-refresh": "^0.18.0",
+        "storybook": "^8.6.18"
+    }
 }
