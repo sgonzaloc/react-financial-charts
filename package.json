@@ -5,7 +5,7 @@
     "license": "MIT",
     "version": "2.0.3",
     "scripts": {
-        "build": "run-s build:core build:utils build:scales build:coordinates build:axes build:series build:indicators build:interactive build:annotations build:tooltip build:charts",
+        "build": "run-s build:core build:utils build:scales build:coordinates build:axes build:series build:indicators build:interactive build:annotations build:tooltip",
         "build:annotations": "npm run build --workspace='@react-financial-charts/annotations'",
         "build:axes": "npm run build --workspace='@react-financial-charts/axes'",
         "build:charts": "npm run build --workspace='react-financial-charts'",
