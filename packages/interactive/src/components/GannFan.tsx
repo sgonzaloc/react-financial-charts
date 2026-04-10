@@ -30,6 +30,14 @@ export class GannFan extends React.Component<GannFanProps> {
         selected: false,
     };
 
+    public shouldComponentUpdate(nextProps: GannFanProps) {
+        return (
+            this.props.selected !== nextProps.selected ||
+            this.props.startXY !== nextProps.startXY ||
+            this.props.endXY !== nextProps.endXY
+        );
+    }
+
     public render() {
         const { selected, interactiveCursorClass } = this.props;
         const { onDragStart, onDrag, onDragComplete, onHover, onUnHover } = this.props;
@@ -41,6 +49,7 @@ export class GannFan extends React.Component<GannFanProps> {
                 canvasDraw={this.drawOnCanvas}
                 interactiveCursorClass={interactiveCursorClass}
                 selected={selected}
+                enableDragOnHover={true}
                 onDragStart={onDragStart}
                 onDrag={onDrag}
                 onDragComplete={onDragComplete}
@@ -117,10 +126,9 @@ export class GannFan extends React.Component<GannFanProps> {
     };
 
     private readonly getLineCoordinates = (start: number[], endX: number, endY: number, text: string) => {
-        const end = [endX, endY];
         return {
             start,
-            end,
+            end: [endX, endY],
             text,
         };
     };
