@@ -32,6 +32,9 @@ jobs:
             - name: Build packages
               run: npm run build
 
+            - name: Build charts package
+              run: npm run build --workspace='react-financial-charts'
+
             - name: Build Storybook with full error log
               id: storybook
               continue-on-error: true
