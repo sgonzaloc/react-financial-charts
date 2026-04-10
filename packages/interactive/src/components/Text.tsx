@@ -8,11 +8,13 @@ export interface TextProps {
     readonly fillStyle: string;
     readonly selected?: boolean;
     readonly xyProvider: (moreProps: any) => number[];
+    readonly textAnchor?: "start" | "middle" | "end";
 }
 
 export class Text extends React.Component<TextProps> {
     public static defaultProps = {
         selected: false,
+        textAnchor: "start",
     };
 
     public render() {
@@ -34,9 +36,19 @@ export class Text extends React.Component<TextProps> {
     };
 
     private readonly drawOnCanvas = (ctx: CanvasRenderingContext2D, moreProps: any) => {
-        const { xyProvider, fontFamily, fontSize, fillStyle, children } = this.props;
+        const { xyProvider, fontFamily, fontSize, fillStyle, children, textAnchor } = this.props;
 
-        const [x, y] = xyProvider(moreProps);
+        let [x, y] = xyProvider(moreProps);
+
+        if (textAnchor === "middle") {
+            ctx.font = `${fontSize}px ${fontFamily}`;
+            const textWidth = ctx.measureText(children).width;
+            x = x - textWidth / 2;
+        } else if (textAnchor === "end") {
+            ctx.font = `${fontSize}px ${fontFamily}`;
+            const textWidth = ctx.measureText(children).width;
+            x = x - textWidth;
+        }
 
         ctx.font = `${fontSize}px ${fontFamily}`;
         ctx.fillStyle = fillStyle;

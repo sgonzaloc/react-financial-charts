@@ -25,6 +25,7 @@ export interface RectangleProps {
         readonly edgeStrokeWidth?: number;
         readonly r?: number;
     };
+    readonly measure?: boolean;
 }
 
 interface RectangleState {
@@ -57,6 +58,7 @@ export class Rectangle extends React.Component<RectangleProps, RectangleState> {
             edgeStrokeWidth: 1,
             r: 5,
         },
+        measure: false,
     };
 
     private saveNodeType: any;
@@ -78,6 +80,7 @@ export class Rectangle extends React.Component<RectangleProps, RectangleState> {
             currentPositionStrokeWidth,
             enabled,
             hoverText,
+            measure,
         } = this.props;
 
         const { current, override } = this.state;
@@ -92,6 +95,7 @@ export class Rectangle extends React.Component<RectangleProps, RectangleState> {
                     {...current}
                     appearance={appearance}
                     hoverText={hoverText}
+                    measure={measure}
                 />
             ) : null;
 
@@ -114,6 +118,7 @@ export class Rectangle extends React.Component<RectangleProps, RectangleState> {
                             onDrag={this.handleDragRectangle}
                             onDragComplete={this.handleDragRectangleComplete}
                             onSelect={this.handleSelect}
+                            measure={measure}
                         />
                     );
                 })}

@@ -2,7 +2,7 @@ import * as React from "react";
 import { isDefined, noop } from "@react-financial-charts/core";
 import { getXValue } from "@react-financial-charts/core/lib/utils/ChartDataUtil";
 import { saveNodeType } from "../utils";
-import { ClickableCircle, HoverTextNearMouse, Rectangle } from "../components";
+import { ClickableCircle, HoverTextNearMouse, Rectangle, Text } from "../components";
 
 export interface EachRectangleProps {
     readonly startXY: number[];
@@ -33,6 +33,7 @@ export interface EachRectangleProps {
     readonly onDrag: (e: React.MouseEvent, index: number | undefined, moreProps: any) => void;
     readonly onDragComplete?: (e: React.MouseEvent, moreProps: any) => void;
     readonly onSelect?: (e: React.MouseEvent, index: number | undefined, moreProps: any) => void;
+    readonly measure?: boolean;
 }
 
 interface EachRectangleState {
@@ -66,10 +67,27 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
         this.state = { hover: false };
     }
 
+    private calculatePercentChange(startPrice: number, endPrice: number): number {
+        return ((endPrice - startPrice) / startPrice) * 100;
+    }
+
+    private formatPercent(value: number): string {
+        const formatted = Math.abs(value).toFixed(2);
+        return value >= 0 ? `+${formatted}%` : `-${formatted}%`;
+    }
+
+    private formatPrice(price: number): string {
+        return price.toFixed(2);
+    }
+
+    private getTextColor(percent: number): string {
+        return percent >= 0 ? "#2e7d32" : "#c62828";
+    }
+
     public render() {
         const { startXY, endXY } = this.props;
         const { interactive, hoverText, appearance, selected } = this.props;
-        const { onDragComplete } = this.props;
+        const { onDragComplete, measure } = this.props;
         const { hover } = this.state;
         const { enable: hoverTextEnabled, ...restHoverTextProps } = hoverText;
         const { strokeStyle, strokeWidth, fill, edgeFill, edgeStroke, edgeStrokeWidth, r } = appearance;
@@ -84,7 +102,32 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
             }
         };
 
-        // Círculo para esquina superior izquierda (startXY)
+        let startPrice: number | null = null;
+        let endPrice: number | null = null;
+        let percentChange: number | null = null;
+        let percentText: string | null = null;
+        let textColor: string = "#000000";
+
+        if (startXY && endXY && startXY[1] !== 0) {
+            startPrice = startXY[1];
+            endPrice = endXY[1];
+            percentChange = this.calculatePercentChange(startPrice, endPrice);
+            percentText = this.formatPercent(percentChange);
+            textColor = this.getTextColor(percentChange);
+        }
+
+        const textXYProvider = ({ xScale, chartConfig }: any) => {
+            const { yScale } = chartConfig;
+            const xCenter = (xScale(startXY[0]) + xScale(endXY[0])) / 2;
+            const yTop = Math.min(yScale(startXY[1]), yScale(endXY[1])) - 10;
+            return [xCenter, yTop];
+        };
+
+        const displayText =
+            startPrice && endPrice
+                ? `${this.formatPrice(startPrice)} → ${this.formatPrice(endPrice)} (${percentText})`
+                : "";
+
         const edge1 =
             isDefined(startXY) && isDefined(endXY) ? (
                 <ClickableCircle
@@ -103,7 +146,6 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
                 />
             ) : null;
 
-        // Círculo para esquina superior derecha
         const edge2 =
             isDefined(startXY) && isDefined(endXY) ? (
                 <ClickableCircle
@@ -122,7 +164,6 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
                 />
             ) : null;
 
-        // Círculo para esquina inferior derecha (endXY)
         const edge3 =
             isDefined(startXY) && isDefined(endXY) ? (
                 <ClickableCircle
@@ -141,7 +182,6 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
                 />
             ) : null;
 
-        // Círculo para esquina inferior izquierda
         const edge4 =
             isDefined(startXY) && isDefined(endXY) ? (
                 <ClickableCircle
@@ -180,6 +220,17 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
                 {edge2}
                 {edge3}
                 {edge4}
+                {measure && displayText && startXY && endXY && (
+                    <Text
+                        xyProvider={textXYProvider}
+                        fontFamily="sans-serif"
+                        fontSize={20}
+                        fillStyle={textColor}
+                        textAnchor="middle"
+                    >
+                        {displayText}
+                    </Text>
+                )}
                 <HoverTextNearMouse show={hoverTextEnabled && hover && !selected} {...restHoverTextProps} />
             </g>
         );
