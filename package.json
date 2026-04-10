@@ -8,7 +8,7 @@
         "build": "npm run build --workspaces --if-present",
         "build:annotations": "npm run build --workspace='@react-financial-charts/annotations'",
         "build:axes": "npm run build --workspace='@react-financial-charts/axes'",
-        "build:charts": "npm run build --workspace='react-financial-charts'",
+        "build:charts": "npm run build --workspace='@react-financial-charts/charts'",
         "build:coordinates": "npm run build --workspace='@react-financial-charts/coordinates'",
         "build:core": "npm run build --workspace='@react-financial-charts/core'",
         "build:indicators": "npm run build --workspace='@react-financial-charts/indicators'",
