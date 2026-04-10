@@ -32,6 +32,15 @@ export class ChannelWithArea extends React.Component<ChannelWithAreaProps> {
         selected: false,
     };
 
+    public shouldComponentUpdate(nextProps: ChannelWithAreaProps) {
+        return (
+            this.props.selected !== nextProps.selected ||
+            this.props.startXY !== nextProps.startXY ||
+            this.props.endXY !== nextProps.endXY ||
+            this.props.dy !== nextProps.dy
+        );
+    }
+
     public render() {
         const { selected, interactiveCursorClass } = this.props;
         const { onDragStart, onDrag, onDragComplete, onHover, onUnHover } = this.props;
