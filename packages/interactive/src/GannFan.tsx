@@ -13,19 +13,19 @@ export interface GannFanProps {
     readonly currentPositionStrokeWidth?: number;
     readonly currentPositionOpacity?: number;
     readonly currentPositionRadius?: number;
-    readonly appearance: {
-        readonly stroke: string;
-        readonly strokeOpacity: number;
-        readonly fillOpacity: number;
-        readonly strokeWidth: number;
-        readonly edgeStroke: string;
-        readonly edgeFill: string;
-        readonly edgeStrokeWidth: number;
-        readonly r: number;
-        readonly fill: string[];
-        readonly fontFamily: string;
-        readonly fontSize: number;
-        readonly fontFill: string;
+    readonly appearance?: {
+        readonly stroke?: string;
+        readonly strokeOpacity?: number;
+        readonly fillOpacity?: number;
+        readonly strokeWidth?: number;
+        readonly edgeStroke?: string;
+        readonly edgeFill?: string;
+        readonly edgeStrokeWidth?: number;
+        readonly r?: number;
+        readonly fill?: string[];
+        readonly fontFamily?: string;
+        readonly fontSize?: number;
+        readonly fontFill?: string;
     };
     readonly hoverText: object;
     readonly fans: any[];
@@ -103,15 +103,22 @@ export class GannFan extends React.Component<GannFanProps, GannFanState> {
 
         const tempChannel =
             isDefined(current) && isDefined(current.endXY) ? (
-                <EachGannFan interactive={false} {...current} appearance={appearance} hoverText={hoverText} />
+                <EachGannFan
+                    key="temp-fan"
+                    index={-1}
+                    interactive={false}
+                    {...current}
+                    appearance={appearance}
+                    hoverText={hoverText}
+                />
             ) : null;
 
         return (
             <g>
                 {fans.map((each, idx) => {
                     const eachAppearance = isDefined(each.appearance)
-                        ? { ...appearance, ...each.appearance }
-                        : appearance;
+                        ? { ...GannFan.defaultProps.appearance, ...appearance, ...each.appearance }
+                        : { ...GannFan.defaultProps.appearance, ...appearance };
 
                     return (
                         <EachGannFan
@@ -124,6 +131,7 @@ export class GannFan extends React.Component<GannFanProps, GannFanState> {
                             hoverText={hoverText}
                             onDrag={this.handleDragFan}
                             onDragComplete={this.handleDragFanComplete}
+                            onSelect={this.handleSelect}
                         />
                     );
                 })}
@@ -150,7 +158,14 @@ export class GannFan extends React.Component<GannFanProps, GannFanState> {
         if (this.mouseMoved && isDefined(current) && isDefined(current.startXY)) {
             const newfans = [
                 ...fans.map((d) => ({ ...d, selected: false })),
-                { ...current, selected: true, appearance },
+                {
+                    ...current,
+                    selected: true,
+                    appearance: {
+                        ...GannFan.defaultProps.appearance,
+                        ...appearance,
+                    },
+                },
             ];
             this.setState(
                 {
@@ -210,13 +225,18 @@ export class GannFan extends React.Component<GannFanProps, GannFanState> {
 
         if (isDefined(override)) {
             const { index, ...rest } = override;
-            const newfans = fans.map((each, idx) => (idx === index ? { ...each, ...rest, selected: true } : each));
+            const newfans = fans.map((each, idx) =>
+                idx === index ? { ...each, ...rest, selected: true } : { ...each, selected: false },
+            );
             this.setState(
                 {
                     override: null,
                 },
                 () => {
-                    this.props.onComplete(e, newfans, moreProps);
+                    const { onComplete } = this.props;
+                    if (onComplete !== undefined) {
+                        onComplete(e, newfans, moreProps);
+                    }
                 },
             );
         }
@@ -229,5 +249,14 @@ export class GannFan extends React.Component<GannFanProps, GannFanState> {
                 ...newXYValue,
             },
         });
+    };
+
+    private readonly handleSelect = (e: React.MouseEvent, index: number | undefined, moreProps: any) => {
+        const { fans, onSelect } = this.props;
+        const newFans = fans.map((d, dIdx) => ({ ...d, selected: dIdx === index }));
+
+        if (onSelect !== undefined) {
+            onSelect(e, newFans, moreProps);
+        }
     };
 }

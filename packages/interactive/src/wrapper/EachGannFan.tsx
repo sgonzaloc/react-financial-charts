@@ -37,6 +37,7 @@ export interface EachGannFanProps {
     readonly index?: number;
     readonly onDrag: (e: React.MouseEvent, index: number | undefined, moreProps: any) => void;
     readonly onDragComplete?: (e: React.MouseEvent, moreProps: any) => void;
+    readonly onSelect?: (e: React.MouseEvent, index: number | undefined, moreProps: any) => void;
 }
 
 interface EachGannFanState {
@@ -70,6 +71,7 @@ export class EachGannFan extends React.Component<EachGannFanProps, EachGannFanSt
             fontFill: "#000000",
         },
         onDrag: noop,
+        onSelect: noop,
         hoverText: {
             ...HoverTextNearMouse.defaultProps,
             enable: true,
@@ -260,8 +262,6 @@ export class EachGannFan extends React.Component<EachGannFanProps, EachGannFanSt
         const newX2Value = getXValue(xScale, xAccessor, [x2 - dx, y2 - dy], fullData);
         const newY2Value = yScale.invert(y2 - dy);
 
-        // const newDy = newY2Value - endXY[1] + this.dragStart.dy;
-
         onDrag(e, index, {
             startXY: [newX1Value, newY1Value],
             endXY: [newX2Value, newY2Value],
@@ -269,14 +269,18 @@ export class EachGannFan extends React.Component<EachGannFanProps, EachGannFanSt
         });
     };
 
-    private readonly handleDragStart = () => {
-        const { startXY, endXY, dy } = this.props;
+    private readonly handleDragStart = (e: React.MouseEvent, moreProps: any) => {
+        const { startXY, endXY, dy, index, onSelect } = this.props;
+        console.log("EachGannFan.handleDragStart - index:", this.props.index, "selected:", this.props.selected);
 
         this.dragStart = {
             startXY,
             endXY,
             dy,
         };
+        if (onSelect) {
+            onSelect(e, index, {});
+        }
     };
 
     private readonly handleHover = (moreProps: any) => {
