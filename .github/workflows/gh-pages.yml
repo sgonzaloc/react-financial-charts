@@ -30,7 +30,7 @@ jobs:
               run: npm ci
 
             - name: Build packages
-              run: npm run build --workspaces --if-present
+              run: npm run build
 
             - name: Build Storybook with full error log
               id: storybook
