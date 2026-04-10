@@ -5,3 +5,4 @@ export { EachInteractiveYCoordinate } from "./EachInteractiveYCoordinate";
 export { EachLinearRegressionChannel } from "./EachLinearRegressionChannel";
 export { EachText } from "./EachText";
 export { EachTrendLine } from "./EachTrendLine";
+export { EachRectangle } from "./EachRectangle";

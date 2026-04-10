@@ -1,6 +1,7 @@
 export { TrendLine } from "./TrendLine";
 export { FibonacciRetracement } from "./FibonacciRetracement";
 export { EquidistantChannel } from "./EquidistantChannel";
+export { Rectangle } from "./Rectangle";
 export { StandardDeviationChannel } from "./StandardDeviationChannel";
 export { GannFan } from "./GannFan";
 export { ClickCallback } from "./ClickCallback";
