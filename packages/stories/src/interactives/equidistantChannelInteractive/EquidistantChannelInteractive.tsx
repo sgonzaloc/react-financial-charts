@@ -30,7 +30,7 @@ class EquidistantChannelInteractive extends React.Component<
         (d: IOHLCData) => d.date,
     );
 
-    constructor(props: EquidistantChannelInteractiveProps) {
+    public constructor(props: EquidistantChannelInteractiveProps) {
         super(props);
         this.state = {
             channels: [],
@@ -44,14 +44,18 @@ class EquidistantChannelInteractive extends React.Component<
     };
 
     private handleSelect = (e: any, newChannels: any[]) => {
-        if (this.state.mode !== "select") return;
+        if (this.state.mode !== "select") {
+            return;
+        }
         this.setState({ channels: newChannels });
     };
 
     private deleteSelected = () => {
         const { channels } = this.state;
         const selectedIndex = channels.findIndex((t: any) => t.selected);
-        if (selectedIndex === -1) return;
+        if (selectedIndex === -1) {
+            return;
+        }
 
         const newChannels = channels.filter((_: any, i: number) => i !== selectedIndex);
         if (newChannels.length > 0) {

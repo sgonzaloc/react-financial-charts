@@ -168,17 +168,23 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
 
                     const handleEdge1DragStart = (e: React.MouseEvent, moreProps: any) => {
                         this.setState({ anchor: "edge1" });
-                        if (onSelect) onSelect(e, index, moreProps);
+                        if (onSelect) {
+                            onSelect(e, index, moreProps);
+                        }
                     };
 
                     const handleEdge2DragStart = (e: React.MouseEvent, moreProps: any) => {
                         this.setState({ anchor: "edge2" });
-                        if (onSelect) onSelect(e, index, moreProps);
+                        if (onSelect) {
+                            onSelect(e, index, moreProps);
+                        }
                     };
 
                     const handleLineDragStart = (e: React.MouseEvent, moreProps: any) => {
                         this.dragStart = { x1: line.x1, y1: line.y, x2: line.x2, y2: line.y };
-                        if (onSelect) onSelect(e, index, moreProps);
+                        if (onSelect) {
+                            onSelect(e, index, moreProps);
+                        }
                     };
 
                     return (
@@ -251,7 +257,9 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
     private readonly handleDragComplete = (e: React.MouseEvent, moreProps: any) => {
         this.setState({ anchor: undefined });
         const { onDragComplete } = this.props;
-        if (onDragComplete) onDragComplete(e, moreProps);
+        if (onDragComplete) {
+            onDragComplete(e, moreProps);
+        }
     };
 
     private readonly handleEdge2Drag = (e: React.MouseEvent, moreProps: any) => {

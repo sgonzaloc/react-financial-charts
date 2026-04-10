@@ -269,7 +269,7 @@ export class EachGannFan extends React.Component<EachGannFanProps, EachGannFanSt
         });
     };
 
-    private readonly handleDragStart = (e: React.MouseEvent, moreProps: any) => {
+    private readonly handleDragStart = (e: React.MouseEvent) => {
         const { startXY, endXY, dy, index, onSelect } = this.props;
         console.log("EachGannFan.handleDragStart - index:", this.props.index, "selected:", this.props.selected);
 

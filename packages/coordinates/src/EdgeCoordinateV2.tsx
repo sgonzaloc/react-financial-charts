@@ -109,7 +109,7 @@ function helper(props: any) {
     }
     let coordinateBase;
     let coordinate;
-    let textAnchor: "start" | "middle" | "end" | "inherit" | undefined = "middle";
+    const textAnchor: "start" | "middle" | "end" | "inherit" | undefined = "middle";
     if (displayCoordinate !== undefined) {
         coordinateBase = {
             edgeXRect,

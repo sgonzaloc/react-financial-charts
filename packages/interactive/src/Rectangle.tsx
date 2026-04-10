@@ -159,7 +159,9 @@ export class Rectangle extends React.Component<RectangleProps, RectangleState> {
 
             this.setState({ override: null }, () => {
                 const { onComplete } = this.props;
-                if (onComplete) onComplete(e, newRectangles, moreProps);
+                if (onComplete) {
+                    onComplete(e, newRectangles, moreProps);
+                }
             });
         }
     };
@@ -178,7 +180,9 @@ export class Rectangle extends React.Component<RectangleProps, RectangleState> {
                 },
                 () => {
                     const { onStart } = this.props;
-                    if (onStart) onStart();
+                    if (onStart) {
+                        onStart();
+                    }
                 },
             );
         }
@@ -203,7 +207,9 @@ export class Rectangle extends React.Component<RectangleProps, RectangleState> {
 
             this.setState({ current: null }, () => {
                 const { onComplete } = this.props;
-                if (onComplete) onComplete(e, newRectangles, moreProps);
+                if (onComplete) {
+                    onComplete(e, newRectangles, moreProps);
+                }
             });
         }
     };
@@ -229,6 +235,8 @@ export class Rectangle extends React.Component<RectangleProps, RectangleState> {
                 ? rectangles.map((d) => ({ ...d, selected: false }))
                 : rectangles.map((d, dIdx) => ({ ...d, selected: dIdx === index }));
 
-        if (onSelect) onSelect(e, newRectangles, moreProps);
+        if (onSelect) {
+            onSelect(e, newRectangles, moreProps);
+        }
     };
 }

@@ -28,7 +28,7 @@ class TrendLineInteractive extends React.Component<TrendLineInteractiveProps, Tr
         (d: IOHLCData) => d.date,
     );
 
-    constructor(props: TrendLineInteractiveProps) {
+    public constructor(props: TrendLineInteractiveProps) {
         super(props);
         this.state = {
             trends: [],
@@ -43,14 +43,18 @@ class TrendLineInteractive extends React.Component<TrendLineInteractiveProps, Tr
     };
 
     private handleSelect = (e: any, newTrends: any[]) => {
-        if (this.state.mode !== "select") return;
+        if (this.state.mode !== "select") {
+            return;
+        }
         this.setState({ trends: newTrends });
     };
 
     private deleteSelected = () => {
         const { trends } = this.state;
         const selectedIndex = trends.findIndex((t: any) => t.selected);
-        if (selectedIndex === -1) return;
+        if (selectedIndex === -1) {
+            return;
+        }
 
         const newTrends = trends.filter((_: any, i: number) => i !== selectedIndex);
         if (newTrends.length > 0) {

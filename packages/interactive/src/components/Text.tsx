@@ -38,7 +38,7 @@ export class Text extends React.Component<TextProps> {
     private readonly drawOnCanvas = (ctx: CanvasRenderingContext2D, moreProps: any) => {
         const { xyProvider, fontFamily, fontSize, fillStyle, children, textAnchor } = this.props;
 
-        let [x, y] = xyProvider(moreProps);
+        const [x, y] = xyProvider(moreProps);
 
         if (textAnchor === "middle") {
             ctx.font = `${fontSize}px ${fontFamily}`;

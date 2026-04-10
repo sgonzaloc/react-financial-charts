@@ -61,7 +61,9 @@ export class Rectangle extends React.Component<RectangleProps> {
             chartConfig: { yScale },
         } = moreProps;
 
-        if (!startXY || !endXY) return;
+        if (!startXY || !endXY) {
+            return;
+        }
 
         const x1 = xScale(startXY[0]);
         const y1 = yScale(startXY[1]);
@@ -85,7 +87,9 @@ export class Rectangle extends React.Component<RectangleProps> {
             chartConfig: { yScale },
         } = moreProps;
 
-        if (!startXY || !endXY) return false;
+        if (!startXY || !endXY) {
+            return false;
+        }
 
         const [mouseX, mouseY] = mouseXY;
         const x1 = xScale(startXY[0]);

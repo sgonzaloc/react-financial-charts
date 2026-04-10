@@ -94,7 +94,7 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
 
         const hoverHandler = interactive ? { onHover: this.handleHover, onUnHover: this.handleHover } : {};
 
-        const handleDragStart = (e: React.MouseEvent, moreProps: any) => {
+        const handleDragStart = (e: React.MouseEvent) => {
             const { startXY, endXY, index, onSelect } = this.props;
             this.dragStart = { startXY, endXY };
             if (onSelect) {
@@ -106,7 +106,7 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
         let endPrice: number | null = null;
         let percentChange: number | null = null;
         let percentText: string | null = null;
-        let textColor: string = "#000000";
+        let textColor = "#000000";
 
         if (startXY && endXY && startXY[1] !== 0) {
             startPrice = startXY[1];

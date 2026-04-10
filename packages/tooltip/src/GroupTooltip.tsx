@@ -138,7 +138,11 @@ export class GroupTooltip extends React.Component<GroupTooltipProps> {
         });
 
         return (
-            <g transform={`translate(${xPos}, ${yPos})`} className={className} textAnchor={textAnchor as "start" | "middle" | "end" | "inherit" | undefined}>
+            <g
+                transform={`translate(${xPos}, ${yPos})`}
+                className={className}
+                textAnchor={textAnchor as "start" | "middle" | "end" | "inherit" | undefined}
+            >
                 {layout === "horizontalInline" ? (
                     <ToolTipText x={0} y={0} fontFamily={fontFamily} fontSize={fontSize} fontWeight={fontWeight}>
                         {singleTooltip}

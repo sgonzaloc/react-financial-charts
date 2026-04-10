@@ -289,7 +289,7 @@ export class EachEquidistantChannel extends React.Component<EachEquidistantChann
         });
     };
 
-    private readonly handleDragStart = (e: React.MouseEvent, moreProps: any) => {
+    private readonly handleDragStart = (e: React.MouseEvent) => {
         const { startXY, endXY, dy, index, onSelect } = this.props;
 
         this.dragStart = {

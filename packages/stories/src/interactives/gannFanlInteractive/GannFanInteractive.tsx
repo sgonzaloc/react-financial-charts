@@ -27,7 +27,7 @@ class GannFanInteractive extends React.Component<GannFanInteractiveProps, GannFa
         (d: IOHLCData) => d.date,
     );
 
-    constructor(props: GannFanInteractiveProps) {
+    public constructor(props: GannFanInteractiveProps) {
         super(props);
         this.state = {
             fans: [],
@@ -43,14 +43,18 @@ class GannFanInteractive extends React.Component<GannFanInteractiveProps, GannFa
 
     private handleSelect = (e: any, newFans: any[]) => {
         console.log("handleSelect", newFans);
-        if (this.state.mode !== "select") return;
+        if (this.state.mode !== "select") {
+            return;
+        }
         this.setState({ fans: newFans });
     };
 
     private deleteSelected = () => {
         const { fans } = this.state;
         const selectedIndex = fans.findIndex((t: any) => t.selected);
-        if (selectedIndex === -1) return;
+        if (selectedIndex === -1) {
+            return;
+        }
 
         const newFans = fans.filter((_: any, i: number) => i !== selectedIndex);
         if (newFans.length > 0) {

@@ -119,7 +119,7 @@ const helper = (props: any) => {
     let coordinateBase;
     let coordinate;
     if (displayCoordinate !== undefined) {
-        let textAnchor: "start" | "middle" | "end" | "inherit" | undefined = "middle";
+        const textAnchor: "start" | "middle" | "end" | "inherit" | undefined = "middle";
 
         let edgeXRect;
         let edgeYRect;

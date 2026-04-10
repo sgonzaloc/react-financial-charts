@@ -28,7 +28,7 @@ class RectangleInteractive extends React.Component<RectangleInteractiveProps, Re
         (d: IOHLCData) => d.date,
     );
 
-    constructor(props: RectangleInteractiveProps) {
+    public constructor(props: RectangleInteractiveProps) {
         super(props);
         this.state = {
             rectangles: [],
@@ -44,14 +44,18 @@ class RectangleInteractive extends React.Component<RectangleInteractiveProps, Re
 
     private handleSelect = (e: any, newRectangles: any[]) => {
         console.log("handleSelect", newRectangles);
-        if (this.state.mode !== "select") return;
+        if (this.state.mode !== "select") {
+            return;
+        }
         this.setState({ rectangles: newRectangles });
     };
 
     private deleteSelected = () => {
         const { rectangles } = this.state;
         const selectedIndex = rectangles.findIndex((t: any) => t.selected);
-        if (selectedIndex === -1) return;
+        if (selectedIndex === -1) {
+            return;
+        }
 
         const newRectangles = rectangles.filter((_: any, i: number) => i !== selectedIndex);
         if (newRectangles.length > 0) {

@@ -30,7 +30,7 @@ class FibonacciRetracementInteractive extends React.Component<
         (d: IOHLCData) => d.date,
     );
 
-    constructor(props: FibonacciRetracementInteractiveProps) {
+    public constructor(props: FibonacciRetracementInteractiveProps) {
         super(props);
         this.state = {
             retracements: [],
@@ -44,14 +44,18 @@ class FibonacciRetracementInteractive extends React.Component<
     };
 
     private handleSelect = (e: any, newRetracements: any[]) => {
-        if (this.state.mode !== "select") return;
+        if (this.state.mode !== "select") {
+            return;
+        }
         this.setState({ retracements: newRetracements });
     };
 
     private deleteSelected = () => {
         const { retracements } = this.state;
         const selectedIndex = retracements.findIndex((t: any) => t.selected);
-        if (selectedIndex === -1) return;
+        if (selectedIndex === -1) {
+            return;
+        }
 
         const newRetracements = retracements.filter((_: any, i: number) => i !== selectedIndex);
         if (newRetracements.length > 0) {
