@@ -7,7 +7,7 @@ import { EachEquidistantChannel } from "./wrapper";
 
 interface EquidistantChannelProps {
     readonly enabled: boolean;
-    readonly onStart: () => void;
+    readonly onStart?: () => void;
     readonly onComplete: (e: React.MouseEvent, newChannels: any[], moreProps: any) => void;
     readonly onSelect: (e: React.MouseEvent, interactives: any[], moreProps: any) => void;
     readonly currentPositionStroke?: string;
@@ -17,16 +17,16 @@ interface EquidistantChannelProps {
     readonly hoverText: object;
     readonly channels: any[];
     readonly appearance: {
-        readonly stroke: string;
-        readonly strokeOpacity: number;
-        readonly strokeWidth: number;
-        readonly fill: string;
-        readonly fillOpacity: number;
-        readonly edgeStroke: string;
-        readonly edgeFill: string;
-        readonly edgeFill2: string;
-        readonly edgeStrokeWidth: number;
-        readonly r: number;
+        readonly strokeStyle?: string;
+        readonly strokeOpacity?: number;
+        readonly strokeWidth?: number;
+        readonly fill?: string;
+        readonly fillOpacity?: number;
+        readonly edgeStroke?: string;
+        readonly edgeFill?: string;
+        readonly edgeFill2?: string;
+        readonly edgeStrokeWidth?: number;
+        readonly r?: number;
     };
 }
 
@@ -51,7 +51,7 @@ export class EquidistantChannel extends React.Component<EquidistantChannelProps,
         },
         channels: [],
         appearance: {
-            stroke: "#000000",
+            strokeStyle: "#000000",
             strokeOpacity: 1,
             strokeWidth: 1,
             fill: "#8AAFE2",
@@ -100,13 +100,14 @@ export class EquidistantChannel extends React.Component<EquidistantChannelProps,
         const tempChannel =
             isDefined(current) && isDefined(current.endXY) ? (
                 <EachEquidistantChannel
+                    key="temp-channel"
+                    index={-1}
                     interactive={false}
                     {...current}
                     appearance={appearance}
                     hoverText={hoverText}
                 />
             ) : null;
-
         return (
             <g>
                 {channels.map((each, idx) => {
@@ -125,6 +126,7 @@ export class EquidistantChannel extends React.Component<EquidistantChannelProps,
                             appearance={eachAppearance}
                             onDrag={this.handleDragChannel}
                             onDragComplete={this.handleDragChannelComplete}
+                            onSelect={this.handleSelect}
                         />
                     );
                 })}
@@ -217,7 +219,10 @@ export class EquidistantChannel extends React.Component<EquidistantChannelProps,
                     {
                         ...current,
                         selected: true,
-                        appearance,
+                        appearance: {
+                            ...EquidistantChannel.defaultProps.appearance,
+                            ...appearance,
+                        },
                     },
                 ];
 
@@ -263,6 +268,15 @@ export class EquidistantChannel extends React.Component<EquidistantChannelProps,
                     },
                 });
             }
+        }
+    };
+
+    private readonly handleSelect = (e: React.MouseEvent, index: number | undefined, moreProps: any) => {
+        const { channels, onSelect } = this.props;
+        const newChannels = channels.map((d, dIdx) => ({ ...d, selected: dIdx === index }));
+
+        if (onSelect !== undefined) {
+            onSelect(e, newChannels, moreProps);
         }
     };
 }
