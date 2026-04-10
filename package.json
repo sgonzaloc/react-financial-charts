@@ -22,7 +22,7 @@
         "clean:modules": "npm run clean --workspaces",
         "convert": "npm run link",
         "docs": "run-s build docs:stories",
-        "docs:stories": "npm run docs --workspace=@react-financial-charts/stories",
+        "docs:stories": "npm run docs --workspace=@react-financial-charts/stories -- --loglevel=silly",
         "link": "npm link",
         "lint": "eslint . --ext ts --ext tsx --quiet",
         "lint:fix": "eslint . --ext ts --ext tsx --quiet --fix",
