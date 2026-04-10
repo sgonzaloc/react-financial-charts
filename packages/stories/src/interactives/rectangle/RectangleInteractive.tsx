@@ -13,6 +13,7 @@ interface RectangleInteractiveProps {
     readonly height: number;
     readonly width: number;
     readonly ratio: number;
+    readonly measure?: boolean;
 }
 
 interface RectangleInteractiveState {
@@ -74,7 +75,7 @@ class RectangleInteractive extends React.Component<RectangleInteractiveProps, Re
     };
 
     public render() {
-        const { data: initialData, height, ratio, width } = this.props;
+        const { data: initialData, height, ratio, width, measure } = this.props;
         const { rectangles, mode } = this.state;
 
         const { data, xScale, xAccessor, displayXAccessor } = this.xScaleProvider(initialData);
@@ -215,6 +216,7 @@ class RectangleInteractive extends React.Component<RectangleInteractiveProps, Re
                                     strokeWidth: 1,
                                 }}
                                 hoverText={{ enable: false }}
+                                measure={measure}
                             />
                         </Chart>
                     </ChartCanvas>
