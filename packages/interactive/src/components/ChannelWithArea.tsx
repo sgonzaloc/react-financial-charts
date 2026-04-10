@@ -100,44 +100,53 @@ export class ChannelWithArea extends React.Component<ChannelWithAreaProps> {
     };
 
     private readonly isHover = (moreProps: any) => {
-        const { tolerance, onHover } = this.props;
+        const { tolerance } = this.props;
+        const { line1, line2 } = helper(this.props, moreProps);
 
-        if (onHover !== undefined) {
-            const { line1, line2 } = helper(this.props, moreProps);
+        if (line1 !== undefined && line2 !== undefined) {
+            const {
+                mouseXY,
+                xScale,
+                chartConfig: { yScale },
+            } = moreProps;
+            const [mouseX, mouseY] = mouseXY;
 
-            if (line1 !== undefined && line2 !== undefined) {
-                const {
-                    mouseXY,
-                    xScale,
-                    chartConfig: { yScale },
-                } = moreProps;
+            const line1Hovering = isHovering({
+                x1Value: line1.x1,
+                y1Value: line1.y1,
+                x2Value: line1.x2,
+                y2Value: line1.y2,
+                type: "LINE",
+                mouseXY,
+                tolerance,
+                xScale,
+                yScale,
+            });
 
-                const line1Hovering = isHovering({
-                    x1Value: line1.x1,
-                    y1Value: line1.y1,
-                    x2Value: line1.x2,
-                    y2Value: line1.y2,
-                    type: "LINE",
-                    mouseXY,
-                    tolerance,
-                    xScale,
-                    yScale,
-                });
+            const line2Hovering = isHovering({
+                x1Value: line2.x1,
+                y1Value: line2.y1,
+                x2Value: line2.x2,
+                y2Value: line2.y2,
+                type: "LINE",
+                mouseXY,
+                tolerance,
+                xScale,
+                yScale,
+            });
 
-                const line2Hovering = isHovering({
-                    x1Value: line2.x1,
-                    y1Value: line2.y1,
-                    x2Value: line2.x2,
-                    y2Value: line2.y2,
-                    type: "LINE",
-                    mouseXY,
-                    tolerance,
-                    xScale,
-                    yScale,
-                });
+            const minX = Math.min(line1.x1, line1.x2, line2.x1, line2.x2);
+            const maxX = Math.max(line1.x1, line1.x2, line2.x1, line2.x2);
+            const minY = Math.min(line1.y1, line1.y2, line2.y1, line2.y2);
+            const maxY = Math.max(line1.y1, line1.y2, line2.y1, line2.y2);
 
-                return line1Hovering || line2Hovering;
-            }
+            const insideArea =
+                mouseX >= minX - tolerance &&
+                mouseX <= maxX + tolerance &&
+                mouseY >= minY - tolerance &&
+                mouseY <= maxY + tolerance;
+
+            return line1Hovering || line2Hovering || insideArea;
         }
         return false;
     };
