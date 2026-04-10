@@ -44,7 +44,6 @@ class FibonacciRetracementInteractive extends React.Component<
     };
 
     private handleSelect = (e: any, newRetracements: any[]) => {
-        console.log("handleSelect");
         if (this.state.mode !== "select") return;
         this.setState({ retracements: newRetracements });
     };
