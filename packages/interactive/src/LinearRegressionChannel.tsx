@@ -84,6 +84,18 @@ export class LinearRegressionChannel extends React.Component<
         this.state = {};
     }
 
+    private readonly handleSelect = (e: React.MouseEvent, index: number | undefined, moreProps: any) => {
+        const { channels, onSelect } = this.props;
+        const newChannels =
+            index === undefined
+                ? channels.map((d) => ({ ...d, selected: false }))
+                : channels.map((d, dIdx) => ({ ...d, selected: dIdx === index }));
+
+        if (onSelect !== undefined) {
+            onSelect(e, newChannels, moreProps);
+        }
+    };
+
     public render() {
         const {
             appearance,
@@ -143,6 +155,7 @@ export class LinearRegressionChannel extends React.Component<
                             hoverText={eachHoverText}
                             onDrag={this.handleDragLine}
                             onDragComplete={this.handleDragLineComplete}
+                            onSelect={this.handleSelect}
                             edgeInteractiveCursor="react-financial-charts-move-cursor"
                         />
                     );

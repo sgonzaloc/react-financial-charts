@@ -25,6 +25,7 @@ export interface EachLinearRegressionChannelProps {
     readonly edgeInteractiveCursor?: string;
     readonly onDrag?: (e: React.MouseEvent, index: number | undefined, x1y1: { x1Value: any; x2Value: any }) => void;
     readonly onDragComplete?: (e: React.MouseEvent, moreProps: any) => void;
+    readonly onSelect?: (e: React.MouseEvent, index: number | undefined, moreProps: any) => void;
     readonly snapTo?: (datum: any) => number;
     readonly interactive: boolean;
     readonly selected: boolean;
@@ -96,6 +97,8 @@ export class EachLinearRegressionChannel extends React.Component<
             interactive,
             selected,
             onDragComplete,
+            onSelect,
+            index,
         } = this.props;
         const { stroke, strokeWidth, fill, r, edgeStrokeWidth, edgeFill, edgeStroke } = appearance;
         const { hover } = this.state;
@@ -109,6 +112,14 @@ export class EachLinearRegressionChannel extends React.Component<
             ...restHoverTextProps
         } = hoverText;
 
+        const handleEdge1DragStart = (e: React.MouseEvent, moreProps: any) => {
+            if (onSelect) onSelect(e, index, moreProps);
+        };
+
+        const handleEdge2DragStart = (e: React.MouseEvent, moreProps: any) => {
+            if (onSelect) onSelect(e, index, moreProps);
+        };
+
         return (
             <g>
                 <LinearRegressionChannelWithArea
@@ -120,6 +131,9 @@ export class EachLinearRegressionChannel extends React.Component<
                     fillStyle={fill}
                     strokeStyle={stroke}
                     strokeWidth={hover || selected ? strokeWidth + 1 : strokeWidth}
+                    onDragStart={handleEdge1DragStart}
+                    onDrag={this.handleEdge1Drag}
+                    onDragComplete={onDragComplete}
                 />
                 <ClickableCircle
                     ref={this.saveNodeType("edge1")}
@@ -130,6 +144,7 @@ export class EachLinearRegressionChannel extends React.Component<
                     strokeStyle={edgeStroke}
                     strokeWidth={edgeStrokeWidth}
                     interactiveCursorClass={edgeInteractiveCursor}
+                    onDragStart={handleEdge1DragStart}
                     onDrag={this.handleEdge1Drag}
                     onDragComplete={onDragComplete}
                 />
@@ -142,6 +157,7 @@ export class EachLinearRegressionChannel extends React.Component<
                     strokeStyle={edgeStroke}
                     strokeWidth={edgeStrokeWidth}
                     interactiveCursorClass={edgeInteractiveCursor}
+                    onDragStart={handleEdge2DragStart}
                     onDrag={this.handleEdge2Drag}
                     onDragComplete={onDragComplete}
                 />
