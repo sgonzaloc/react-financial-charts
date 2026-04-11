@@ -2,7 +2,7 @@ import * as React from "react";
 import { isDefined, noop } from "@react-financial-charts/core";
 import { getXValue } from "@react-financial-charts/core/lib/utils/ChartDataUtil";
 import { saveNodeType } from "../utils";
-import { ClickableCircle, HoverTextNearMouse, Rectangle, Text, Arrow } from "../components";
+import { ClickableCircle, HoverTextNearMouse, Rectangle, InteractiveText, Arrow } from "../components";
 
 export interface EachRectangleProps {
     readonly startXY: number[];
@@ -116,13 +116,6 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
             textColor = this.getTextColor(percentChange);
         }
 
-        const textXYProvider = ({ xScale, chartConfig }: any) => {
-            const { yScale } = chartConfig;
-            const xCenter = (xScale(startXY[0]) + xScale(endXY[0])) / 2;
-            const yTop = Math.min(yScale(startXY[1]), yScale(endXY[1])) - 10;
-            return [xCenter, yTop];
-        };
-
         const barsDiff = Math.abs(endXY[0] - startXY[0]);
         const displayText =
             startPrice && endPrice
@@ -203,6 +196,12 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
                 />
             ) : null;
 
+        const getTextPosition = (startXY: number[], endXY: number[]) => {
+            const xCenter = (startXY[0] + endXY[0]) / 2;
+            const yTop = Math.max(startXY[1], endXY[1]);
+            return [xCenter, yTop];
+        };
+
         return (
             <g>
                 <Rectangle
@@ -225,15 +224,15 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
                 {edge4}
                 {measure && displayText && startXY && endXY && (
                     <>
-                        <Text
-                            xyProvider={textXYProvider}
-                            fontFamily="sans-serif"
+                        <InteractiveText
                             fontSize={20}
-                            fillStyle={textColor}
+                            textFill={textColor}
                             textAnchor="middle"
-                        >
-                            {displayText}
-                        </Text>
+                            text={displayText}
+                            position={getTextPosition(startXY, endXY)}
+                            offset={[0, -30]}
+                            bgFillStyle="#E9EFFF"
+                        />
                         <Arrow
                             x1={startXY[0]}
                             y1={(startXY[1] + endXY[1]) / 2}

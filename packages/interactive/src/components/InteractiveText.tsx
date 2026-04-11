@@ -2,33 +2,41 @@ import * as React from "react";
 import { getMouseCanvas, GenericChartComponent } from "@react-financial-charts/core";
 
 export interface InteractiveTextProps {
-    readonly bgFillStyle: string;
-    readonly bgStrokeWidth: number;
-    readonly bgStroke: string;
+    readonly bgFillStyle?: string;
+    readonly bgStrokeWidth?: number;
+    readonly bgStroke?: string;
     readonly defaultClassName?: string;
-    readonly fontFamily: string;
-    readonly fontSize: number;
-    readonly fontWeight: number | string;
-    readonly fontStyle: string;
+    readonly fontFamily?: string;
+    readonly fontSize?: number;
+    readonly fontWeight?: number | string;
+    readonly fontStyle?: string;
     readonly onDragStart?: (e: React.MouseEvent, moreProps: any) => void;
     readonly onDrag?: (e: React.MouseEvent, moreProps: any) => void;
     readonly onDragComplete?: (e: React.MouseEvent, moreProps: any) => void;
     readonly onHover?: (e: React.MouseEvent, moreProps: any) => void;
     readonly onUnHover?: (e: React.MouseEvent, moreProps: any) => void;
-    readonly position?: any;
+    readonly position: any;
+    readonly offset?: any;
     readonly interactiveCursorClass?: string;
     readonly selected: boolean;
     readonly text: string;
     readonly textFill: string;
+    readonly textAnchor?: "start" | "middle" | "end";
     readonly tolerance: number;
 }
 
 export class InteractiveText extends React.Component<InteractiveTextProps> {
     public static defaultProps = {
-        type: "SD", // standard dev
-        fontWeight: "normal", // standard dev
+        bgFillStyle: "#D3D3D3",
+        bgStrokeWidth: 1,
+        bgStroke: "#000000",
+        fontFamily: "-apple-system, system-ui, Roboto, 'Helvetica Neue', Ubuntu, sans-serif",
+        fontSize: 12,
+        fontWeight: "normal",
+        fontStyle: "normal",
         tolerance: 4,
         selected: false,
+        textAnchor: "start",
     };
 
     private calculateTextWidth = true;
@@ -82,8 +90,19 @@ export class InteractiveText extends React.Component<InteractiveTextProps> {
     };
 
     private readonly drawOnCanvas = (ctx: CanvasRenderingContext2D, moreProps: any) => {
-        const { bgFillStyle, bgStrokeWidth, bgStroke, textFill, fontFamily, fontSize, fontStyle, fontWeight, text } =
-            this.props;
+        const {
+            bgFillStyle,
+            bgStrokeWidth,
+            bgStroke,
+            textFill,
+            fontFamily,
+            fontSize,
+            fontStyle,
+            fontWeight,
+            text,
+            //@ts-ignore
+            textAnchor,
+        } = { ...InteractiveText.defaultProps, ...this.props };
 
         if (this.calculateTextWidth) {
             ctx.font = `${fontStyle} ${fontWeight} ${fontSize}px ${fontFamily}`;
@@ -117,7 +136,7 @@ export class InteractiveText extends React.Component<InteractiveTextProps> {
     };
 
     private readonly helper = (moreProps: any, textWidth: number) => {
-        const { position, fontSize } = this.props;
+        const { position, offset, fontSize } = { ...InteractiveText.defaultProps, ...this.props };
 
         const {
             xScale,
@@ -125,8 +144,11 @@ export class InteractiveText extends React.Component<InteractiveTextProps> {
         } = moreProps;
 
         const [xValue, yValue] = position;
-        const x = xScale(xValue);
-        const y = yScale(yValue);
+        let x = xScale(xValue);
+        let y = yScale(yValue);
+        const [xOffset, yOffset] = offset;
+        x += xOffset ?? 0;
+        y += yOffset ?? 0;
 
         const rect = {
             x: x - textWidth / 2 - fontSize,
