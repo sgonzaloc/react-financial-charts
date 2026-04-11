@@ -6,17 +6,17 @@ import {
     strokeDashTypes,
 } from "@react-financial-charts/core";
 
-interface BrushProps {
+interface AreaSelectorProps {
     readonly enabled: boolean;
-    readonly onBrush: ({ start, end }: any, moreProps: any) => void;
+    readonly onAreaSelector: ({ start, end }: any, moreProps: any) => void;
     readonly type?: "1D" | "2D";
     readonly strokeStyle?: string;
     readonly fillStyle?: string;
-    readonly interactiveState: object;
+    readonly interactiveState?: object;
     readonly strokeDashArray?: strokeDashTypes;
 }
 
-interface BrushState {
+interface AreaSelectorState {
     end?: any;
     rect: any | null;
     selected?: boolean;
@@ -24,7 +24,7 @@ interface BrushState {
     x1y1?: any;
 }
 
-export class Brush extends React.Component<BrushProps, BrushState> {
+export class AreaSelector extends React.Component<AreaSelectorProps, AreaSelectorState> {
     public static defaultProps = {
         type: "2D",
         strokeStyle: "#000000",
@@ -34,7 +34,7 @@ export class Brush extends React.Component<BrushProps, BrushState> {
 
     private zoomHappening?: boolean;
 
-    public constructor(props: BrushProps) {
+    public constructor(props: AreaSelectorProps) {
         super(props);
 
         this.terminate = this.terminate.bind(this);
@@ -80,8 +80,8 @@ export class Brush extends React.Component<BrushProps, BrushState> {
 
         const { x, y, height, width } = rect;
         const {
-            strokeStyle = Brush.defaultProps.strokeStyle,
-            fillStyle = Brush.defaultProps.fillStyle,
+            strokeStyle = AreaSelector.defaultProps.strokeStyle,
+            fillStyle = AreaSelector.defaultProps.fillStyle,
             strokeDashArray,
         } = this.props;
 
@@ -162,10 +162,10 @@ export class Brush extends React.Component<BrushProps, BrushState> {
 
     private readonly handleZoomComplete = (_: React.MouseEvent, moreProps: any) => {
         if (this.zoomHappening) {
-            const { onBrush } = this.props;
-            if (onBrush !== undefined) {
+            const { onAreaSelector } = this.props;
+            if (onAreaSelector !== undefined) {
                 const { start, end } = this.state;
-                onBrush({ start, end }, moreProps);
+                onAreaSelector({ start, end }, moreProps);
             }
         }
 
