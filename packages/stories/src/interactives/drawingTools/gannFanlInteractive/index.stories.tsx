@@ -2,7 +2,7 @@ import * as React from "react";
 import GannFanInteractive from "./GannFanInteractive";
 
 export default {
-    title: "Interactives/Gann Fan",
+    title: "Interactive Drawing Tools/Trend Tools/Gann Fan",
 };
 
 export const basic = () => <GannFanInteractive />;

@@ -2,7 +2,7 @@ import * as React from "react";
 import RectangleInteractive from "./RectangleInteractive";
 
 export default {
-    title: "Interactives/Rectangle",
+    title: "Interactive Drawing Tools/Shapes/Rectangle",
 };
 
 export const basic = () => <RectangleInteractive />;

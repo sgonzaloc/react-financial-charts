@@ -3,84 +3,84 @@ import { Chart, ChartCanvas } from "@react-financial-charts/core";
 import { XAxis, YAxis } from "@react-financial-charts/axes";
 import { discontinuousTimeScaleProviderBuilder } from "@react-financial-charts/scales";
 import { CandlestickSeries } from "@react-financial-charts/series";
-import { IOHLCData, withOHLCData } from "../../data";
+import { IOHLCData, withOHLCData } from "../../../data";
 import { withDeviceRatio, withSize } from "@react-financial-charts/utils";
-import { Rectangle } from "@react-financial-charts/interactive";
+import { EquidistantChannel } from "@react-financial-charts/interactive";
 import { format } from "d3-format";
 
-interface RectangleInteractiveProps {
+interface EquidistantChannelInteractiveProps {
     readonly data: IOHLCData[];
     readonly height: number;
     readonly width: number;
     readonly ratio: number;
-    readonly measure?: boolean;
 }
 
-interface RectangleInteractiveState {
-    rectangles: any[];
+interface EquidistantChannelInteractiveState {
+    channels: any[];
     mode: "draw" | "select";
 }
 
-class RectangleInteractive extends React.Component<RectangleInteractiveProps, RectangleInteractiveState> {
+class EquidistantChannelInteractive extends React.Component<
+    EquidistantChannelInteractiveProps,
+    EquidistantChannelInteractiveState
+> {
     private readonly margin = { left: 0, right: 48, top: 20, bottom: 30 };
     private readonly pricesDisplayFormat = format(".2f");
     private readonly xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor(
         (d: IOHLCData) => d.date,
     );
 
-    public constructor(props: RectangleInteractiveProps) {
+    public constructor(props: EquidistantChannelInteractiveProps) {
         super(props);
         this.state = {
-            rectangles: [],
+            channels: [],
             mode: "draw",
         };
     }
 
-    private handleDrawComplete = (e: any, newRectangles: any[]) => {
-        console.log("handleDrawComplete", newRectangles);
-        const rectangles = newRectangles.map((t: any) => ({ ...t, selected: false }));
-        this.setState({ rectangles, mode: "select" });
+    private handleDrawComplete = (e: any, newChannels: any[]) => {
+        const channels = newChannels.map((t: any) => ({ ...t, selected: false }));
+        this.setState({ channels, mode: "select" });
     };
 
-    private handleSelect = (e: any, newRectangles: any[]) => {
-        console.log("handleSelect", newRectangles);
+    private handleSelect = (e: any, newChannels: any[]) => {
         if (this.state.mode !== "select") {
             return;
         }
-        this.setState({ rectangles: newRectangles });
+        this.setState({ channels: newChannels });
     };
 
     private deleteSelected = () => {
-        const { rectangles } = this.state;
-        const selectedIndex = rectangles.findIndex((t: any) => t.selected);
+        const { channels } = this.state;
+        const selectedIndex = channels.findIndex((t: any) => t.selected);
         if (selectedIndex === -1) {
             return;
         }
 
-        const newRectangles = rectangles.filter((_: any, i: number) => i !== selectedIndex);
-        if (newRectangles.length > 0) {
-            newRectangles[0].selected = true;
+        const newChannels = channels.filter((_: any, i: number) => i !== selectedIndex);
+        if (newChannels.length > 0) {
+            newChannels[0].selected = true;
         }
-        this.setState({ rectangles: newRectangles });
+        this.setState({ channels: newChannels });
     };
 
     private deleteAll = () => {
-        this.setState({ rectangles: [] });
+        this.setState({ channels: [] });
     };
 
     private setMode = (mode: "draw" | "select") => {
-        const { rectangles } = this.state;
+        const { channels } = this.state;
         if (mode === "draw") {
-            const newRectangles = rectangles.map((t: any) => ({ ...t, selected: false }));
-            this.setState({ mode, rectangles: newRectangles });
+            const newChannels = channels.map((t: any) => ({ ...t, selected: false }));
+            this.setState({ mode, channels: newChannels });
         } else {
             this.setState({ mode });
         }
     };
 
     public render() {
-        const { data: initialData, height, ratio, width, measure } = this.props;
-        const { rectangles, mode } = this.state;
+        const { data: initialData, height, ratio, width } = this.props;
+        const { channels, mode } = this.state;
 
         const { data, xScale, xAccessor, displayXAccessor } = this.xScaleProvider(initialData);
 
@@ -88,8 +88,8 @@ class RectangleInteractive extends React.Component<RectangleInteractiveProps, Re
         const endXAccessor = xAccessor(data[data.length - 1]);
         const xExtents = [startXAccessor, endXAccessor];
 
-        const hasRectangles = rectangles.length > 0;
-        const hasSelected = rectangles.some((t: any) => t.selected);
+        const hasChannels = channels.length > 0;
+        const hasSelected = channels.some((t: any) => t.selected);
 
         const buttonStyle = (isActive: boolean) => ({
             padding: "0 20px",
@@ -153,7 +153,7 @@ class RectangleInteractive extends React.Component<RectangleInteractiveProps, Re
                             </button>
                             <button
                                 onClick={this.deleteAll}
-                                disabled={!hasRectangles}
+                                disabled={!hasChannels}
                                 style={{
                                     padding: "0 16px",
                                     height: "32px",
@@ -162,8 +162,8 @@ class RectangleInteractive extends React.Component<RectangleInteractiveProps, Re
                                     fontWeight: 500,
                                     border: "none",
                                     borderRadius: "4px",
-                                    cursor: hasRectangles ? "pointer" : "not-allowed",
-                                    opacity: hasRectangles ? 1 : 0.5,
+                                    cursor: hasChannels ? "pointer" : "not-allowed",
+                                    opacity: hasChannels ? 1 : 0.5,
                                     backgroundColor: "#fff",
                                     color: "#dc3545",
                                     border: "1px solid #dc3545",
@@ -187,7 +187,7 @@ class RectangleInteractive extends React.Component<RectangleInteractiveProps, Re
                             whiteSpace: "nowrap",
                         }}
                     >
-                        {rectangles.length} rectangle{rectangles.length !== 1 ? "s" : ""}
+                        {channels.length} channel{channels.length !== 1 ? "s" : ""}
                         {hasSelected && ` (1 selected)`}
                     </div>
                 </div>
@@ -209,18 +209,15 @@ class RectangleInteractive extends React.Component<RectangleInteractiveProps, Re
                             <XAxis />
                             <YAxis tickFormat={this.pricesDisplayFormat} />
                             <CandlestickSeries />
-                            <Rectangle
+                            <EquidistantChannel
                                 enabled={mode === "draw"}
-                                rectangles={rectangles}
+                                channels={channels}
                                 onComplete={this.handleDrawComplete}
-                                onSelect={mode === "select" ? this.handleSelect : undefined}
                                 appearance={{
-                                    fill: "rgba(138, 175, 226, 0.5)",
-                                    strokeStyle: "#000000",
-                                    strokeWidth: 1,
+                                    fill: "rgba(138, 175, 226, 0.6)",
                                 }}
+                                onSelect={this.handleSelect}
                                 hoverText={{ enable: false }}
-                                measure={measure}
                             />
                         </Chart>
                     </ChartCanvas>
@@ -231,5 +228,5 @@ class RectangleInteractive extends React.Component<RectangleInteractiveProps, Re
 }
 
 export default withOHLCData()(
-    withSize({ style: { minHeight: 600, width: "100%" } })(withDeviceRatio()(RectangleInteractive)),
+    withSize({ style: { minHeight: 600, width: "100%" } })(withDeviceRatio()(EquidistantChannelInteractive)),
 );

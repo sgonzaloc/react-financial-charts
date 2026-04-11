@@ -3,76 +3,75 @@ import { Chart, ChartCanvas } from "@react-financial-charts/core";
 import { XAxis, YAxis } from "@react-financial-charts/axes";
 import { discontinuousTimeScaleProviderBuilder } from "@react-financial-charts/scales";
 import { CandlestickSeries } from "@react-financial-charts/series";
-import { IOHLCData, withOHLCData } from "../../data";
+import { IOHLCData, withOHLCData } from "../../../data";
 import { withDeviceRatio, withSize } from "@react-financial-charts/utils";
-import { FibonacciRetracement } from "@react-financial-charts/interactive";
+import { Arrow } from "@react-financial-charts/interactive";
 import { format } from "d3-format";
 
-interface FibonacciRetracementInteractiveProps {
+interface ArrowInteractiveProps {
     readonly data: IOHLCData[];
     readonly height: number;
     readonly width: number;
     readonly ratio: number;
 }
 
-interface FibonacciRetracementInteractiveState {
-    retracements: any[];
+interface ArrowInteractiveState {
+    arrows: any[];
     mode: "draw" | "select";
 }
 
-class FibonacciRetracementInteractive extends React.Component<
-    FibonacciRetracementInteractiveProps,
-    FibonacciRetracementInteractiveState
-> {
+class ArrowInteractive extends React.Component<ArrowInteractiveProps, ArrowInteractiveState> {
     private readonly margin = { left: 0, right: 48, top: 20, bottom: 30 };
     private readonly pricesDisplayFormat = format(".2f");
     private readonly xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor(
         (d: IOHLCData) => d.date,
     );
 
-    public constructor(props: FibonacciRetracementInteractiveProps) {
+    public constructor(props: ArrowInteractiveProps) {
         super(props);
         this.state = {
-            retracements: [],
+            arrows: [],
             mode: "draw",
         };
     }
 
-    private handleDrawComplete = (e: any, newRetracements: any[]) => {
-        const retracements = newRetracements.map((t: any) => ({ ...t, selected: false }));
-        this.setState({ retracements, mode: "select" });
+    private handleDrawComplete = (e: any, newArrows: any[]) => {
+        console.log("handleDrawComplete", newArrows);
+        const arrows = newArrows.map((t: any) => ({ ...t, selected: false }));
+        this.setState({ arrows, mode: "select" });
     };
 
-    private handleSelect = (e: any, newRetracements: any[]) => {
+    private handleSelect = (e: any, newArrows: any[]) => {
+        console.log("handleSelect", newArrows);
         if (this.state.mode !== "select") {
             return;
         }
-        this.setState({ retracements: newRetracements });
+        this.setState({ arrows: newArrows });
     };
 
     private deleteSelected = () => {
-        const { retracements } = this.state;
-        const selectedIndex = retracements.findIndex((t: any) => t.selected);
+        const { arrows } = this.state;
+        const selectedIndex = arrows.findIndex((t: any) => t.selected);
         if (selectedIndex === -1) {
             return;
         }
 
-        const newRetracements = retracements.filter((_: any, i: number) => i !== selectedIndex);
-        if (newRetracements.length > 0) {
-            newRetracements[0].selected = true;
+        const newArrows = arrows.filter((_: any, i: number) => i !== selectedIndex);
+        if (newArrows.length > 0) {
+            newArrows[0].selected = true;
         }
-        this.setState({ retracements: newRetracements });
+        this.setState({ arrows: newArrows });
     };
 
     private deleteAll = () => {
-        this.setState({ retracements: [] });
+        this.setState({ arrows: [] });
     };
 
     private setMode = (mode: "draw" | "select") => {
-        const { retracements } = this.state;
+        const { arrows } = this.state;
         if (mode === "draw") {
-            const newRetracements = retracements.map((t: any) => ({ ...t, selected: false }));
-            this.setState({ mode, retracements: newRetracements });
+            const newArrows = arrows.map((t: any) => ({ ...t, selected: false }));
+            this.setState({ mode, arrows: newArrows });
         } else {
             this.setState({ mode });
         }
@@ -80,7 +79,7 @@ class FibonacciRetracementInteractive extends React.Component<
 
     public render() {
         const { data: initialData, height, ratio, width } = this.props;
-        const { retracements, mode } = this.state;
+        const { arrows, mode } = this.state;
 
         const { data, xScale, xAccessor, displayXAccessor } = this.xScaleProvider(initialData);
 
@@ -88,8 +87,8 @@ class FibonacciRetracementInteractive extends React.Component<
         const endXAccessor = xAccessor(data[data.length - 1]);
         const xExtents = [startXAccessor, endXAccessor];
 
-        const hasRetracements = retracements.length > 0;
-        const hasSelected = retracements.some((t: any) => t.selected);
+        const hasArrows = arrows.length > 0;
+        const hasSelected = arrows.some((t: any) => t.selected);
 
         const buttonStyle = (isActive: boolean) => ({
             padding: "0 20px",
@@ -153,7 +152,7 @@ class FibonacciRetracementInteractive extends React.Component<
                             </button>
                             <button
                                 onClick={this.deleteAll}
-                                disabled={!hasRetracements}
+                                disabled={!hasArrows}
                                 style={{
                                     padding: "0 16px",
                                     height: "32px",
@@ -162,8 +161,8 @@ class FibonacciRetracementInteractive extends React.Component<
                                     fontWeight: 500,
                                     border: "none",
                                     borderRadius: "4px",
-                                    cursor: hasRetracements ? "pointer" : "not-allowed",
-                                    opacity: hasRetracements ? 1 : 0.5,
+                                    cursor: hasArrows ? "pointer" : "not-allowed",
+                                    opacity: hasArrows ? 1 : 0.5,
                                     backgroundColor: "#fff",
                                     color: "#dc3545",
                                     border: "1px solid #dc3545",
@@ -187,7 +186,7 @@ class FibonacciRetracementInteractive extends React.Component<
                             whiteSpace: "nowrap",
                         }}
                     >
-                        {retracements.length} retracement{retracements.length !== 1 ? "s" : ""}
+                        {arrows.length} arrow{arrows.length !== 1 ? "s" : ""}
                         {hasSelected && ` (1 selected)`}
                     </div>
                 </div>
@@ -209,11 +208,16 @@ class FibonacciRetracementInteractive extends React.Component<
                             <XAxis />
                             <YAxis tickFormat={this.pricesDisplayFormat} />
                             <CandlestickSeries />
-                            <FibonacciRetracement
+                            <Arrow
                                 enabled={mode === "draw"}
-                                retracements={retracements}
+                                arrows={arrows}
                                 onComplete={this.handleDrawComplete}
                                 onSelect={mode === "select" ? this.handleSelect : undefined}
+                                appearance={{
+                                    color: "#1E53E5",
+                                    lineWidth: 2,
+                                }}
+                                hoverText={{ enable: false }}
                             />
                         </Chart>
                     </ChartCanvas>
@@ -224,5 +228,5 @@ class FibonacciRetracementInteractive extends React.Component<
 }
 
 export default withOHLCData()(
-    withSize({ style: { minHeight: 600, width: "100%" } })(withDeviceRatio()(FibonacciRetracementInteractive)),
+    withSize({ style: { minHeight: 600, width: "100%" } })(withDeviceRatio()(ArrowInteractive)),
 );

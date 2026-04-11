@@ -2,7 +2,7 @@ import * as React from "react";
 import TrendLineInteractive from "./TrendLineInteractive";
 
 export default {
-    title: "Interactives/Trend Line",
+    title: "Interactive Drawing Tools/Trend Tools/Trend Line",
 };
 
 export const Line = () => <TrendLineInteractive type="LINE" />;

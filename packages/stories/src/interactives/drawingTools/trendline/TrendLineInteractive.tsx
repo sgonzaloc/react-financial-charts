@@ -3,83 +3,83 @@ import { Chart, ChartCanvas } from "@react-financial-charts/core";
 import { XAxis, YAxis } from "@react-financial-charts/axes";
 import { discontinuousTimeScaleProviderBuilder } from "@react-financial-charts/scales";
 import { CandlestickSeries } from "@react-financial-charts/series";
-import { IOHLCData, withOHLCData } from "../../data";
+import { IOHLCData, withOHLCData } from "../../../data";
 import { withDeviceRatio, withSize } from "@react-financial-charts/utils";
-import { GannFan } from "@react-financial-charts/interactive";
+import { TrendLine as TrendLineComponent } from "@react-financial-charts/interactive";
 import { format } from "d3-format";
 
-interface GannFanInteractiveProps {
+interface TrendLineInteractiveProps {
     readonly data: IOHLCData[];
     readonly height: number;
     readonly width: number;
     readonly ratio: number;
+    readonly type?: "LINE" | "XLINE" | "RAY";
 }
 
-interface GannFanInteractiveState {
-    fans: any[];
+interface TrendLineInteractiveState {
+    trends: any[];
     mode: "draw" | "select";
 }
 
-class GannFanInteractive extends React.Component<GannFanInteractiveProps, GannFanInteractiveState> {
+class TrendLineInteractive extends React.Component<TrendLineInteractiveProps, TrendLineInteractiveState> {
     private readonly margin = { left: 0, right: 48, top: 20, bottom: 30 };
     private readonly pricesDisplayFormat = format(".2f");
     private readonly xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor(
         (d: IOHLCData) => d.date,
     );
 
-    public constructor(props: GannFanInteractiveProps) {
+    public constructor(props: TrendLineInteractiveProps) {
         super(props);
         this.state = {
-            fans: [],
+            trends: [],
             mode: "draw",
         };
     }
 
-    private handleDrawComplete = (e: any, newFans: any[]) => {
-        console.log("handleDrawComplete", newFans);
-        const fans = newFans.map((t: any) => ({ ...t, selected: false }));
-        this.setState({ fans, mode: "select" });
+    private handleDrawComplete = (e: any, newTrends: any[]) => {
+        const trends = newTrends.map((t: any) => ({ ...t, selected: false }));
+        this.setState({ trends });
+        this.setState({ mode: "select" });
     };
 
-    private handleSelect = (e: any, newFans: any[]) => {
-        console.log("handleSelect", newFans);
+    private handleSelect = (e: any, newTrends: any[]) => {
         if (this.state.mode !== "select") {
             return;
         }
-        this.setState({ fans: newFans });
+        this.setState({ trends: newTrends });
     };
 
     private deleteSelected = () => {
-        const { fans } = this.state;
-        const selectedIndex = fans.findIndex((t: any) => t.selected);
+        const { trends } = this.state;
+        const selectedIndex = trends.findIndex((t: any) => t.selected);
         if (selectedIndex === -1) {
             return;
         }
 
-        const newFans = fans.filter((_: any, i: number) => i !== selectedIndex);
-        if (newFans.length > 0) {
-            newFans[0].selected = true;
+        const newTrends = trends.filter((_: any, i: number) => i !== selectedIndex);
+        if (newTrends.length > 0) {
+            newTrends[0].selected = true;
         }
-        this.setState({ fans: newFans });
+        this.setState({ trends: newTrends });
     };
 
     private deleteAll = () => {
-        this.setState({ fans: [] });
+        this.setState({ trends: [] });
     };
 
     private setMode = (mode: "draw" | "select") => {
-        const { fans } = this.state;
+        const { trends } = this.state;
         if (mode === "draw") {
-            const newFans = fans.map((t: any) => ({ ...t, selected: false }));
-            this.setState({ mode, fans: newFans });
+            const newTrends = trends.map((t: any) => ({ ...t, selected: false }));
+            this.setState({ mode, trends: newTrends });
         } else {
             this.setState({ mode });
         }
     };
 
     public render() {
-        const { data: initialData, height, ratio, width } = this.props;
-        const { fans, mode } = this.state;
+        const { data: initialData, height, ratio, width, type = "LINE" } = this.props;
+        const { trends, mode } = this.state;
 
         const { data, xScale, xAccessor, displayXAccessor } = this.xScaleProvider(initialData);
 
@@ -87,8 +87,8 @@ class GannFanInteractive extends React.Component<GannFanInteractiveProps, GannFa
         const endXAccessor = xAccessor(data[data.length - 1]);
         const xExtents = [startXAccessor, endXAccessor];
 
-        const hasFans = fans.length > 0;
-        const hasSelected = fans.some((t: any) => t.selected);
+        const hasTrends = trends.length > 0;
+        const hasSelected = trends.some((t: any) => t.selected);
 
         const buttonStyle = (isActive: boolean) => ({
             padding: "0 20px",
@@ -141,18 +141,15 @@ class GannFanInteractive extends React.Component<GannFanInteractiveProps, GannFa
                                     borderRadius: "4px",
                                     cursor: hasSelected ? "pointer" : "not-allowed",
                                     opacity: hasSelected ? 1 : 0.5,
-                                    backgroundColor: "#fff",
-                                    color: "#dc3545",
-                                    border: "1px solid #dc3545",
                                     display: "inline-block",
                                     textAlign: "center" as const,
                                 }}
                             >
-                                <span style={{ marginRight: "8px" }}>🗑️</span>Delete Selected
+                                <span style={{ marginRight: "8px" }}>❌</span>Delete Selected
                             </button>
                             <button
                                 onClick={this.deleteAll}
-                                disabled={!hasFans}
+                                disabled={!hasTrends}
                                 style={{
                                     padding: "0 16px",
                                     height: "32px",
@@ -161,16 +158,13 @@ class GannFanInteractive extends React.Component<GannFanInteractiveProps, GannFa
                                     fontWeight: 500,
                                     border: "none",
                                     borderRadius: "4px",
-                                    cursor: hasFans ? "pointer" : "not-allowed",
-                                    opacity: hasFans ? 1 : 0.5,
-                                    backgroundColor: "#fff",
-                                    color: "#dc3545",
-                                    border: "1px solid #dc3545",
+                                    cursor: hasTrends ? "pointer" : "not-allowed",
+                                    opacity: hasTrends ? 1 : 0.5,
                                     display: "inline-block",
                                     textAlign: "center" as const,
                                 }}
                             >
-                                <span style={{ marginRight: "8px" }}>🗑️</span>Delete All
+                                <span style={{ marginRight: "8px" }}>❌</span>Delete All
                             </button>
                         </>
                     )}
@@ -186,7 +180,7 @@ class GannFanInteractive extends React.Component<GannFanInteractiveProps, GannFa
                             whiteSpace: "nowrap",
                         }}
                     >
-                        {fans.length} Gann Fan{fans.length !== 1 ? "s" : ""}
+                        {trends.length} line{trends.length !== 1 ? "s" : ""}
                         {hasSelected && ` (1 selected)`}
                     </div>
                 </div>
@@ -208,23 +202,14 @@ class GannFanInteractive extends React.Component<GannFanInteractiveProps, GannFa
                             <XAxis />
                             <YAxis tickFormat={this.pricesDisplayFormat} />
                             <CandlestickSeries />
-                            <GannFan
+                            <TrendLineComponent
                                 enabled={mode === "draw"}
-                                fans={fans}
+                                type={type}
+                                snap={false}
                                 onComplete={this.handleDrawComplete}
                                 onSelect={mode === "select" ? this.handleSelect : undefined}
-                                appearance={{
-                                    fill: [
-                                        "rgba(228, 26, 28, 0.2)",
-                                        "rgba(55, 126, 184, 0.2)",
-                                        "rgba(77, 175, 74, 0.2)",
-                                        "rgba(152, 78, 163, 0.2)",
-                                        "rgba(255, 127, 0, 0.2)",
-                                        "rgba(255, 255, 51, 0.2)",
-                                        "rgba(166, 86, 40, 0.2)",
-                                        "rgba(247, 129, 191, 0.2)",
-                                    ],
-                                }}
+                                trends={trends}
+                                hoverText={{ enable: false }}
                             />
                         </Chart>
                     </ChartCanvas>
@@ -235,5 +220,5 @@ class GannFanInteractive extends React.Component<GannFanInteractiveProps, GannFa
 }
 
 export default withOHLCData()(
-    withSize({ style: { minHeight: 600, width: "100%" } })(withDeviceRatio()(GannFanInteractive)),
+    withSize({ style: { minHeight: 600, width: "100%" } })(withDeviceRatio()(TrendLineInteractive)),
 );

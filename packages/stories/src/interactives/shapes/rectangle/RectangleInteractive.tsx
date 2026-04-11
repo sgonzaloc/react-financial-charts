@@ -3,83 +3,84 @@ import { Chart, ChartCanvas } from "@react-financial-charts/core";
 import { XAxis, YAxis } from "@react-financial-charts/axes";
 import { discontinuousTimeScaleProviderBuilder } from "@react-financial-charts/scales";
 import { CandlestickSeries } from "@react-financial-charts/series";
-import { IOHLCData, withOHLCData } from "../../data";
+import { IOHLCData, withOHLCData } from "../../../data";
 import { withDeviceRatio, withSize } from "@react-financial-charts/utils";
-import { TrendLine as TrendLineComponent } from "@react-financial-charts/interactive";
+import { Rectangle } from "@react-financial-charts/interactive";
 import { format } from "d3-format";
 
-interface TrendLineInteractiveProps {
+interface RectangleInteractiveProps {
     readonly data: IOHLCData[];
     readonly height: number;
     readonly width: number;
     readonly ratio: number;
-    readonly type?: "LINE" | "XLINE" | "RAY";
+    readonly measure?: boolean;
 }
 
-interface TrendLineInteractiveState {
-    trends: any[];
+interface RectangleInteractiveState {
+    rectangles: any[];
     mode: "draw" | "select";
 }
 
-class TrendLineInteractive extends React.Component<TrendLineInteractiveProps, TrendLineInteractiveState> {
+class RectangleInteractive extends React.Component<RectangleInteractiveProps, RectangleInteractiveState> {
     private readonly margin = { left: 0, right: 48, top: 20, bottom: 30 };
     private readonly pricesDisplayFormat = format(".2f");
     private readonly xScaleProvider = discontinuousTimeScaleProviderBuilder().inputDateAccessor(
         (d: IOHLCData) => d.date,
     );
 
-    public constructor(props: TrendLineInteractiveProps) {
+    public constructor(props: RectangleInteractiveProps) {
         super(props);
         this.state = {
-            trends: [],
+            rectangles: [],
             mode: "draw",
         };
     }
 
-    private handleDrawComplete = (e: any, newTrends: any[]) => {
-        const trends = newTrends.map((t: any) => ({ ...t, selected: false }));
-        this.setState({ trends });
-        this.setState({ mode: "select" });
+    private handleDrawComplete = (e: any, newRectangles: any[]) => {
+        console.log("handleDrawComplete", newRectangles);
+        const rectangles = newRectangles.map((t: any) => ({ ...t, selected: false }));
+        this.setState({ rectangles, mode: "select" });
     };
 
-    private handleSelect = (e: any, newTrends: any[]) => {
+    private handleSelect = (e: any, newRectangles: any[]) => {
+        console.log("handleSelect", newRectangles);
         if (this.state.mode !== "select") {
             return;
         }
-        this.setState({ trends: newTrends });
+        this.setState({ rectangles: newRectangles });
     };
 
     private deleteSelected = () => {
-        const { trends } = this.state;
-        const selectedIndex = trends.findIndex((t: any) => t.selected);
+        const { rectangles } = this.state;
+        const selectedIndex = rectangles.findIndex((t: any) => t.selected);
         if (selectedIndex === -1) {
             return;
         }
 
-        const newTrends = trends.filter((_: any, i: number) => i !== selectedIndex);
-        if (newTrends.length > 0) {
-            newTrends[0].selected = true;
+        const newRectangles = rectangles.filter((_: any, i: number) => i !== selectedIndex);
+        if (newRectangles.length > 0) {
+            newRectangles[0].selected = true;
         }
-        this.setState({ trends: newTrends });
+        this.setState({ rectangles: newRectangles });
     };
 
     private deleteAll = () => {
-        this.setState({ trends: [] });
+        this.setState({ rectangles: [] });
     };
 
     private setMode = (mode: "draw" | "select") => {
-        const { trends } = this.state;
+        const { rectangles } = this.state;
         if (mode === "draw") {
-            const newTrends = trends.map((t: any) => ({ ...t, selected: false }));
-            this.setState({ mode, trends: newTrends });
+            const newRectangles = rectangles.map((t: any) => ({ ...t, selected: false }));
+            this.setState({ mode, rectangles: newRectangles });
         } else {
             this.setState({ mode });
         }
     };
 
     public render() {
-        const { data: initialData, height, ratio, width, type = "LINE" } = this.props;
-        const { trends, mode } = this.state;
+        const { data: initialData, height, ratio, width, measure } = this.props;
+        const { rectangles, mode } = this.state;
 
         const { data, xScale, xAccessor, displayXAccessor } = this.xScaleProvider(initialData);
 
@@ -87,8 +88,8 @@ class TrendLineInteractive extends React.Component<TrendLineInteractiveProps, Tr
         const endXAccessor = xAccessor(data[data.length - 1]);
         const xExtents = [startXAccessor, endXAccessor];
 
-        const hasTrends = trends.length > 0;
-        const hasSelected = trends.some((t: any) => t.selected);
+        const hasRectangles = rectangles.length > 0;
+        const hasSelected = rectangles.some((t: any) => t.selected);
 
         const buttonStyle = (isActive: boolean) => ({
             padding: "0 20px",
@@ -141,15 +142,18 @@ class TrendLineInteractive extends React.Component<TrendLineInteractiveProps, Tr
                                     borderRadius: "4px",
                                     cursor: hasSelected ? "pointer" : "not-allowed",
                                     opacity: hasSelected ? 1 : 0.5,
+                                    backgroundColor: "#fff",
+                                    color: "#dc3545",
+                                    border: "1px solid #dc3545",
                                     display: "inline-block",
                                     textAlign: "center" as const,
                                 }}
                             >
-                                <span style={{ marginRight: "8px" }}>❌</span>Delete Selected
+                                <span style={{ marginRight: "8px" }}>🗑️</span>Delete Selected
                             </button>
                             <button
                                 onClick={this.deleteAll}
-                                disabled={!hasTrends}
+                                disabled={!hasRectangles}
                                 style={{
                                     padding: "0 16px",
                                     height: "32px",
@@ -158,13 +162,16 @@ class TrendLineInteractive extends React.Component<TrendLineInteractiveProps, Tr
                                     fontWeight: 500,
                                     border: "none",
                                     borderRadius: "4px",
-                                    cursor: hasTrends ? "pointer" : "not-allowed",
-                                    opacity: hasTrends ? 1 : 0.5,
+                                    cursor: hasRectangles ? "pointer" : "not-allowed",
+                                    opacity: hasRectangles ? 1 : 0.5,
+                                    backgroundColor: "#fff",
+                                    color: "#dc3545",
+                                    border: "1px solid #dc3545",
                                     display: "inline-block",
                                     textAlign: "center" as const,
                                 }}
                             >
-                                <span style={{ marginRight: "8px" }}>❌</span>Delete All
+                                <span style={{ marginRight: "8px" }}>🗑️</span>Delete All
                             </button>
                         </>
                     )}
@@ -180,7 +187,7 @@ class TrendLineInteractive extends React.Component<TrendLineInteractiveProps, Tr
                             whiteSpace: "nowrap",
                         }}
                     >
-                        {trends.length} line{trends.length !== 1 ? "s" : ""}
+                        {rectangles.length} rectangle{rectangles.length !== 1 ? "s" : ""}
                         {hasSelected && ` (1 selected)`}
                     </div>
                 </div>
@@ -202,14 +209,18 @@ class TrendLineInteractive extends React.Component<TrendLineInteractiveProps, Tr
                             <XAxis />
                             <YAxis tickFormat={this.pricesDisplayFormat} />
                             <CandlestickSeries />
-                            <TrendLineComponent
+                            <Rectangle
                                 enabled={mode === "draw"}
-                                type={type}
-                                snap={false}
+                                rectangles={rectangles}
                                 onComplete={this.handleDrawComplete}
                                 onSelect={mode === "select" ? this.handleSelect : undefined}
-                                trends={trends}
+                                appearance={{
+                                    fill: "rgba(138, 175, 226, 0.5)",
+                                    strokeStyle: "#000000",
+                                    strokeWidth: 1,
+                                }}
                                 hoverText={{ enable: false }}
+                                measure={measure}
                             />
                         </Chart>
                     </ChartCanvas>
@@ -220,5 +231,5 @@ class TrendLineInteractive extends React.Component<TrendLineInteractiveProps, Tr
 }
 
 export default withOHLCData()(
-    withSize({ style: { minHeight: 600, width: "100%" } })(withDeviceRatio()(TrendLineInteractive)),
+    withSize({ style: { minHeight: 600, width: "100%" } })(withDeviceRatio()(RectangleInteractive)),
 );

@@ -3,26 +3,26 @@ import { Chart, ChartCanvas } from "@react-financial-charts/core";
 import { XAxis, YAxis } from "@react-financial-charts/axes";
 import { discontinuousTimeScaleProviderBuilder } from "@react-financial-charts/scales";
 import { CandlestickSeries } from "@react-financial-charts/series";
-import { IOHLCData, withOHLCData } from "../../data";
+import { IOHLCData, withOHLCData } from "../../../data";
 import { withDeviceRatio, withSize } from "@react-financial-charts/utils";
-import { EquidistantChannel } from "@react-financial-charts/interactive";
+import { FibonacciRetracement } from "@react-financial-charts/interactive";
 import { format } from "d3-format";
 
-interface EquidistantChannelInteractiveProps {
+interface FibonacciRetracementInteractiveProps {
     readonly data: IOHLCData[];
     readonly height: number;
     readonly width: number;
     readonly ratio: number;
 }
 
-interface EquidistantChannelInteractiveState {
-    channels: any[];
+interface FibonacciRetracementInteractiveState {
+    retracements: any[];
     mode: "draw" | "select";
 }
 
-class EquidistantChannelInteractive extends React.Component<
-    EquidistantChannelInteractiveProps,
-    EquidistantChannelInteractiveState
+class FibonacciRetracementInteractive extends React.Component<
+    FibonacciRetracementInteractiveProps,
+    FibonacciRetracementInteractiveState
 > {
     private readonly margin = { left: 0, right: 48, top: 20, bottom: 30 };
     private readonly pricesDisplayFormat = format(".2f");
@@ -30,49 +30,49 @@ class EquidistantChannelInteractive extends React.Component<
         (d: IOHLCData) => d.date,
     );
 
-    public constructor(props: EquidistantChannelInteractiveProps) {
+    public constructor(props: FibonacciRetracementInteractiveProps) {
         super(props);
         this.state = {
-            channels: [],
+            retracements: [],
             mode: "draw",
         };
     }
 
-    private handleDrawComplete = (e: any, newChannels: any[]) => {
-        const channels = newChannels.map((t: any) => ({ ...t, selected: false }));
-        this.setState({ channels, mode: "select" });
+    private handleDrawComplete = (e: any, newRetracements: any[]) => {
+        const retracements = newRetracements.map((t: any) => ({ ...t, selected: false }));
+        this.setState({ retracements, mode: "select" });
     };
 
-    private handleSelect = (e: any, newChannels: any[]) => {
+    private handleSelect = (e: any, newRetracements: any[]) => {
         if (this.state.mode !== "select") {
             return;
         }
-        this.setState({ channels: newChannels });
+        this.setState({ retracements: newRetracements });
     };
 
     private deleteSelected = () => {
-        const { channels } = this.state;
-        const selectedIndex = channels.findIndex((t: any) => t.selected);
+        const { retracements } = this.state;
+        const selectedIndex = retracements.findIndex((t: any) => t.selected);
         if (selectedIndex === -1) {
             return;
         }
 
-        const newChannels = channels.filter((_: any, i: number) => i !== selectedIndex);
-        if (newChannels.length > 0) {
-            newChannels[0].selected = true;
+        const newRetracements = retracements.filter((_: any, i: number) => i !== selectedIndex);
+        if (newRetracements.length > 0) {
+            newRetracements[0].selected = true;
         }
-        this.setState({ channels: newChannels });
+        this.setState({ retracements: newRetracements });
     };
 
     private deleteAll = () => {
-        this.setState({ channels: [] });
+        this.setState({ retracements: [] });
     };
 
     private setMode = (mode: "draw" | "select") => {
-        const { channels } = this.state;
+        const { retracements } = this.state;
         if (mode === "draw") {
-            const newChannels = channels.map((t: any) => ({ ...t, selected: false }));
-            this.setState({ mode, channels: newChannels });
+            const newRetracements = retracements.map((t: any) => ({ ...t, selected: false }));
+            this.setState({ mode, retracements: newRetracements });
         } else {
             this.setState({ mode });
         }
@@ -80,7 +80,7 @@ class EquidistantChannelInteractive extends React.Component<
 
     public render() {
         const { data: initialData, height, ratio, width } = this.props;
-        const { channels, mode } = this.state;
+        const { retracements, mode } = this.state;
 
         const { data, xScale, xAccessor, displayXAccessor } = this.xScaleProvider(initialData);
 
@@ -88,8 +88,8 @@ class EquidistantChannelInteractive extends React.Component<
         const endXAccessor = xAccessor(data[data.length - 1]);
         const xExtents = [startXAccessor, endXAccessor];
 
-        const hasChannels = channels.length > 0;
-        const hasSelected = channels.some((t: any) => t.selected);
+        const hasRetracements = retracements.length > 0;
+        const hasSelected = retracements.some((t: any) => t.selected);
 
         const buttonStyle = (isActive: boolean) => ({
             padding: "0 20px",
@@ -153,7 +153,7 @@ class EquidistantChannelInteractive extends React.Component<
                             </button>
                             <button
                                 onClick={this.deleteAll}
-                                disabled={!hasChannels}
+                                disabled={!hasRetracements}
                                 style={{
                                     padding: "0 16px",
                                     height: "32px",
@@ -162,8 +162,8 @@ class EquidistantChannelInteractive extends React.Component<
                                     fontWeight: 500,
                                     border: "none",
                                     borderRadius: "4px",
-                                    cursor: hasChannels ? "pointer" : "not-allowed",
-                                    opacity: hasChannels ? 1 : 0.5,
+                                    cursor: hasRetracements ? "pointer" : "not-allowed",
+                                    opacity: hasRetracements ? 1 : 0.5,
                                     backgroundColor: "#fff",
                                     color: "#dc3545",
                                     border: "1px solid #dc3545",
@@ -187,7 +187,7 @@ class EquidistantChannelInteractive extends React.Component<
                             whiteSpace: "nowrap",
                         }}
                     >
-                        {channels.length} channel{channels.length !== 1 ? "s" : ""}
+                        {retracements.length} retracement{retracements.length !== 1 ? "s" : ""}
                         {hasSelected && ` (1 selected)`}
                     </div>
                 </div>
@@ -209,15 +209,11 @@ class EquidistantChannelInteractive extends React.Component<
                             <XAxis />
                             <YAxis tickFormat={this.pricesDisplayFormat} />
                             <CandlestickSeries />
-                            <EquidistantChannel
+                            <FibonacciRetracement
                                 enabled={mode === "draw"}
-                                channels={channels}
+                                retracements={retracements}
                                 onComplete={this.handleDrawComplete}
-                                appearance={{
-                                    fill: "rgba(138, 175, 226, 0.6)",
-                                }}
-                                onSelect={this.handleSelect}
-                                hoverText={{ enable: false }}
+                                onSelect={mode === "select" ? this.handleSelect : undefined}
                             />
                         </Chart>
                     </ChartCanvas>
@@ -228,5 +224,5 @@ class EquidistantChannelInteractive extends React.Component<
 }
 
 export default withOHLCData()(
-    withSize({ style: { minHeight: 600, width: "100%" } })(withDeviceRatio()(EquidistantChannelInteractive)),
+    withSize({ style: { minHeight: 600, width: "100%" } })(withDeviceRatio()(FibonacciRetracementInteractive)),
 );
