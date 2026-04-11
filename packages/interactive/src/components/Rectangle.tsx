@@ -74,9 +74,11 @@ export class Rectangle extends React.Component<RectangleProps> {
         ctx.rect(x1, y1, x2 - x1, y2 - y1);
         ctx.fillStyle = fillStyle;
         ctx.fill();
-        ctx.strokeStyle = strokeStyle;
-        ctx.lineWidth = strokeWidth;
-        ctx.stroke();
+        if (strokeWidth > 0) {
+            ctx.strokeStyle = strokeStyle;
+            ctx.lineWidth = strokeWidth;
+            ctx.stroke();
+        }
     };
 
     private readonly isHover = (moreProps: any) => {

@@ -2,7 +2,7 @@ import * as React from "react";
 import { isDefined, noop } from "@react-financial-charts/core";
 import { getXValue } from "@react-financial-charts/core/lib/utils/ChartDataUtil";
 import { saveNodeType } from "../utils";
-import { ClickableCircle, HoverTextNearMouse, Rectangle, Text } from "../components";
+import { ClickableCircle, HoverTextNearMouse, Rectangle, Text, Arrow } from "../components";
 
 export interface EachRectangleProps {
     readonly startXY: number[];
@@ -123,9 +123,12 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
             return [xCenter, yTop];
         };
 
+        const barsDiff = Math.abs(endXY[0] - startXY[0]);
         const displayText =
             startPrice && endPrice
-                ? `${this.formatPrice(startPrice)} → ${this.formatPrice(endPrice)} (${percentText})`
+                ? `${this.formatPrice(startPrice)} → ${this.formatPrice(endPrice)} (${percentText}), ${barsDiff} bar${
+                      barsDiff !== 1 ? "s" : ""
+                  }`
                 : "";
 
         const edge1 =
@@ -209,8 +212,8 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
                     startXY={startXY}
                     endXY={endXY}
                     strokeStyle={strokeStyle}
-                    strokeWidth={hover || selected ? strokeWidth + 1 : strokeWidth}
-                    fillStyle={fill}
+                    strokeWidth={measure ? 0 : hover || selected ? strokeWidth + 1 : strokeWidth}
+                    fillStyle={measure ? "rgba(213, 224, 255, 0.3)" : fill}
                     interactiveCursorClass="react-financial-charts-move-cursor"
                     onDragStart={handleDragStart}
                     onDrag={this.handleRectangleDrag}
@@ -221,15 +224,29 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
                 {edge3}
                 {edge4}
                 {measure && displayText && startXY && endXY && (
-                    <Text
-                        xyProvider={textXYProvider}
-                        fontFamily="sans-serif"
-                        fontSize={20}
-                        fillStyle={textColor}
-                        textAnchor="middle"
-                    >
-                        {displayText}
-                    </Text>
+                    <>
+                        <Text
+                            xyProvider={textXYProvider}
+                            fontFamily="sans-serif"
+                            fontSize={20}
+                            fillStyle={textColor}
+                            textAnchor="middle"
+                        >
+                            {displayText}
+                        </Text>
+                        <Arrow
+                            x1={startXY[0]}
+                            y1={(startXY[1] + endXY[1]) / 2}
+                            x2={endXY[0]}
+                            y2={(startXY[1] + endXY[1]) / 2}
+                        />
+                        <Arrow
+                            x1={(startXY[0] + endXY[0]) / 2}
+                            y1={startXY[1]}
+                            x2={(startXY[0] + endXY[0]) / 2}
+                            y2={endXY[1]}
+                        />
+                    </>
                 )}
                 <HoverTextNearMouse show={hoverTextEnabled && hover && !selected} {...restHoverTextProps} />
             </g>

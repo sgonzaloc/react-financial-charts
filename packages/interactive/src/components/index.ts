@@ -10,3 +10,4 @@ export * from "./LinearRegressionChannelWithArea";
 export * from "./MouseLocationIndicator";
 export * from "./Text";
 export * from "./Rectangle";
+export * from "./Arrow";
