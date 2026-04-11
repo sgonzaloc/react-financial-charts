@@ -8,6 +8,5 @@ export * from "./Text";
 export * from "./InteractiveYCoordinate";
 export * from "./LinearRegressionChannelWithArea";
 export * from "./MouseLocationIndicator";
-export * from "./Text_deprecated";
 export * from "./Rectangle";
 export * from "./Arrow";
