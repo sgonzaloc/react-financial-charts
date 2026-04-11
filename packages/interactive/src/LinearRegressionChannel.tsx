@@ -4,7 +4,7 @@ import { getValueFromOverride, isHoverForInteractiveType, saveNodeType, terminat
 import { HoverTextNearMouse, MouseLocationIndicator } from "./components";
 import { EachLinearRegressionChannel } from "./wrapper";
 
-export interface StandardDeviationChannelProps {
+export interface LinearRegressionChannelProps {
     readonly enabled: boolean;
     readonly snapTo?: (datum: any) => number;
     readonly onStart?: () => void;
@@ -29,14 +29,14 @@ export interface StandardDeviationChannelProps {
     readonly channels: any[];
 }
 
-interface StandardDeviationChannelState {
+interface LinearRegressionChannelState {
     current?: any;
     override?: any;
 }
 
-export class StandardDeviationChannel extends React.Component<
-    StandardDeviationChannelProps,
-    StandardDeviationChannelState
+export class LinearRegressionChannel extends React.Component<
+    LinearRegressionChannelProps,
+    LinearRegressionChannelState
 > {
     public static defaultProps = {
         snapTo: (d: any) => d.close,
@@ -74,7 +74,7 @@ export class StandardDeviationChannel extends React.Component<
     // @ts-ignore
     private terminate: any;
 
-    public constructor(props: StandardDeviationChannelProps) {
+    public constructor(props: LinearRegressionChannelProps) {
         super(props);
 
         this.terminate = terminate.bind(this);
@@ -89,7 +89,7 @@ export class StandardDeviationChannel extends React.Component<
             appearance,
             channels,
             currentPositionOpacity,
-            currentPositionRadius = StandardDeviationChannel.defaultProps.currentPositionRadius,
+            currentPositionRadius = LinearRegressionChannel.defaultProps.currentPositionRadius,
             currentPositionStroke,
             currentPositionStrokeWidth,
             enabled,
@@ -99,12 +99,12 @@ export class StandardDeviationChannel extends React.Component<
         const { current, override } = this.state;
 
         const eachDefaultAppearance = {
-            ...StandardDeviationChannel.defaultProps.appearance,
+            ...LinearRegressionChannel.defaultProps.appearance,
             ...appearance,
         };
 
         const hoverTextDefault = {
-            ...StandardDeviationChannel.defaultProps.hoverText,
+            ...LinearRegressionChannel.defaultProps.hoverText,
             ...hoverText,
         };
 
