@@ -2,7 +2,7 @@ import * as React from "react";
 import { isDefined, noop } from "@react-financial-charts/core";
 import { getXValue } from "@react-financial-charts/core/lib/utils/ChartDataUtil";
 import { saveNodeType } from "../utils";
-import { ClickableCircle, HoverTextNearMouse, Rectangle, InteractiveText, Arrow } from "../components";
+import { ClickableCircle, HoverTextNearMouse, Rectangle, Text, Arrow } from "../components";
 
 export interface EachRectangleProps {
     readonly startXY: number[];
@@ -196,7 +196,7 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
                 />
             ) : null;
 
-        const getTextPosition = (startXY: number[], endXY: number[]) => {
+        const getTextPosition = (startXY: number[], endXY: number[]): [number, number] => {
             const xCenter = (startXY[0] + endXY[0]) / 2;
             const yTop = Math.max(startXY[1], endXY[1]);
             return [xCenter, yTop];
@@ -224,7 +224,7 @@ export class EachRectangle extends React.Component<EachRectangleProps, EachRecta
                 {edge4}
                 {measure && displayText && startXY && endXY && (
                     <>
-                        <InteractiveText
+                        <Text
                             fontSize={20}
                             textFill={textColor}
                             textAnchor="middle"

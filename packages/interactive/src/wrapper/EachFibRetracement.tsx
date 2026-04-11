@@ -2,7 +2,13 @@ import * as React from "react";
 import { head, last, noop } from "@react-financial-charts/core";
 import { getXValue } from "@react-financial-charts/core/lib/utils/ChartDataUtil";
 import { isHover, saveNodeType } from "../utils";
-import { ClickableCircle, HoverTextNearMouse, InteractiveStraightLine, generateLine, Text } from "../components";
+import {
+    ClickableCircle,
+    HoverTextNearMouse,
+    InteractiveStraightLine,
+    generateLine,
+    Text_deprecated,
+} from "../components";
 import { getNewXY } from "./EachTrendLine";
 
 export interface EachFibRetracementProps {
@@ -205,7 +211,7 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
                                 onDrag={dragHandler}
                                 onDragComplete={onDragComplete}
                             />
-                            <Text
+                            <Text_deprecated
                                 selected={selected}
                                 xyProvider={xyProvider}
                                 fontFamily={fontFamily}
@@ -213,7 +219,7 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
                                 fillStyle={fontFill}
                             >
                                 {text}
-                            </Text>
+                            </Text_deprecated>
                             <ClickableCircle
                                 ref={this.saveNodeType(`edge1_${j}`)}
                                 show={selected || hover}

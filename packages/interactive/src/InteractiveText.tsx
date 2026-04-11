@@ -101,6 +101,7 @@ export class InteractiveText extends React.Component<InteractiveTextProps, Inter
                             onDrag={this.handleDrag}
                             onDragComplete={this.handleDragComplete}
                             edgeInteractiveCursor="react-financial-charts-move-cursor"
+                            onSelect={this.handleSelect}
                         />
                     );
                 })}
@@ -175,5 +176,17 @@ export class InteractiveText extends React.Component<InteractiveTextProps, Inter
                 position,
             },
         });
+    };
+
+    private readonly handleSelect = (e: React.MouseEvent, index: number | undefined, moreProps: any) => {
+        const { textList, onSelect } = this.props;
+        const newTextList =
+            index === undefined
+                ? textList.map((d) => ({ ...d, selected: false }))
+                : textList.map((d, dIdx) => ({ ...d, selected: dIdx === index }));
+
+        if (onSelect) {
+            onSelect(e, newTextList, moreProps);
+        }
     };
 }

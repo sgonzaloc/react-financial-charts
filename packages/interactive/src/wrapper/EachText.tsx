@@ -1,7 +1,8 @@
 import * as React from "react";
 import { getXValue } from "@react-financial-charts/core/lib/utils/ChartDataUtil";
 import { isHover, saveNodeType } from "../utils";
-import { HoverTextNearMouse, InteractiveText } from "../components";
+import { HoverTextNearMouse, Text } from "../components";
+import { noop } from "@react-financial-charts/core";
 
 export interface EachTextProps {
     readonly index?: number;
@@ -30,6 +31,7 @@ export interface EachTextProps {
         readonly bgWidth: number | string;
         readonly bgHeight: number | string;
     };
+    readonly onSelect?: (e: React.MouseEvent, index: number | undefined, moreProps: any) => void;
 }
 
 interface EachTextState {
@@ -47,6 +49,7 @@ export class EachText extends React.Component<EachTextProps, EachTextState> {
             bgWidth: "auto",
             text: "Click to select object",
         },
+        onSelect: noop,
     };
 
     private dragStartPosition: any;
@@ -102,7 +105,7 @@ export class EachText extends React.Component<EachTextProps, EachTextState> {
 
         return (
             <g>
-                <InteractiveText
+                <Text
                     ref={this.saveNodeType("text")}
                     selected={selected || hover}
                     interactiveCursorClass="react-financial-charts-move-cursor"
@@ -161,8 +164,8 @@ export class EachText extends React.Component<EachTextProps, EachTextState> {
         onDrag(e, index, xyValue);
     };
 
-    private readonly handleDragStart = (_: React.MouseEvent, moreProps: any) => {
-        const { position } = this.props;
+    private readonly handleDragStart = (e: React.MouseEvent, moreProps: any) => {
+        const { position, index, onSelect } = this.props;
         const { mouseXY } = moreProps;
         const {
             chartConfig: { yScale },
@@ -179,5 +182,9 @@ export class EachText extends React.Component<EachTextProps, EachTextState> {
             dx,
             dy,
         };
+
+        if (onSelect) {
+            onSelect(e, index, {});
+        }
     };
 }
