@@ -9,6 +9,11 @@ export interface ArrowProps {
     readonly color?: string;
     readonly lineWidth?: number;
     readonly dashArray?: number[];
+    readonly onDragStart?: (e: React.MouseEvent, moreProps: any) => void;
+    readonly onDrag?: (e: React.MouseEvent, moreProps: any) => void;
+    readonly onDragComplete?: (e: React.MouseEvent, moreProps: any) => void;
+    readonly selected?: boolean;
+    readonly tolerance?: number;
 }
 
 export class Arrow extends React.Component<ArrowProps> {
@@ -16,14 +21,24 @@ export class Arrow extends React.Component<ArrowProps> {
         color: "#1E53E5",
         lineWidth: 2,
         dashArray: [],
+        selected: false,
+        tolerance: 4,
     };
 
     public render() {
+        const { selected, onDragStart, onDrag, onDragComplete } = this.props;
+
         return (
             <GenericChartComponent
-                canvasDraw={this.drawOnCanvas}
+                isHover={this.isHover}
                 canvasToDraw={getMouseCanvas}
-                drawOn={["mousemove", "pan", "drag"]}
+                canvasDraw={this.drawOnCanvas}
+                selected={selected}
+                enableDragOnHover={true}
+                onDragStart={onDragStart}
+                onDrag={onDrag}
+                onDragComplete={onDragComplete}
+                drawOn={["mousemove", "mouseleave", "pan", "drag"]}
             />
         );
     }
@@ -79,5 +94,34 @@ export class Arrow extends React.Component<ArrowProps> {
             ctx.fillStyle = color;
             ctx.fill();
         }
+    };
+
+    private readonly isHover = (moreProps: any) => {
+        const { tolerance = 4, x1, y1, x2, y2 } = this.props;
+        const {
+            mouseXY,
+            xScale,
+            chartConfig: { yScale },
+        } = moreProps;
+
+        const startX = xScale(x1);
+        const startY = yScale(y1);
+        const endX = xScale(x2);
+        const endY = yScale(y2);
+
+        const [mouseX, mouseY] = mouseXY;
+
+        // Calcular bounding box de la flecha
+        const left = Math.min(startX, endX);
+        const right = Math.max(startX, endX);
+        const top = Math.min(startY, endY);
+        const bottom = Math.max(startY, endY);
+
+        return (
+            mouseX >= left - tolerance &&
+            mouseX <= right + tolerance &&
+            mouseY >= top - tolerance &&
+            mouseY <= bottom + tolerance
+        );
     };
 }
