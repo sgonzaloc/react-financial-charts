@@ -31,7 +31,7 @@ This is the **most up-to-date version** of React Financial Charts, featuring:
 -   ✅ **React 19 Ready** - Full compatibility with React 19
 -   ✅ **TypeScript** - Fully typed with latest TypeScript 4.9+
 -   ✅ **Updated Dependencies** - All dependencies modernized
--   ✅ **New Interactive Tools** - Rectangle and Price Range tools
+-   ✅ **New Interactive Tools** - Rectangle, Arrow, Price Range, and Marquee Zoom
 -   ✅ **Performance Optimizations** - `shouldComponentUpdate` improvements
 -   ✅ **Selection Support** - Click to select any interactive object
 
@@ -52,7 +52,7 @@ The aim with this project is create financial charts that work out of the box.
 
 -   Multiple chart types (Scatter, Area, Line, Candlestick, OHLC, HeikenAshi, Renko, Kagi, Point & Figure)
 -   Technical indicators (EMA, SMA, MACD, RSI, Bollinger Bands, ATR, Stochastic, and more)
--   Interactive drawing tools (Trendline, Fibonacci, Gann Fan, Channel, Rectangle, Price Range)
+-   Interactive drawing tools (Trendline, Fibonacci, Gann Fan, Channel, Rectangle, Arrow, Price Range, Marquee Zoom)
 -   **Selection support** - Click to select any interactive object
 -   **Performance optimizations** - `shouldComponentUpdate` prevents unnecessary re-renders
 -   **Storybook stories** - Complete interactive documentation
@@ -106,11 +106,20 @@ The aim with this project is create financial charts that work out of the box.
 | **Rectangle** | Draw rectangular shapes for annotations and area highlighting |
 | **Arrow**     | Draw directional arrows for visual guidance                   |
 
-#### Measurement Tools
+#### Measurement & Navigation
 
-| Tool            | Description                                                                                    |
-| --------------- | ---------------------------------------------------------------------------------------------- |
-| **Price Range** | Measure price differences (absolute change + percentage) with visual arrows and time indicator |
+| Tool             | Description                                                                                    |
+| ---------------- | ---------------------------------------------------------------------------------------------- |
+| **Price Range**  | Measure price differences (absolute change + percentage) with visual arrows and time indicator |
+| **Marquee Zoom** | Drag to draw a rectangle and zoom into the selected area                                       |
+
+### Interactive Features
+
+-   **Selection** - Click to select any interactive object
+-   **Drag & Drop** - Move objects anywhere on the chart
+-   **Resize** - Adjust dimensions using control points
+-   **Delete** - Remove selected objects with Delete key
+-   **Performance** - Optimized rendering with `shouldComponentUpdate`
 
 ## Installation
 
@@ -137,8 +146,9 @@ You can test all interactive drawing tools in the [Storybook](https://sgonzaloc.
 -   **Gann Fan** - Gann fan angles
 -   **Equidistant Channel** - Parallel channel drawing
 -   **Rectangle** - Draw and annotate rectangular areas
--   **Price Range** - Measure percentage change between two price points
 -   **Arrow** - Draw directional arrows
+-   **Price Range** - Measure percentage change between two price points
+-   **Marquee Zoom** - Drag to zoom into any area
 
 ## Contributing
 
@@ -185,6 +195,8 @@ Complete Storybook documentation available for all interactive components:
 -   Trendline
 -   Rays
 -   Extended Lines
+-   Arrow
+-   Marquee Zoom
 
 ## Roadmap
 
@@ -220,6 +232,7 @@ Complete Storybook documentation available for all interactive components:
 -   [x] Add Rectangle drawing tool
 -   [x] Add Arrow drawing tool
 -   [x] Add Price Range measurement tool
+-   [x] Add Marquee Zoom tool
 -   [x] Add Storybook stories for all interactive components
 
 ## Contributors ✨
