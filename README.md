@@ -59,41 +59,58 @@ The aim with this project is create financial charts that work out of the box.
 
 ---
 
-### Chart types
+### Chart Types
 
--   Scatter
--   Area
--   Line
--   Candlestick
--   OHLC
--   HeikenAshi
--   Renko
--   Kagi
--   Point & Figure
+| Type               | Description                                           |
+| ------------------ | ----------------------------------------------------- |
+| **Scatter**        | Scatter plot for price distribution                   |
+| **Area**           | Area chart with filled region                         |
+| **Line**           | Simple line chart                                     |
+| **Candlestick**    | Traditional candlestick chart (OHLC)                  |
+| **OHLC**           | Open, High, Low, Close bar chart                      |
+| **HeikenAshi**     | Smoothed candlestick variant for trend identification |
+| **Renko**          | Brick-based chart ignoring time                       |
+| **Kagi**           | Thick line chart based on price reversals             |
+| **Point & Figure** | X and O columns for price movements                   |
 
 ### Indicators
 
--   EMA, SMA, WMA, TMA
--   Bollinger band
--   SAR
--   MACD
--   RSI
--   ATR
--   Stochastic (fast, slow, full)
--   ForceIndex
--   ElderRay
--   Elder Impulse
+| Indicator              | Description                                                 |
+| ---------------------- | ----------------------------------------------------------- |
+| **EMA, SMA, WMA, TMA** | Moving averages (Exponential, Simple, Weighted, Triangular) |
+| **Bollinger Bands**    | Volatility bands around moving average                      |
+| **SAR**                | Parabolic Stop and Reverse                                  |
+| **MACD**               | Moving Average Convergence Divergence                       |
+| **RSI**                | Relative Strength Index                                     |
+| **ATR**                | Average True Range                                          |
+| **Stochastic**         | Fast, Slow, and Full stochastic oscillators                 |
+| **ForceIndex**         | Volume-based momentum indicator                             |
+| **ElderRay**           | Bull/bear power indicator                                   |
+| **Elder Impulse**      | Trend and momentum combination                              |
 
 ### Interactive Drawing Tools
 
--   **Trendline** - Draw trend lines for support and resistance analysis
--   **Fibonacci Retracement** - Identify potential reversal levels using Fibonacci ratios
--   **Gann Fan** - Gann fan lines based on angular relationships
--   **Equidistant Channel** - Parallel channels for price action analysis
--   **Rectangle** - Draw rectangular shapes for annotations and area highlighting
--   **Price Range** - Measure price differences (absolute change + percentage)
+#### Trend Tools
 
----
+| Tool                      | Description                                               |
+| ------------------------- | --------------------------------------------------------- |
+| **Trendline**             | Draw trend lines for support and resistance analysis      |
+| **Fibonacci Retracement** | Identify potential reversal levels using Fibonacci ratios |
+| **Gann Fan**              | Gann fan lines based on angular relationships             |
+| **Equidistant Channel**   | Parallel channels for price action analysis               |
+
+#### Shapes
+
+| Tool          | Description                                                   |
+| ------------- | ------------------------------------------------------------- |
+| **Rectangle** | Draw rectangular shapes for annotations and area highlighting |
+| **Arrow**     | Draw directional arrows for visual guidance                   |
+
+#### Measurement Tools
+
+| Tool            | Description                                                                                    |
+| --------------- | ---------------------------------------------------------------------------------------------- |
+| **Price Range** | Measure price differences (absolute change + percentage) with visual arrows and time indicator |
 
 ## Installation
 
@@ -121,12 +138,13 @@ You can test all interactive drawing tools in the [Storybook](https://sgonzaloc.
 -   **Equidistant Channel** - Parallel channel drawing
 -   **Rectangle** - Draw and annotate rectangular areas
 -   **Price Range** - Measure percentage change between two price points
+-   **Arrow** - Draw directional arrows
 
 ## Contributing
 
 Refer to [CONTRIBUTING.md](./CONTRIBUTING.md)
 
-This project is a mono-repo that uses [Lerna](https://lerna.js.org/) to manage dependencies between packages.
+This project is a mono-repo that uses npm workspaces to manage dependencies between packages
 
 To get started run:
 
@@ -170,30 +188,39 @@ Complete Storybook documentation available for all interactive components:
 
 ## Roadmap
 
--   [x] Convert to typescript
+-   [x] Convert to TypeScript
 -   [x] Bump dependencies to latest
 -   [x] Remove React 16 warnings
 -   [x] Add CI
 -   [x] Fix passive scrolling issues
 -   [x] Implement PRs from react-stockcharts
 -   [x] Add all typings
--   [x] Move examples to storybook
--   [x] Add all series' to storybook
--   [x] Split project into multiple packages
+-   [x] Move examples to Storybook
+-   [x] Add all series to Storybook
+-   [x] Split project into multiple packages (npm workspaces)
 -   [x] Fix issues with empty datasets
 -   [x] Correct all class props
 -   [x] Migrate to new React Context API
 -   [x] Remove all UNSAFE methods
--   [x] Allow to select trends
--   [x] Add selection support for all interactive objects
--   [x] Improve performance on renders with shouldComponentUpdate
--   [x] Add Rectangle drawing tool
--   [x] Add Price Range measurement tool
--   [x] Add Storybook stories for all interactive components
+
+### Modernization
+
 -   [x] Upgrade to Storybook 8
 -   [x] React 19 compatibility
 -   [x] Update all dependencies to latest versions
--   [ ] Add full test suite
+
+### Interactive Features
+
+-   [x] Allow to select trends
+-   [x] Add selection support for all interactive objects
+-   [x] Improve performance with `shouldComponentUpdate`
+
+### Drawing Tools
+
+-   [x] Add Rectangle drawing tool
+-   [x] Add Arrow drawing tool
+-   [x] Add Price Range measurement tool
+-   [x] Add Storybook stories for all interactive components
 
 ## Contributors ✨
 
