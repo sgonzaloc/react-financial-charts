@@ -23,6 +23,7 @@ export interface TextProps {
     readonly textFill: string;
     readonly textAnchor?: "start" | "middle" | "end";
     readonly tolerance: number;
+    readonly showBackground?: boolean;
 }
 
 export class Text extends React.Component<TextProps> {
@@ -38,6 +39,8 @@ export class Text extends React.Component<TextProps> {
         selected: false,
         textAnchor: "start",
         offset: [0, 0],
+        textFill: "#000000",
+        showBackground: true,
     };
 
     private calculateTextWidth = true;
@@ -101,8 +104,7 @@ export class Text extends React.Component<TextProps> {
             fontStyle,
             fontWeight,
             text,
-            //@ts-ignore
-            textAnchor,
+            showBackground,
         } = { ...Text.defaultProps, ...this.props };
 
         if (this.calculateTextWidth) {
@@ -116,15 +118,16 @@ export class Text extends React.Component<TextProps> {
 
         const { x, y, rect } = this.helper(moreProps, this.textWidth ?? 0);
 
-        ctx.fillStyle = bgFillStyle;
+        if (showBackground) {
+            ctx.fillStyle = bgFillStyle;
+            ctx.beginPath();
+            ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
 
-        ctx.beginPath();
-        ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
-
-        if (selected) {
-            ctx.strokeStyle = bgStroke;
-            ctx.lineWidth = bgStrokeWidth;
-            ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
+            if (selected) {
+                ctx.strokeStyle = bgStroke;
+                ctx.lineWidth = bgStrokeWidth;
+                ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
+            }
         }
 
         ctx.fillStyle = textFill;

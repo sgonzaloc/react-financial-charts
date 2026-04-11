@@ -2,13 +2,7 @@ import * as React from "react";
 import { head, last, noop } from "@react-financial-charts/core";
 import { getXValue } from "@react-financial-charts/core/lib/utils/ChartDataUtil";
 import { isHover, saveNodeType } from "../utils";
-import {
-    ClickableCircle,
-    HoverTextNearMouse,
-    InteractiveStraightLine,
-    generateLine,
-    Text_deprecated,
-} from "../components";
+import { ClickableCircle, HoverTextNearMouse, InteractiveStraightLine, Text } from "../components";
 import { getNewXY } from "./EachTrendLine";
 
 export interface EachFibRetracementProps {
@@ -114,31 +108,12 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
         } = hoverText;
 
         const lineType = type === "EXTEND" ? "XLINE" : type === "BOUND" ? "LINE" : "RAY";
-        const dir = head(lines).y1 > last(lines).y1 ? 3 : -1.3;
+        const dir = head(lines).y1 > last(lines).y1 ? 1 : -1;
 
         return (
             <g>
                 {lines.map((line, j) => {
                     const text = `${yDisplayFormat(line.y)} (${line.percent.toFixed(2)}%)`;
-
-                    const xyProvider = ({ xScale, chartConfig }: any) => {
-                        const { yScale } = chartConfig;
-                        const {
-                            x1: lineX1,
-                            y1: lineY1,
-                            x2: lineX2,
-                        } = generateLine({
-                            type: lineType,
-                            start: [line.x1, line.y],
-                            end: [line.x2, line.y],
-                            xScale,
-                            yScale,
-                        });
-
-                        const x = xScale(Math.min(lineX1, lineX2)) + 10;
-                        const y = yScale(lineY1) + dir * 4;
-                        return [x, y];
-                    };
 
                     const firstOrLast = j === 0 || j === lines.length - 1;
 
@@ -211,15 +186,16 @@ export class EachFibRetracement extends React.Component<EachFibRetracementProps,
                                 onDrag={dragHandler}
                                 onDragComplete={onDragComplete}
                             />
-                            <Text_deprecated
+                            <Text
+                                text={text}
                                 selected={selected}
-                                xyProvider={xyProvider}
+                                position={[Math.min(line.x1, line.x2), line.y]}
+                                offset={[0, dir * fontSize]}
                                 fontFamily={fontFamily}
                                 fontSize={fontSize}
-                                fillStyle={fontFill}
-                            >
-                                {text}
-                            </Text_deprecated>
+                                textFill={fontFill}
+                                showBackground={false}
+                            />
                             <ClickableCircle
                                 ref={this.saveNodeType(`edge1_${j}`)}
                                 show={selected || hover}
