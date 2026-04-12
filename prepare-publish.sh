@@ -1,6 +1,15 @@
 #!/bin/bash
 
 echo "========================================="
+echo "  CLEANING NODE_MODULES"
+echo "========================================="
+echo ""
+
+rm -rf node_modules packages/*/node_modules package-lock.json
+echo "✅ Cleaned node_modules and package-lock.json"
+
+
+echo "========================================="
 echo "  PRE-PUBLISH VALIDATION"
 echo "========================================="
 echo ""
