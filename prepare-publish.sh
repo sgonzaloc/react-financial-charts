@@ -5,7 +5,7 @@ echo "  PRE-PUBLISH VALIDATION"
 echo "========================================="
 echo ""
 
-if [[ -n $(git status -s) ]]; then
+if [[ -n $(git status -s) && "$1" != "--force" ]]; then
   echo "❌ ERROR: Uncommitted changes detected."
   git status -s
   echo ""
@@ -71,6 +71,14 @@ echo ""
 echo "========================================="
 echo "  TOTAL CHANGES: $((ROOT_CHANGES + TOTAL_PKG + SRC_CHANGES))"
 echo "========================================="
+
+
+CHANGES=$(grep -l '"file:\.\./' packages/*/package.json | wc -l | tr -d ' ')
+echo "📦 Files with file: dependencies: $CHANGES"
+sed -i '' 's|"file:\.\./[^"]*"|"^3.0.0"|g' packages/*/package.json
+echo "✅ Replaced in $CHANGES package.json files"
+
+
 echo ""
 echo "Next steps:"
 echo "   npm i"
