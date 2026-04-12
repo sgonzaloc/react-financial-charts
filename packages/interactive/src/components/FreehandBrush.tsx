@@ -51,44 +51,65 @@ export class FreehandBrush extends React.Component<FreehandBrushProps> {
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
 
-        ctx.moveTo(xScale(points[0].x), yScale(points[0].y));
+        const firstPoint = points[0];
+        ctx.moveTo(xScale(firstPoint.x), yScale(firstPoint.y));
         for (let i = 1; i < points.length; i++) {
             ctx.lineTo(xScale(points[i].x), yScale(points[i].y));
         }
         ctx.stroke();
     };
 
+    private distanceToSegment(
+        p: { x: number; y: number },
+        a: { x: number; y: number },
+        b: { x: number; y: number },
+    ): number {
+        const ax = b.x - a.x;
+        const ay = b.y - a.y;
+        const t = ((p.x - a.x) * ax + (p.y - a.y) * ay) / (ax * ax + ay * ay);
+
+        if (t < 0) {
+            return Math.hypot(p.x - a.x, p.y - a.y);
+        }
+        if (t > 1) {
+            return Math.hypot(p.x - b.x, p.y - b.y);
+        }
+
+        const projX = a.x + t * ax;
+        const projY = a.y + t * ay;
+        return Math.hypot(p.x - projX, p.y - projY);
+    }
+
     private readonly isHover = (moreProps: any) => {
-        const { points } = this.props;
+        const { points, lineWidth } = this.props;
         const {
             mouseXY,
             xScale,
             chartConfig: { yScale },
         } = moreProps;
-        const [mouseX, mouseY] = mouseXY;
-        const tolerance = 4;
 
         if (!points || points.length < 2) return false;
 
-        let minX = Infinity,
-            maxX = -Infinity,
-            minY = Infinity,
-            maxY = -Infinity;
+        const [mouseX, mouseY] = mouseXY;
+        const tolerance = (lineWidth || 2) + 4;
 
-        for (const point of points) {
-            const x = xScale(point.x);
-            const y = yScale(point.y);
-            minX = Math.min(minX, x);
-            maxX = Math.max(maxX, x);
-            minY = Math.min(minY, y);
-            maxY = Math.max(maxY, y);
+        for (let i = 0; i < points.length - 1; i++) {
+            const a = {
+                x: xScale(points[i].x),
+                y: yScale(points[i].y),
+            };
+            const b = {
+                x: xScale(points[i + 1].x),
+                y: yScale(points[i + 1].y),
+            };
+            const mousePoint = { x: mouseX, y: mouseY };
+
+            const distance = this.distanceToSegment(mousePoint, a, b);
+            if (distance <= tolerance) {
+                return true;
+            }
         }
 
-        return (
-            mouseX >= minX - tolerance &&
-            mouseX <= maxX + tolerance &&
-            mouseY >= minY - tolerance &&
-            mouseY <= maxY + tolerance
-        );
+        return false;
     };
 }
