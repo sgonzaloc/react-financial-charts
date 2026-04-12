@@ -30,7 +30,7 @@
         "start:stories": "npm run start --workspace=@react-financial-charts/stories",
         "test": "npm run test --workspaces",
         "prestart": "npm run build",
-        "prepublishOnly": "./prepare-publish.sh && npm run build",
+        "prepublishOnly": "./prepare-publish.sh && npm i && npm run build",
         "publish": "npm publish --workspaces --access public",
         "postpublish": "git checkout -- .",
         "publish-yalc": "yalc push",
