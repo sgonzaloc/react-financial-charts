@@ -32,6 +32,7 @@
         "prestart": "npm run build",
         "prepublishOnly": "./prepare-publish.sh && npm run build",
         "publish": "npm publish --workspaces --access public",
+        "postpublish": "git checkout -- .",
         "publish-yalc": "yalc push",
         "release": "npm version",
         "release:pre": "npm version --preid=pre",
