@@ -18,6 +18,8 @@ interface FreehandBrushInteractiveProps {
 interface FreehandBrushInteractiveState {
     drawings: any[];
     mode: "draw" | "select";
+    lineColor: string;
+    lineWidth: number;
 }
 
 class FreehandBrushInteractive extends React.Component<FreehandBrushInteractiveProps, FreehandBrushInteractiveState> {
@@ -32,11 +34,19 @@ class FreehandBrushInteractive extends React.Component<FreehandBrushInteractiveP
         this.state = {
             drawings: [],
             mode: "draw",
+            lineColor: "#FF9800",
+            lineWidth: 3,
         };
     }
 
     private handleDrawComplete = (e: any, newDrawings: any[]) => {
-        const drawings = newDrawings.map((t: any) => ({ ...t, selected: false }));
+        const { lineColor, lineWidth } = this.state;
+        const drawings = newDrawings.map((t: any) => ({
+            ...t,
+            selected: false,
+            color: lineColor,
+            lineWidth: lineWidth,
+        }));
         this.setState({ drawings, mode: "select" });
     };
 
@@ -68,9 +78,65 @@ class FreehandBrushInteractive extends React.Component<FreehandBrushInteractiveP
         }
     };
 
+    private handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newColor = e.target.value;
+        const { drawings, mode } = this.state;
+
+        this.setState({ lineColor: newColor });
+
+        if (mode === "select") {
+            const updatedDrawings = drawings.map((drawing: any) => {
+                if (drawing.selected) {
+                    return { ...drawing, color: newColor };
+                }
+                return drawing;
+            });
+            this.setState({ drawings: updatedDrawings });
+        }
+    };
+
+    private handleLineWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newWidth = parseInt(e.target.value, 10);
+        const { drawings, mode } = this.state;
+
+        this.setState({ lineWidth: newWidth });
+
+        if (mode === "select") {
+            const updatedDrawings = drawings.map((drawing: any) => {
+                if (drawing.selected) {
+                    return { ...drawing, lineWidth: newWidth };
+                }
+                return drawing;
+            });
+            this.setState({ drawings: updatedDrawings });
+        }
+    };
+
+    private getCurrentDisplayColor = () => {
+        const { drawings, mode, lineColor } = this.state;
+        if (mode === "select") {
+            const selectedDrawing = drawings.find((d: any) => d.selected);
+            if (selectedDrawing) {
+                return selectedDrawing.color;
+            }
+        }
+        return lineColor;
+    };
+
+    private getCurrentDisplayWidth = () => {
+        const { drawings, mode, lineWidth } = this.state;
+        if (mode === "select") {
+            const selectedDrawing = drawings.find((d: any) => d.selected);
+            if (selectedDrawing) {
+                return selectedDrawing.lineWidth;
+            }
+        }
+        return lineWidth;
+    };
+
     public render() {
         const { data: initialData, height, ratio, width } = this.props;
-        const { drawings, mode } = this.state;
+        const { drawings, mode, lineColor, lineWidth } = this.state;
 
         const { data, xScale, xAccessor, displayXAccessor } = this.xScaleProvider(initialData);
 
@@ -80,6 +146,8 @@ class FreehandBrushInteractive extends React.Component<FreehandBrushInteractiveP
 
         const hasDrawings = drawings.length > 0;
         const hasSelected = drawings.some((t: any) => t.selected);
+        const currentColor = this.getCurrentDisplayColor();
+        const currentWidth = this.getCurrentDisplayWidth();
 
         const buttonStyle = (isActive: boolean) => ({
             padding: "0 20px",
@@ -107,6 +175,7 @@ class FreehandBrushInteractive extends React.Component<FreehandBrushInteractiveP
                         padding: "8px 20px",
                         backgroundColor: "#f8f9fa",
                         borderBottom: "1px solid #dee2e6",
+                        flexWrap: "wrap",
                     }}
                 >
                     <button onClick={() => this.setMode("draw")} style={buttonStyle(mode === "draw")}>
@@ -115,6 +184,86 @@ class FreehandBrushInteractive extends React.Component<FreehandBrushInteractiveP
                     <button onClick={() => this.setMode("select")} style={buttonStyle(mode === "select")}>
                         <span style={{ marginRight: "8px" }}>👆</span>Select
                     </button>
+
+                    <div style={{ width: "1px", height: "20px", backgroundColor: "#dee2e6" }} />
+
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <label style={{ fontSize: "12px", color: "#666" }}>
+                            {mode === "select" && hasSelected
+                                ? "🎨 Selected drawing color:"
+                                : "🎨 Color for new drawings:"}
+                        </label>
+                        <input
+                            type="color"
+                            value={currentColor}
+                            onChange={this.handleColorChange}
+                            style={{
+                                width: "32px",
+                                height: "32px",
+                                border: "1px solid #ccc",
+                                borderRadius: "4px",
+                                cursor: "pointer",
+                                backgroundColor: "#fff",
+                            }}
+                        />
+                        <span style={{ fontSize: "12px", color: "#666", marginLeft: "4px" }}>{currentColor}</span>
+                    </div>
+
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <label style={{ fontSize: "12px", color: "#666" }}>
+                            {mode === "select" && hasSelected
+                                ? "📏 Selected drawing width:"
+                                : "📏 Width for new drawings:"}
+                        </label>
+                        <input
+                            type="range"
+                            min="1"
+                            max="10"
+                            value={currentWidth}
+                            onChange={this.handleLineWidthChange}
+                            style={{ width: "100px" }}
+                        />
+                        <input
+                            type="number"
+                            min="1"
+                            max="10"
+                            value={currentWidth}
+                            onChange={this.handleLineWidthChange}
+                            style={{
+                                width: "50px",
+                                padding: "4px 6px",
+                                border: "1px solid #ccc",
+                                borderRadius: "4px",
+                                fontSize: "12px",
+                            }}
+                        />
+                        <span style={{ fontSize: "12px", color: "#666" }}>px</span>
+                    </div>
+
+                    <div
+                        style={{
+                            width: "40px",
+                            height: "32px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            border: "1px solid #dee2e6",
+                            borderRadius: "4px",
+                            backgroundColor: "#fff",
+                        }}
+                    >
+                        <svg width="30" height="20">
+                            <line
+                                x1="2"
+                                y1="10"
+                                x2="28"
+                                y2="10"
+                                stroke={currentColor}
+                                strokeWidth={currentWidth}
+                                strokeLinecap="round"
+                            />
+                        </svg>
+                    </div>
 
                     {mode === "select" && (
                         <>
@@ -204,8 +353,8 @@ class FreehandBrushInteractive extends React.Component<FreehandBrushInteractiveP
                                 drawings={drawings}
                                 onComplete={this.handleDrawComplete}
                                 onSelect={mode === "select" ? this.handleSelect : undefined}
-                                color="#FF9800"
-                                lineWidth={3}
+                                color={lineColor}
+                                lineWidth={lineWidth}
                                 hoverText={{ enable: false }}
                             />
                         </Chart>
