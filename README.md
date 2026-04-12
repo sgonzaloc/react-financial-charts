@@ -31,7 +31,7 @@ This is the **most up-to-date version** of React Financial Charts, featuring:
 -   ✅ **React 19 Ready** - Full compatibility with React 19
 -   ✅ **TypeScript** - Fully typed with latest TypeScript 4.9+
 -   ✅ **Updated Dependencies** - All dependencies modernized
--   ✅ **New Interactive Tools** - Rectangle, Arrow, Price Range, and Marquee Zoom
+-   ✅ **New Interactive Tools** - Rectangle, Arrow, Price Range, Freehand Brush, and Marquee Zoom
 -   ✅ **Performance Optimizations** - `shouldComponentUpdate` improvements
 -   ✅ **Selection Support** - Click to select any interactive object
 
@@ -52,7 +52,7 @@ The aim with this project is create financial charts that work out of the box.
 
 -   Multiple chart types (Scatter, Area, Line, Candlestick, OHLC, HeikenAshi, Renko, Kagi, Point & Figure)
 -   Technical indicators (EMA, SMA, MACD, RSI, Bollinger Bands, ATR, Stochastic, and more)
--   Interactive drawing tools (Trendline, Fibonacci, Gann Fan, Channel, Rectangle, Arrow, Price Range, Marquee Zoom)
+-   Interactive drawing tools (Trendline, Fibonacci, Gann Fan, Channel, Rectangle, Arrow)
 -   **Selection support** - Click to select any interactive object
 -   **Performance optimizations** - `shouldComponentUpdate` prevents unnecessary re-renders
 -   **Storybook stories** - Complete interactive documentation
@@ -106,12 +106,18 @@ The aim with this project is create financial charts that work out of the box.
 | **Rectangle** | Draw rectangular shapes for annotations and area highlighting |
 | **Arrow**     | Draw directional arrows for visual guidance                   |
 
-#### Measurement & Navigation
+#### Measurement Tools
 
-| Tool             | Description                                                                                    |
-| ---------------- | ---------------------------------------------------------------------------------------------- |
-| **Price Range**  | Measure price differences (absolute change + percentage) with visual arrows and time indicator |
-| **Marquee Zoom** | Drag to draw a rectangle and zoom into the selected area                                       |
+| Tool            | Description                                                                                    |
+| --------------- | ---------------------------------------------------------------------------------------------- |
+| **Price Range** | Measure price differences (absolute change + percentage) with visual arrows and time indicator |
+
+#### Interactive Actions
+
+| Tool               | Description                                                                 |
+| ------------------ | --------------------------------------------------------------------------- |
+| **Freehand Brush** | Draw freehand lines directly on the chart with customizable color and width |
+| **Marquee Zoom**   | Drag to draw a rectangle and zoom into the selected area                    |
 
 ### Interactive Features
 
@@ -149,6 +155,7 @@ You can test all interactive drawing tools in the [Storybook](https://sgonzaloc.
 -   **Arrow** - Draw directional arrows
 -   **Price Range** - Measure percentage change between two price points
 -   **Marquee Zoom** - Drag to zoom into any area
+-   **Freehand Brush** - Draw freehand lines with customizable color and stroke width
 
 ## Contributing
 
@@ -181,7 +188,7 @@ Recent updates include:
 
 -   **`shouldComponentUpdate`** implemented on all interactive components to prevent unnecessary re-renders
 -   **Throttled canvas drawing** for smoother resize operations
--   **Optimized hover detection** using bounding boxes
+-   **Optimized hover detection** using distance-to-segment algorithms for precise line selection
 
 ## Storybook Stories
 
@@ -197,6 +204,7 @@ Complete Storybook documentation available for all interactive components:
 -   Extended Lines
 -   Arrow
 -   Marquee Zoom
+-   Freehand Brush
 
 ## Roadmap
 
@@ -229,11 +237,12 @@ Complete Storybook documentation available for all interactive components:
 
 ### Drawing Tools
 
--   [x] Add Rectangle drawing tool
--   [x] Add Arrow drawing tool
--   [x] Add Price Range measurement tool
--   [x] Add Marquee Zoom tool
 -   [x] Add Storybook stories for all interactive components
+-   [x] Add Rectangle drawing tool and related stories
+-   [x] Add Arrow drawing tool and related stories
+-   [x] Add Price Range measurement tool and related stories
+-   [x] Add Marquee Zoom tool and related stories
+-   [x] Add Freehand Brush drawing tool and related stories
 
 ## Contributors ✨
 
