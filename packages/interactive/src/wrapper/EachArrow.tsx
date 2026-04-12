@@ -56,7 +56,7 @@ export class EachArrow extends React.Component<EachArrowProps, EachArrowState> {
         this.state = { hover: false };
     }
 
-    handleDragStart = (e: React.MouseEvent) => {
+    public handleDragStart = (e: React.MouseEvent) => {
         const { startXY, endXY, index, onSelect } = this.props;
         this.dragStart = { startXY, endXY };
         if (onSelect) {

@@ -27,7 +27,7 @@ class TextInteractive extends React.Component<TextInteractiveProps, TextInteract
         (d: IOHLCData) => d.date,
     );
 
-    constructor(props: TextInteractiveProps) {
+    public constructor(props: TextInteractiveProps) {
         super(props);
         this.state = {
             textList: [],
@@ -35,7 +35,7 @@ class TextInteractive extends React.Component<TextInteractiveProps, TextInteract
         };
     }
 
-    private handleChoosePosition = (e: any, newText: any, moreProps: any) => {
+    private handleChoosePosition = (e: any, newText: any) => {
         console.log("handleChoosePosition", newText);
         const newTextList = [
             ...this.state.textList,
@@ -47,23 +47,29 @@ class TextInteractive extends React.Component<TextInteractiveProps, TextInteract
         this.setState({ textList: newTextList, mode: "select" });
     };
 
-    private handleDragComplete = (e: any, newTextList: any[], moreProps: any) => {
+    private handleDragComplete = (e: any, newTextList: any[]) => {
         console.log("handleDragComplete", newTextList);
         this.setState({ textList: newTextList });
     };
 
     private handleSelect = (e: any, newTextList: any[]) => {
         console.log("handleSelect", newTextList);
-        if (this.state.mode !== "select") return;
+        if (this.state.mode !== "select") {
+            return;
+        }
         this.setState({ textList: newTextList });
     };
 
     private deleteSelected = () => {
         const { textList } = this.state;
         const selectedIndex = textList.findIndex((t: any) => t.selected);
-        if (selectedIndex === -1) return;
+        if (selectedIndex === -1) {
+            return;
+        }
         const newTextList = textList.filter((_: any, i: number) => i !== selectedIndex);
-        if (newTextList.length > 0) newTextList[0].selected = true;
+        if (newTextList.length > 0) {
+            newTextList[0].selected = true;
+        }
         this.setState({ textList: newTextList });
     };
 

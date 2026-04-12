@@ -33,7 +33,7 @@ export class EachFreehandBrush extends React.Component<EachFreehandBrushProps, E
     private dragStart: any;
     private saveNodeType: any;
 
-    constructor(props: EachFreehandBrushProps) {
+    public constructor(props: EachFreehandBrushProps) {
         super(props);
         this.saveNodeType = saveNodeType.bind(this);
         this.state = { hover: false };
@@ -56,7 +56,9 @@ export class EachFreehandBrush extends React.Component<EachFreehandBrushProps, E
         const handleDragStart = (e: React.MouseEvent, moreProps: any) => {
             const { startPos } = moreProps;
             this.dragStart = { points, startPos };
-            if (onSelect) onSelect(e, index, moreProps);
+            if (onSelect) {
+                onSelect(e, index, moreProps);
+            }
         };
 
         const handleDrag = (e: React.MouseEvent, moreProps: any) => {
@@ -69,7 +71,9 @@ export class EachFreehandBrush extends React.Component<EachFreehandBrushProps, E
                 mouseXY,
             } = moreProps;
 
-            if (!startPoints || startPoints.length === 0) return;
+            if (!startPoints || startPoints.length === 0) {
+                return;
+            }
 
             const dx = startPos[0] - mouseXY[0];
             const dy = startPos[1] - mouseXY[1];
@@ -89,11 +93,15 @@ export class EachFreehandBrush extends React.Component<EachFreehandBrushProps, E
                 y: p.y + deltaY,
             }));
 
-            if (onDrag) onDrag(e, index, newPoints);
+            if (onDrag) {
+                onDrag(e, index, newPoints);
+            }
         };
 
         const handleDragComplete = (e: React.MouseEvent, moreProps: any) => {
-            if (onDragComplete) onDragComplete(e, moreProps);
+            if (onDragComplete) {
+                onDragComplete(e, moreProps);
+            }
         };
 
         const startPoint = points[0];

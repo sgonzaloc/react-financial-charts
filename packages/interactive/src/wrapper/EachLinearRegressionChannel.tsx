@@ -113,11 +113,15 @@ export class EachLinearRegressionChannel extends React.Component<
         } = hoverText;
 
         const handleEdge1DragStart = (e: React.MouseEvent, moreProps: any) => {
-            if (onSelect) onSelect(e, index, moreProps);
+            if (onSelect) {
+                onSelect(e, index, moreProps);
+            }
         };
 
         const handleEdge2DragStart = (e: React.MouseEvent, moreProps: any) => {
-            if (onSelect) onSelect(e, index, moreProps);
+            if (onSelect) {
+                onSelect(e, index, moreProps);
+            }
         };
 
         return (

@@ -38,7 +38,7 @@ export class FreehandBrush extends React.Component<FreehandBrushProps, FreehandB
 
     private saveNodeType: any;
 
-    constructor(props: FreehandBrushProps) {
+    public constructor(props: FreehandBrushProps) {
         super(props);
         this.saveNodeType = saveNodeType.bind(this);
         this.state = {
@@ -109,7 +109,9 @@ export class FreehandBrush extends React.Component<FreehandBrushProps, FreehandB
             chartConfig: { yScale },
         } = moreProps;
 
-        if (!currentPoints || currentPoints.length < 2) return;
+        if (!currentPoints || currentPoints.length < 2) {
+            return;
+        }
 
         ctx.beginPath();
         ctx.strokeStyle = color || "#FF9800";
@@ -126,7 +128,9 @@ export class FreehandBrush extends React.Component<FreehandBrushProps, FreehandB
 
     private readonly handleMouseDown = (_: React.MouseEvent, moreProps: any) => {
         const { enabled } = this.props;
-        if (!enabled) return;
+        if (!enabled) {
+            return;
+        }
 
         const point = this.getFreePoint(moreProps);
         this.setState({
@@ -138,7 +142,9 @@ export class FreehandBrush extends React.Component<FreehandBrushProps, FreehandB
 
     private readonly handleMouseMove = (_: React.MouseEvent, moreProps: any) => {
         const { drawing } = this.state;
-        if (!drawing) return;
+        if (!drawing) {
+            return;
+        }
 
         this.setState({ hasMoved: true });
         const newPoint = this.getFreePoint(moreProps);
@@ -201,7 +207,9 @@ export class FreehandBrush extends React.Component<FreehandBrushProps, FreehandB
                     : { ...each, selected: false },
             );
             this.setState({ override: undefined }, () => {
-                if (onComplete) onComplete(e, newDrawings, moreProps);
+                if (onComplete) {
+                    onComplete(e, newDrawings, moreProps);
+                }
             });
         }
     };
@@ -209,6 +217,8 @@ export class FreehandBrush extends React.Component<FreehandBrushProps, FreehandB
     private readonly handleSelect = (e: React.MouseEvent, index: number | undefined, moreProps: any) => {
         const { drawings, onSelect } = this.props;
         const newDrawings = drawings.map((d, i) => ({ ...d, selected: i === index }));
-        if (onSelect) onSelect(e, newDrawings, moreProps);
+        if (onSelect) {
+            onSelect(e, newDrawings, moreProps);
+        }
     };
 }

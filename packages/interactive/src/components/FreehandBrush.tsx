@@ -43,7 +43,9 @@ export class FreehandBrush extends React.Component<FreehandBrushProps> {
             chartConfig: { yScale },
         } = moreProps;
 
-        if (!points || points.length < 2) return;
+        if (!points || points.length < 2) {
+            return;
+        }
 
         ctx.beginPath();
         ctx.strokeStyle = color || "#FF9800";
@@ -88,7 +90,9 @@ export class FreehandBrush extends React.Component<FreehandBrushProps> {
             chartConfig: { yScale },
         } = moreProps;
 
-        if (!points || points.length < 2) return false;
+        if (!points || points.length < 2) {
+            return false;
+        }
 
         const [mouseX, mouseY] = mouseXY;
         const tolerance = (lineWidth || 2) + 4;

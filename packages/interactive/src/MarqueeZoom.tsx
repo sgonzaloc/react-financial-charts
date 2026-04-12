@@ -149,7 +149,7 @@ export class MarqueeZoom extends React.Component<MarqueeZoomProps, MarqueeZoomSt
         });
     };
 
-    private readonly handleZoomComplete = (_: React.MouseEvent, moreProps: any) => {
+    private readonly handleZoomComplete = () => {
         if (this.zoomHappening) {
             const { start, end } = this.state;
             const { onZoom } = this.props;

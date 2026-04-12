@@ -29,7 +29,7 @@ class FreehandBrushInteractive extends React.Component<FreehandBrushInteractiveP
         (d: IOHLCData) => d.date,
     );
 
-    constructor(props: FreehandBrushInteractiveProps) {
+    public constructor(props: FreehandBrushInteractiveProps) {
         super(props);
         this.state = {
             drawings: [],
@@ -51,16 +51,22 @@ class FreehandBrushInteractive extends React.Component<FreehandBrushInteractiveP
     };
 
     private handleSelect = (e: any, newDrawings: any[]) => {
-        if (this.state.mode !== "select") return;
+        if (this.state.mode !== "select") {
+            return;
+        }
         this.setState({ drawings: newDrawings });
     };
 
     private deleteSelected = () => {
         const { drawings } = this.state;
         const selectedIndex = drawings.findIndex((t: any) => t.selected);
-        if (selectedIndex === -1) return;
+        if (selectedIndex === -1) {
+            return;
+        }
         const newDrawings = drawings.filter((_: any, i: number) => i !== selectedIndex);
-        if (newDrawings.length > 0) newDrawings[0].selected = true;
+        if (newDrawings.length > 0) {
+            newDrawings[0].selected = true;
+        }
         this.setState({ drawings: newDrawings });
     };
 

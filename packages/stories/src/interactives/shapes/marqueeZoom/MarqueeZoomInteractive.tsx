@@ -28,7 +28,7 @@ class MarqueeZoomInteractive extends React.Component<MarqueeZoomInteractiveProps
         (d: IOHLCData) => d.date,
     );
 
-    constructor(props: MarqueeZoomInteractiveProps) {
+    public constructor(props: MarqueeZoomInteractiveProps) {
         super(props);
         const { data, xAccessor } = this.xScaleProvider(props.data);
         this.state = {
@@ -38,7 +38,7 @@ class MarqueeZoomInteractive extends React.Component<MarqueeZoomInteractiveProps
         };
     }
 
-    private handleZoom = (xExtents: [number, number], yExtents: [number, number]) => {
+    private handleZoom = (xExtents: [number, number]) => {
         const { data } = this.xScaleProvider(this.props.data);
         const startDate = data[Math.floor(xExtents[0])]?.date;
         const endDate = data[Math.floor(xExtents[1])]?.date;
