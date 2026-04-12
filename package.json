@@ -31,7 +31,7 @@
         "test": "npm run test --workspaces",
         "prestart": "npm run build",
         "prepublishOnly": "./prepare-publish.sh && npm run build",
-        "publish": "npm publish --workspaces",
+        "publish": "npm publish --workspaces --access public",
         "publish-yalc": "yalc push",
         "release": "npm version",
         "release:pre": "npm version --preid=pre",
