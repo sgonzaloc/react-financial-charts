@@ -11,3 +11,4 @@ export * from "./MouseLocationIndicator";
 export * from "./Rectangle";
 export * from "./Arrow";
 export * from "./AreaSelector";
+export * from "./FreehandBrush";

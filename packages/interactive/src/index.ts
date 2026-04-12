@@ -12,3 +12,4 @@ export * from "./utils";
 export { Rectangle } from "./Rectangle";
 export { InteractiveArrow as Arrow } from "./InteractiveArrow";
 export { MarqueeZoom } from "./MarqueeZoom";
+export { FreehandBrush } from "./FreehandBrush";
