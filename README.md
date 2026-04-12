@@ -6,7 +6,7 @@
 
 ---
 
-![React](https://img.shields.io/badge/React-16%7C17%7C18%7C19-4B32C3?logo=react&logoColor=white)
+![React](https://img.shields.io/badge/React-18%7C19-4B32C3?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-4.9.5-3178C6?logo=typescript&logoColor=white)
 ![D3.js](https://img.shields.io/badge/D3.js-2.9.1-E3FF00?logo=d3.js&logoColor=white)
 ![Storybook](https://img.shields.io/badge/Storybook-8.6.18-5B8CD6?logo=storybook&logoColor=white)
@@ -25,10 +25,15 @@ We welcome collaborators who wish to contribute and help enhance this trading to
 
 ## About This Fork
 
-This is the **most up-to-date version** of React Financial Charts, featuring:
+This is the **most up-to-date version** of React Financial Charts, now **published on npm** under `@sgonzaloc` scope.
 
+[![npm version](https://img.shields.io/npm/v/@sgonzaloc/react-financial-charts.svg)](https://www.npmjs.com/package/@sgonzaloc/react-financial-charts)
+
+Features:
+
+-   ✅ **Published on npm** - Install directly: `npm install @sgonzaloc/react-financial-charts`
 -   ✅ **Storybook 8** - Latest version with modern UI
--   ✅ **React 19 Ready** - Full compatibility with React 19
+-   ✅ **React 18 & 19 Ready** - Full compatibility
 -   ✅ **TypeScript** - Fully typed with latest TypeScript 4.9+
 -   ✅ **Updated Dependencies** - All dependencies modernized
 -   ✅ **New Interactive Tools** - Rectangle, Arrow, Price Range, Freehand Brush, and Marquee Zoom
@@ -129,7 +134,15 @@ The aim with this project is create financial charts that work out of the box.
 
 ## Installation
 
-This package is currently under active development. For now, please clone the repository and use `yalc` for local development:
+### Install from npm (recommended)
+
+```bash
+npm install @sgonzaloc/react-financial-charts
+```
+
+All packages (`core`, `axes`, `scales`, `series`, `utils`, `interactive`, `indicators`) are included as dependencies.
+
+### Local development (clone repo)
 
 ```bash
 git clone https://github.com/sgonzaloc/react-financial-charts.git
@@ -226,8 +239,9 @@ Complete Storybook documentation available for all interactive components:
 ### Modernization
 
 -   [x] Upgrade to Storybook 8
--   [x] React 19 compatibility
+-   [x] React 18 & 19 compatibility
 -   [x] Update all dependencies to latest versions
+-   [x] Publish to npm under @sgonzaloc scope
 
 ### Interactive Features
 
@@ -258,4 +272,4 @@ Thanks goes to these wonderful people:
 
 ## LICENSE
 
-[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B13613%2Fgit%40github.com%3Areactivemarkets%2Freact-financial-charts.git.svg?type=large)](https://app.fossa.com/projects/custom%2B13613%2Fgit%40github.com%3Areactivemarkets%2Freact-financial-charts.git?ref=badge_large)
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B13613%2Fgit%40github.com%3Areactivemarkets%2Freact-financial-charts.git.svg?type=large)](https://app.fossa.com/api/projects/custom%2B13613%2Fgit%40github.com%3Areactivemarkets%2Freact-financial-charts.git?ref=badge_large)
