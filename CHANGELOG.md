@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/sgonzaloc/react-financial-charts/releases/tag/v3.0.3) (2026-04-13)
+
+### Added
+
+-   Full React 18 & React 19 support
+-   Freehand Brush drawing tool
+-   Marquee Zoom interactive tool
+-   Rectangle shape tool
+-   Arrow shape tool
+-   Price Range measurement tool
+-   Published on npm under @sgonzaloc scope
+-   Selection support for all interactive objects
+-   Storybook 8 documentation
+-   TypeScript 4.9+ support
+
+### Changed
+
+-   Complete TypeScript rewrite
+-   Updated all dependencies to latest versions
+-   Performance optimizations with shouldComponentUpdate
+-   Throttled canvas drawing for smoother resize operations
+-   Optimized hover detection using distance-to-segment algorithms
+-   Migrated to new React context API
+-   Eliminated unsafe lifecycle methods
+
+### Fixed
+
+-   Build issues with React 19
+-   Package publishing errors
+-   Workspace dependency resolution
+-   Chart flickering issues
+-   Circular dependencies
+-   React 18 compatibility issues
+-   CandlestickSeries bug
+-   x-axis location rounding
+
+### Removed
+
+-   React 16/17 support (use v2.x for legacy)
+-   UNSAFE lifecycle methods
+
 ## [2.0.1](https://github.com/markmcdowell/react-financial-charts/compare/v2.0.0...v2.0.1) (2023-05-13)
 
 **Note:** Version bump only for package root
@@ -49,7 +90,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   do not capture wheel when pan and zoom disabled ([357383b](https://github.com/markmcdowell/react-financial-charts/commit/357383bbb823122806f6d7ec398bd885365bd908))
 
-# [1.3.0](https://github.com/markmcdowell/react-financial-charts/compare/v1.2.2...v1.3.0) (2021-05-23)
+## [1.3.0](https://github.com/markmcdowell/react-financial-charts/compare/v1.2.2...v1.3.0) (2021-05-23)
 
 ### Bug Fixes
 
@@ -72,13 +113,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **annotations:** fixing svg path annotation ([05cd1ec](https://github.com/markmcdowell/react-financial-charts/commit/05cd1ec00153add3d62ce3ce31bac1ddb78cb427)), closes [#496](https://github.com/markmcdowell/react-financial-charts/issues/496)
 
-# [1.2.0](https://github.com/markmcdowell/react-financial-charts/compare/v1.1.0...v1.2.0) (2021-04-26)
+## [1.2.0](https://github.com/markmcdowell/react-financial-charts/compare/v1.1.0...v1.2.0) (2021-04-26)
 
 ### Features
 
 -   **series:** adding connectNulls to AreaSeries ([d800dc5](https://github.com/markmcdowell/react-financial-charts/commit/d800dc5289387d29bc4b194a57b85c62b2ff18ed)), closes [#497](https://github.com/markmcdowell/react-financial-charts/issues/497)
 
-# [1.1.0](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.1...v1.1.0) (2021-02-26)
+## [1.1.0](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.1...v1.1.0) (2021-02-26)
 
 ### Bug Fixes
 
@@ -104,14 +145,14 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **deps:** moving to d3 v6 ([8d371d2](https://github.com/markmcdowell/react-financial-charts/commit/8d371d240bc7ac3db3e2f0037b3c0807e05b4749))
 
-# [1.0.0-alpha.16](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2020-09-04)
+## [1.0.0-alpha.16](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2020-09-04)
 
 ### Bug Fixes
 
 -   **core:** removing colors ([ceb8217](https://github.com/markmcdowell/react-financial-charts/commit/ceb8217e9c8795787565c3baa1cedc3e693dfb4c))
 -   **series:** fixing AlternateDataSeries filtering ([65e31c4](https://github.com/markmcdowell/react-financial-charts/commit/65e31c47844a25c9e10ec2f116e3e82867a37416))
 
-# [1.0.0-alpha.15](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2020-09-03)
+## [1.0.0-alpha.15](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2020-09-03)
 
 ### Bug Fixes
 
@@ -122,7 +163,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **stories:** adding updating data example ([8b39605](https://github.com/markmcdowell/react-financial-charts/commit/8b39605902cb0ae0db75c55bbd8086bc27a8b6be))
 
-# [1.0.0-alpha.14](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2020-09-02)
+## [1.0.0-alpha.14](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2020-09-02)
 
 ### Bug Fixes
 
@@ -135,7 +176,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **series:** adding AlternateDataSeries component ([03fbb00](https://github.com/markmcdowell/react-financial-charts/commit/03fbb00f15dfd6487e7f92aa6e1517c99d7c1d1c))
 
-# [1.0.0-alpha.13](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2020-09-01)
+## [1.0.0-alpha.13](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2020-09-01)
 
 ### Bug Fixes
 
@@ -156,20 +197,20 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **stories:** adding custom timeFormat to scales stories ([c72b81c](https://github.com/markmcdowell/react-financial-charts/commit/c72b81c8ff4351de3a6ccb1d55c6b2c783cdd000))
 -   **stories:** adding scales examples ([5cbcd9d](https://github.com/markmcdowell/react-financial-charts/commit/5cbcd9dc8c7a1624ddd197daab28bb837c9ff698))
 
-# [1.0.0-alpha.12](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2020-08-28)
+## [1.0.0-alpha.12](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2020-08-28)
 
 ### Bug Fixes
 
 -   **interactive:** missing constructor to initialize state in HoverTextNearMouse ([27f410a](https://github.com/markmcdowell/react-financial-charts/commit/27f410a56a4ab87e758c55965ec162ce0066d509)), closes [#435](https://github.com/markmcdowell/react-financial-charts/issues/435)
 -   **series:** BarSeries should have opacity ([7d6e414](https://github.com/markmcdowell/react-financial-charts/commit/7d6e41441ff292a0a899cf4b84738b14c0b5aa24))
 
-# [1.0.0-alpha.11](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2020-08-28)
+## [1.0.0-alpha.11](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2020-08-28)
 
 ### Bug Fixes
 
 -   **coordinates:** EdgeIndicator yAccessor should allow undefined ([d0896e9](https://github.com/markmcdowell/react-financial-charts/commit/d0896e9a0e0c7de50c63a2995e8635bb8496a71a))
 
-# [1.0.0-alpha.10](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2020-08-28)
+## [1.0.0-alpha.10](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2020-08-28)
 
 ### Bug Fixes
 
@@ -180,7 +221,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   correcting more props ([2b3c1e0](https://github.com/markmcdowell/react-financial-charts/commit/2b3c1e093b12131b7a4bc1ed12fd8ea4c541ac4b))
 -   correcting zoomAnchor prop type ([981077b](https://github.com/markmcdowell/react-financial-charts/commit/981077b1e6e08b7c22d75842c7df90e82711e038))
 
-# [1.0.0-alpha.9](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2020-08-24)
+## [1.0.0-alpha.9](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2020-08-24)
 
 ### Bug Fixes
 
@@ -194,7 +235,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 -   **axes:** allowing tick labels without tick lines ([f0cf6b9](https://github.com/markmcdowell/react-financial-charts/commit/f0cf6b9d49a44a43e498d0d2a998cdb2956c7163))
 -   adding more prop types across all components ([efefd4d](https://github.com/markmcdowell/react-financial-charts/commit/efefd4dc3000ffe5ad5e63380ab324ab1e232a67))
 
-# [1.0.0-alpha.8](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2020-08-17)
+## [1.0.0-alpha.8](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2020-08-17)
 
 ### Bug Fixes
 
@@ -206,19 +247,19 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   exporting props from components for docs ([fbdaea5](https://github.com/markmcdowell/react-financial-charts/commit/fbdaea506730b091f4f8f6da52fc030b44d1a6e1))
 
-# [1.0.0-alpha.7](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2020-07-26)
+## [1.0.0-alpha.7](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2020-07-26)
 
 ### Bug Fixes
 
 -   updating prop types ([425b0b4](https://github.com/markmcdowell/react-financial-charts/commit/425b0b459de229770e7608aff4f397b9bb00de5e))
 
-# [1.0.0-alpha.6](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2020-07-23)
+## [1.0.0-alpha.6](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.5...v1.0.0-alpha.6) (2020-07-23)
 
 ### Bug Fixes
 
 -   **tooltip:** removing generic from SingleValueTooltip ([8035b85](https://github.com/markmcdowell/react-financial-charts/commit/8035b85c5df72f6076b778fb2c3bbef6f3d1d7a6))
 
-# [1.0.0-alpha.5](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2020-07-23)
+## [1.0.0-alpha.5](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.4...v1.0.0-alpha.5) (2020-07-23)
 
 ### Bug Fixes
 
@@ -228,23 +269,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **tooltip:** adding change to ohlc tooltip ([bc38b73](https://github.com/markmcdowell/react-financial-charts/commit/bc38b7387270837276739ba1e77832053ddf8769))
 
-# [1.0.0-alpha.4](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2020-07-19)
+## [1.0.0-alpha.4](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.3...v1.0.0-alpha.4) (2020-07-19)
 
 ### Bug Fixes
 
 -   **utils:** @types/react-virtualized-auto-sizer is required as a dependency ([fa9e5ed](https://github.com/markmcdowell/react-financial-charts/commit/fa9e5ed801fa464d6efe283aaf4026272e71b352))
 
-# [1.0.0-alpha.3](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2020-07-19)
+## [1.0.0-alpha.3](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2020-07-19)
 
 ### Bug Fixes
 
 -   **utils:** re-exporting AutoSizerProps ([3615c6c](https://github.com/markmcdowell/react-financial-charts/commit/3615c6c26892c1692a8b517e321287a6d2b246a5))
 
-# [1.0.0-alpha.2](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2020-07-15)
+## [1.0.0-alpha.2](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2020-07-15)
 
 **Note:** Version bump only for package root
 
-# [1.0.0-alpha.1](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2020-07-10)
+## [1.0.0-alpha.1](https://github.com/markmcdowell/react-financial-charts/compare/v1.0.0-alpha.0...v1.0.0-alpha.1) (2020-07-10)
 
 ### Bug Fixes
 
@@ -275,7 +316,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 -   **charts:** fixing gridlines when the axis is on the left or top ([61d5e7b](https://github.com/markmcdowell/react-financial-charts/commit/61d5e7b0225bb8c317cf04484f9a279341eb1791))
 
-# [0.5.0](https://github.com/markmcdowell/react-financial-charts/compare/v0.4.1...v0.5.0) (2020-01-07)
+## [0.5.0](https://github.com/markmcdowell/react-financial-charts/compare/v0.4.1...v0.5.0) (2020-01-07)
 
 ### Features
 
