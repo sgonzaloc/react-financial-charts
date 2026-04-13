@@ -1,6 +1,6 @@
 {
     "name": "@react-financial-charts/scales",
-    "version": "3.0.2",
+    "version": "3.0.3",
     "description": "Scales for react-financial-charts",
     "publishConfig": {
         "access": "public"
