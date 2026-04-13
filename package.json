@@ -1,6 +1,6 @@
 {
     "name": "react-financial-charts-monorepo",
-    "private": false,
+    "private": true,
     "main": "index.js",
     "license": "MIT",
     "version": "3.0.3",
