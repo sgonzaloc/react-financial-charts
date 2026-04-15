@@ -622,6 +622,7 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
         const { plotData: beforePlotData, domain } = filterData(fullData, newDomain, xAccessor, initialXScale, {
             currentPlotData: initialPlotData,
             currentDomain: initialXScale!.domain(),
+            ignoreThresholds: true,
         });
 
         const plotData = postCalculator(beforePlotData);
