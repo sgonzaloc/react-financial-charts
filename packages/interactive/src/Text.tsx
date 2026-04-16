@@ -1,49 +1,53 @@
 import * as React from "react";
 import { ChartContext, GenericChartComponent, getMouseCanvas, isDefined, noop } from "@react-financial-charts/core";
 import { HoverTextNearMouse } from "./components";
-import { getValueFromOverride, isHoverForInteractiveType, saveNodeType, terminate } from "./utils";
+import { getValueFromOverride, saveNodeType } from "./utils";
 import { EachText } from "./wrapper";
 
-interface InteractiveTextProps {
+interface TextProps {
     readonly onChoosePosition: (e: React.MouseEvent, newText: any, moreProps: any) => void;
     readonly onDragComplete?: (e: React.MouseEvent, newTextList: any[], moreProps: any) => void;
     readonly onSelect?: (e: React.MouseEvent, interactives: any[], moreProps: any) => void;
-    readonly defaultText: {
-        readonly bgFill: string;
-        readonly bgOpacity: number;
+    readonly onEdit?: (e: KeyboardEvent | React.MouseEvent, index: number, newText: string, moreProps: any) => void;
+    readonly appearance: {
+        readonly bgFill?: string;
+        readonly bgOpacity?: number;
         readonly bgStrokeWidth?: number;
         readonly bgStroke?: string;
-        readonly textFill: string;
-        readonly fontFamily: string;
-        readonly fontWeight: string;
-        readonly fontStyle: string;
-        readonly fontSize: number;
-        readonly text: string;
+        readonly textFill?: string;
+        readonly fontFamily?: string;
+        readonly fontWeight?: string;
+        readonly fontStyle?: string;
+        readonly fontSize?: number;
     };
+    readonly defaultText?: string;
     readonly hoverText: object;
     readonly textList: any[];
     readonly enabled: boolean;
 }
 
-interface InteractiveTextState {
+interface TextState {
     current?: any;
     override?: any;
+    editingIndex: number | null;
 }
 
-export class InteractiveText extends React.Component<InteractiveTextProps, InteractiveTextState> {
+export class Text extends React.Component<TextProps, TextState> {
     public static defaultProps = {
         onSelect: noop,
-        defaultText: {
-            bgFill: "#D3D3D3",
+        onEdit: noop,
+        appearance: {
+            bgFill: "transparent",
             bgOpacity: 1,
             bgStrokeWidth: 1,
-            textFill: "#F10040",
+            bgStroke: "#1E53E5",
+            textFill: "#000000",
             fontFamily: "-apple-system, system-ui, Roboto, 'Helvetica Neue', Ubuntu, sans-serif",
             fontSize: 12,
             fontStyle: "normal",
             fontWeight: "normal",
-            text: "Lorem ipsum...",
         },
+        defaultText: "Lorem ipsum...",
         hoverText: {
             ...HoverTextNearMouse.defaultProps,
             enable: true,
@@ -57,33 +61,26 @@ export class InteractiveText extends React.Component<InteractiveTextProps, Inter
 
     public static contextType = ChartContext;
 
-    // @ts-ignore
-    private getSelectionState: any;
     private saveNodeType: any;
 
-    // @ts-ignore
-    private terminate: any;
-
-    public constructor(props: InteractiveTextProps) {
+    public constructor(props: TextProps) {
         super(props);
-
-        this.terminate = terminate.bind(this);
         this.saveNodeType = saveNodeType.bind(this);
-        this.getSelectionState = isHoverForInteractiveType("textList").bind(this);
-
-        this.state = {};
+        this.state = {
+            editingIndex: null,
+        };
     }
-
     public render() {
-        const { textList, defaultText, hoverText } = this.props;
-        const { override } = this.state;
+        const { textList, appearance, defaultText, hoverText, onEdit } = this.props;
+        const { override, editingIndex } = this.state;
         return (
             <g>
                 {textList.map((each, idx) => {
-                    const defaultHoverText = InteractiveText.defaultProps.hoverText;
+                    const defaultHoverText = Text.defaultProps.hoverText;
                     const props = {
-                        ...defaultText,
+                        ...appearance,
                         ...each,
+                        text: each.text || defaultText,
                         hoverText: {
                             ...defaultHoverText,
                             ...hoverText,
@@ -102,6 +99,10 @@ export class InteractiveText extends React.Component<InteractiveTextProps, Inter
                             onDragComplete={this.handleDragComplete}
                             edgeInteractiveCursor="react-financial-charts-move-cursor"
                             onSelect={this.handleSelect}
+                            onEdit={onEdit ? this.handleEdit : undefined}
+                            isEditingGlobal={editingIndex === idx}
+                            onRequestEdit={this.handleRequestEdit}
+                            onEndEdit={this.handleEndEdit}
                         />
                     );
                 })}
@@ -110,10 +111,27 @@ export class InteractiveText extends React.Component<InteractiveTextProps, Inter
                     canvasToDraw={getMouseCanvas}
                     drawOn={["mousemove", "pan"]}
                 />
-                ;
             </g>
         );
     }
+
+    private readonly handleRequestEdit = (index: number) => {
+        if (this.state.editingIndex === null || index > this.state.editingIndex) {
+            this.setState({ editingIndex: index });
+        }
+    };
+
+    private readonly handleEndEdit = () => {
+        this.setState({ editingIndex: null });
+    };
+
+    private readonly handleEdit = (e: KeyboardEvent | React.MouseEvent, index: number, newText: string) => {
+        const { onEdit } = this.props;
+        if (onEdit) {
+            const moreProps = this.context;
+            onEdit(e, index, newText, moreProps);
+        }
+    };
 
     private readonly handleDraw = (e: React.MouseEvent, moreProps: any) => {
         const { enabled } = this.props;
@@ -124,13 +142,12 @@ export class InteractiveText extends React.Component<InteractiveTextProps, Inter
                 xAccessor,
                 currentItem,
             } = moreProps;
-
-            const { defaultText, onChoosePosition } = this.props;
-
+            const { appearance, defaultText, onChoosePosition } = this.props;
             if (onChoosePosition !== undefined) {
                 const xyValue = [xAccessor(currentItem), yScale.invert(mouseY)];
                 const newText = {
-                    ...defaultText,
+                    ...appearance,
+                    text: defaultText,
                     position: xyValue,
                 };
                 onChoosePosition(e, newText, moreProps);
@@ -144,38 +161,19 @@ export class InteractiveText extends React.Component<InteractiveTextProps, Inter
             const { textList } = this.props;
             const newTextList = textList.map((each, idx) => {
                 const selected = idx === override.index;
-                return selected
-                    ? {
-                          ...each,
-                          position: override.position,
-                          selected,
-                      }
-                    : {
-                          ...each,
-                          selected,
-                      };
+                return selected ? { ...each, position: override.position, selected } : { ...each, selected };
             });
-            this.setState(
-                {
-                    override: null,
-                },
-                () => {
-                    const { onDragComplete } = this.props;
-                    if (onDragComplete !== undefined) {
-                        onDragComplete(e, newTextList, moreProps);
-                    }
-                },
-            );
+            this.setState({ override: null }, () => {
+                const { onDragComplete } = this.props;
+                if (onDragComplete !== undefined) {
+                    onDragComplete(e, newTextList, moreProps);
+                }
+            });
         }
     };
 
     private readonly handleDrag = (_: React.MouseEvent, index: any, position: any) => {
-        this.setState({
-            override: {
-                index,
-                position,
-            },
-        });
+        this.setState({ override: { index, position } });
     };
 
     private readonly handleSelect = (e: React.MouseEvent, index: number | undefined, moreProps: any) => {
@@ -184,7 +182,6 @@ export class InteractiveText extends React.Component<InteractiveTextProps, Inter
             index === undefined
                 ? textList.map((d) => ({ ...d, selected: false }))
                 : textList.map((d, dIdx) => ({ ...d, selected: dIdx === index }));
-
         if (onSelect) {
             onSelect(e, newTextList, moreProps);
         }

@@ -15,6 +15,9 @@ export interface TextProps {
     readonly onDragComplete?: (e: React.MouseEvent, moreProps: any) => void;
     readonly onHover?: (e: React.MouseEvent, moreProps: any) => void;
     readonly onUnHover?: (e: React.MouseEvent, moreProps: any) => void;
+    readonly onClick?: (e: React.MouseEvent, moreProps: any) => void;
+    readonly onDoubleClick?: (e: React.MouseEvent, moreProps: any) => void;
+    readonly onDoubleClickWhenHover?: (e: React.MouseEvent, moreProps: any) => void;
     readonly position: [number, number];
     readonly offset?: [number, number];
     readonly interactiveCursorClass?: string;
@@ -24,6 +27,8 @@ export interface TextProps {
     readonly textAnchor?: "start" | "middle" | "end";
     readonly tolerance: number;
     readonly showBackground?: boolean;
+    readonly showCursor?: boolean;
+    readonly cursorCharIndex?: number;
 }
 
 export class Text extends React.Component<TextProps> {
@@ -41,6 +46,8 @@ export class Text extends React.Component<TextProps> {
         offset: [0, 0],
         textFill: "#000000",
         showBackground: true,
+        showCursor: false,
+        cursorCharIndex: -1,
     };
 
     private calculateTextWidth = true;
@@ -56,7 +63,7 @@ export class Text extends React.Component<TextProps> {
     }
 
     public render() {
-        const { selected, interactiveCursorClass } = this.props;
+        const { selected, interactiveCursorClass, onDoubleClick, onDoubleClickWhenHover, onClick } = this.props;
         const { onHover, onUnHover } = this.props;
         const { onDragStart, onDrag, onDragComplete } = this.props;
 
@@ -72,7 +79,10 @@ export class Text extends React.Component<TextProps> {
                 onDragComplete={onDragComplete}
                 onHover={onHover}
                 onUnHover={onUnHover}
-                drawOn={["mousemove", "mouseleave", "pan", "drag"]}
+                onClick={onClick}
+                onDoubleClick={onDoubleClick}
+                onDoubleClickWhenHover={onDoubleClickWhenHover}
+                drawOn={["mousemove", "mouseleave", "pan", "drag", "click", "dblclick"]}
             />
         );
     }
@@ -105,6 +115,9 @@ export class Text extends React.Component<TextProps> {
             fontWeight,
             text,
             showBackground,
+            showCursor,
+            cursorCharIndex,
+            selected,
         } = { ...Text.defaultProps, ...this.props };
 
         if (this.calculateTextWidth) {
@@ -114,20 +127,17 @@ export class Text extends React.Component<TextProps> {
             this.calculateTextWidth = false;
         }
 
-        const { selected } = this.props;
-
         const { x, y, rect } = this.helper(moreProps, this.textWidth ?? 0);
 
         if (showBackground) {
             ctx.fillStyle = bgFillStyle;
-            ctx.beginPath();
             ctx.fillRect(rect.x, rect.y, rect.width, rect.height);
+        }
 
-            if (selected) {
-                ctx.strokeStyle = bgStroke;
-                ctx.lineWidth = bgStrokeWidth;
-                ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
-            }
+        if (selected) {
+            ctx.strokeStyle = bgStroke;
+            ctx.lineWidth = bgStrokeWidth;
+            ctx.strokeRect(rect.x, rect.y, rect.width, rect.height);
         }
 
         ctx.fillStyle = textFill;
@@ -137,6 +147,20 @@ export class Text extends React.Component<TextProps> {
 
         ctx.beginPath();
         ctx.fillText(text, x, y);
+
+        if (showCursor && cursorCharIndex !== undefined && cursorCharIndex >= 0 && cursorCharIndex <= text.length) {
+            const textBeforeCursor = text.substring(0, cursorCharIndex);
+            const textBeforeWidth = ctx.measureText(textBeforeCursor).width;
+            const textWidthHalf = (this.textWidth ?? 0) / 2;
+            const cursorOffset = textBeforeWidth - textWidthHalf;
+
+            ctx.beginPath();
+            ctx.moveTo(x + cursorOffset, y - fontSize / 2);
+            ctx.lineTo(x + cursorOffset, y + fontSize / 2);
+            ctx.strokeStyle = textFill;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
     };
 
     private readonly helper = (moreProps: any, textWidth: number) => {

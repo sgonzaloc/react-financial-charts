@@ -4,7 +4,7 @@ export { EquidistantChannel } from "./EquidistantChannel";
 export { LinearRegressionChannel } from "./LinearRegressionChannel";
 export { GannFan } from "./GannFan";
 export { ClickCallback } from "./ClickCallback";
-export { InteractiveText } from "./InteractiveText";
+export { Text } from "./Text";
 export { InteractiveYCoordinate } from "./InteractiveYCoordinate";
 export { DrawingObjectSelector } from "./DrawingObjectSelector";
 export { ZoomButtons } from "./ZoomButtons";
