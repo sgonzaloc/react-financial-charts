@@ -5,7 +5,7 @@ import { discontinuousTimeScaleProviderBuilder } from "@react-financial-charts/s
 import { CandlestickSeries } from "@react-financial-charts/series";
 import { IOHLCData, withOHLCData } from "../../../data";
 import { withDeviceRatio, withSize } from "@react-financial-charts/utils";
-import { InteractiveText } from "@react-financial-charts/interactive";
+import { Text } from "@react-financial-charts/interactive";
 import { format } from "d3-format";
 
 interface TextInteractiveProps {
@@ -36,7 +36,6 @@ class TextInteractive extends React.Component<TextInteractiveProps, TextInteract
     }
 
     private handleChoosePosition = (e: any, newText: any) => {
-        console.log("handleChoosePosition", newText);
         const newTextList = [
             ...this.state.textList,
             {
@@ -48,15 +47,23 @@ class TextInteractive extends React.Component<TextInteractiveProps, TextInteract
     };
 
     private handleDragComplete = (e: any, newTextList: any[]) => {
-        console.log("handleDragComplete", newTextList);
         this.setState({ textList: newTextList });
     };
 
     private handleSelect = (e: any, newTextList: any[]) => {
-        console.log("handleSelect", newTextList);
         if (this.state.mode !== "select") {
             return;
         }
+        this.setState({ textList: newTextList });
+    };
+
+    private handleEdit = (e: any, index: number, newText: string) => {
+        const { textList } = this.state;
+        const newTextList = [...textList];
+        newTextList[index] = {
+            ...newTextList[index],
+            text: newText,
+        };
         this.setState({ textList: newTextList });
     };
 
@@ -147,7 +154,6 @@ class TextInteractive extends React.Component<TextInteractiveProps, TextInteract
                                     lineHeight: "32px",
                                     fontSize: "13px",
                                     fontWeight: 500,
-                                    border: "none",
                                     borderRadius: "4px",
                                     cursor: hasSelected ? "pointer" : "not-allowed",
                                     opacity: hasSelected ? 1 : 0.5,
@@ -169,7 +175,6 @@ class TextInteractive extends React.Component<TextInteractiveProps, TextInteract
                                     lineHeight: "32px",
                                     fontSize: "13px",
                                     fontWeight: 500,
-                                    border: "none",
                                     borderRadius: "4px",
                                     cursor: hasTexts ? "pointer" : "not-allowed",
                                     opacity: hasTexts ? 1 : 0.5,
@@ -218,22 +223,23 @@ class TextInteractive extends React.Component<TextInteractiveProps, TextInteract
                             <XAxis />
                             <YAxis tickFormat={this.pricesDisplayFormat} />
                             <CandlestickSeries />
-                            <InteractiveText
+                            <Text
                                 enabled={mode === "draw"}
                                 textList={textList}
                                 onChoosePosition={this.handleChoosePosition}
                                 onDragComplete={this.handleDragComplete}
                                 onSelect={mode === "select" ? this.handleSelect : undefined}
-                                defaultText={{
-                                    bgFill: "#D3D3D3",
-                                    bgOpacity: 1,
+                                onEdit={this.handleEdit}
+                                defaultText={"Add Text"}
+                                appearance={{
+                                    bgFill: "transparent",
                                     bgStrokeWidth: 1,
+                                    bgStroke: "#1E53E5",
                                     textFill: "#000000",
                                     fontFamily: "sans-serif",
                                     fontSize: 14,
                                     fontStyle: "normal",
                                     fontWeight: "normal",
-                                    text: "Text",
                                 }}
                                 hoverText={{ enable: false }}
                             />
