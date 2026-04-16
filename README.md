@@ -36,9 +36,10 @@ Features:
 -   ✅ **React 18 & 19 Ready** - Full compatibility
 -   ✅ **TypeScript** - Fully typed with latest TypeScript 4.9+
 -   ✅ **Updated Dependencies** - All dependencies modernized
--   ✅ **New Interactive Tools** - Rectangle, Arrow, Price Range, Freehand Brush, and Marquee Zoom
+-   ✅ **New Interactive Tools** - Rectangle, Arrow, Price Range, Freehand Brush, Marquee Zoom, Linear Regression Channel, and Text
 -   ✅ **Performance Optimizations** - `shouldComponentUpdate` improvements
 -   ✅ **Selection Support** - Click to select any interactive object
+-   ✅ **Text Tool Features** - Double-click editing, configurable appearance, cursor blink, overlapping selection support
 
 The original repositories are no longer actively maintained:
 
@@ -57,7 +58,7 @@ The aim with this project is create financial charts that work out of the box.
 
 -   Multiple chart types (Scatter, Area, Line, Candlestick, OHLC, HeikenAshi, Renko, Kagi, Point & Figure)
 -   Technical indicators (EMA, SMA, MACD, RSI, Bollinger Bands, ATR, Stochastic, and more)
--   Interactive drawing tools (Trendline, Fibonacci, Gann Fan, Channel, Rectangle, Arrow)
+-   Interactive drawing tools (Trendline, Fibonacci, Gann Fan, Channel, Rectangle, Arrow, Linear Regression Channel, Text)
 -   **Selection support** - Click to select any interactive object
 -   **Performance optimizations** - `shouldComponentUpdate` prevents unnecessary re-renders
 -   **Storybook stories** - Complete interactive documentation
@@ -97,12 +98,13 @@ The aim with this project is create financial charts that work out of the box.
 
 #### Trend Tools
 
-| Tool                      | Description                                               |
-| ------------------------- | --------------------------------------------------------- |
-| **Trendline**             | Draw trend lines for support and resistance analysis      |
-| **Fibonacci Retracement** | Identify potential reversal levels using Fibonacci ratios |
-| **Gann Fan**              | Gann fan lines based on angular relationships             |
-| **Equidistant Channel**   | Parallel channels for price action analysis               |
+| Tool                          | Description                                               |
+| ----------------------------- | --------------------------------------------------------- |
+| **Trendline**                 | Draw trend lines for support and resistance analysis      |
+| **Fibonacci Retracement**     | Identify potential reversal levels using Fibonacci ratios |
+| **Gann Fan**                  | Gann fan lines based on angular relationships             |
+| **Equidistant Channel**       | Parallel channels for price action analysis               |
+| **Linear Regression Channel** | Statistical channel based on linear regression            |
 
 #### Shapes
 
@@ -123,6 +125,7 @@ The aim with this project is create financial charts that work out of the box.
 | ------------------ | --------------------------------------------------------------------------- |
 | **Freehand Brush** | Draw freehand lines directly on the chart with customizable color and width |
 | **Marquee Zoom**   | Drag to draw a rectangle and zoom into the selected area                    |
+| **Text**           | Add editable text annotations (double-click to edit)                        |
 
 ### Interactive Features
 
@@ -169,6 +172,8 @@ You can test all interactive drawing tools in the [Storybook](https://sgonzaloc.
 -   **Price Range** - Measure percentage change between two price points
 -   **Marquee Zoom** - Drag to zoom into any area
 -   **Freehand Brush** - Draw freehand lines with customizable color and stroke width
+-   **Text** - Add editable text annotations (double-click to edit)
+-   **Linear Regression Channel** - Statistical channel based on linear regression
 
 ## Contributing
 
@@ -218,6 +223,8 @@ Complete Storybook documentation available for all interactive components:
 -   Arrow
 -   Marquee Zoom
 -   Freehand Brush
+-   Linear Regression Channel
+-   Text
 
 ## Roadmap
 
@@ -257,6 +264,8 @@ Complete Storybook documentation available for all interactive components:
 -   [x] Add Price Range measurement tool and related stories
 -   [x] Add Marquee Zoom tool and related stories
 -   [x] Add Freehand Brush drawing tool and related stories
+-   [x] Add Linear Regression Channel tool and related stories
+-   [x] Add Text tool with editable text, configurable appearance, cursor blink, and overlapping selection support
 
 ## Contributors ✨
 
