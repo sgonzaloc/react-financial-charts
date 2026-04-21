@@ -1,8 +1,6 @@
 # React Financial Charts
 
-> **Note:** This repository is a modern fork of [react-financial-charts](https://github.com/react-financial/react-financial-charts) (which was originally a fork of [react-stockcharts](https://github.com/rrag/react-stockcharts)). The original `react-stockcharts` has been unmaintained for 8+ years, and `react-financial-charts` has not seen updates in over 3 years.
-
-> **Note:** v1 is a fully breaking change with large parts, if not all, rewritten. Do not expect the same API! although the same features should exist.
+> **Note:** This repository is a modern fork of [react-financial-charts](https://github.com/react-financial/react-financial-charts) (originally a fork of [react-stockcharts](https://github.com/rrag/react-stockcharts)). The original `react-stockcharts` has been unmaintained for 8+ years, and `react-financial-charts` has not seen updates in over 3 years.
 
 ---
 
