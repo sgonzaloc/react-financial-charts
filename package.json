@@ -30,13 +30,12 @@
         "start:stories": "npm run start --workspace=@react-financial-charts/stories",
         "test": "npm run test --workspaces",
         "prestart": "npm run build",
-        "prepublishOnly": "./prepare-publish.sh && npm i && npm run build",
         "publish": "npm publish --workspaces --access public",
-        "postpublish": "git checkout -- .",
-        "publish-yalc": "yalc push",
-        "release": "npm version",
-        "release:pre": "npm version --preid=pre",
-        "release:grad": "npm version --preid=grad"
+        "yalc:publish": "yalc publish --workspaces",
+        "yalc:publish-workspaces": "for d in packages/*; do (cd $d && yalc publish); done",
+        "yalc:push-workspaces": "for d in packages/*; do (cd $d && yalc push); done",
+        "prepublishOnly": "if [ \"$SKIP_PUBLISH\" != \"1\" ]; then ./prepare-publish.sh && npm i && npm run build; fi",
+        "postpublish": "if [ \"$SKIP_PUBLISH\" != \"1\" ]; then git checkout -- .; fi"
     },
     "workspaces": [
         "packages/*"
