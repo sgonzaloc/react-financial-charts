@@ -84,7 +84,7 @@ export class EachText extends React.Component<EachTextProps, EachTextState> {
         };
     }
 
-    public componentDidUpdate(prevProps: EachTextProps, prevState: EachTextState) {
+    public componentDidUpdate(prevProps: EachTextProps) {
         if (this.props.isEditingGlobal && !prevProps.isEditingGlobal) {
             window.addEventListener("keydown", this.handleKeyPress);
             this.startCursorBlink();
@@ -178,7 +178,9 @@ export class EachText extends React.Component<EachTextProps, EachTextState> {
     }
 
     private readonly handleKeyPress = (e: KeyboardEvent) => {
-        if (!this.props.isEditingGlobal) return;
+        if (!this.props.isEditingGlobal) {
+            return;
+        }
         e.stopPropagation();
 
         const { onEdit, index } = this.props;
@@ -202,7 +204,7 @@ export class EachText extends React.Component<EachTextProps, EachTextState> {
         }
     };
 
-    private readonly handleDoubleClick = (e: React.MouseEvent, moreProps: any) => {
+    private readonly handleDoubleClick = (e: React.MouseEvent) => {
         e.stopPropagation();
         e.preventDefault();
         const { index, onRequestEdit } = this.props;
@@ -221,7 +223,9 @@ export class EachText extends React.Component<EachTextProps, EachTextState> {
 
     private readonly handleDrag = (e: React.MouseEvent, moreProps: any) => {
         const { index, onDrag } = this.props;
-        if (onDrag === undefined) return;
+        if (onDrag === undefined) {
+            return;
+        }
         const {
             mouseXY: [, mouseY],
             chartConfig: { yScale },
