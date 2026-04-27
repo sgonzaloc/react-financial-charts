@@ -1,9 +1,9 @@
 import * as React from "react";
-import StockChart, { MinutesStockChart, SecondsStockChart } from "./StockChart";
+import StockChart, { MinutesStockChart, SecondsStockChart } from "./Intro";
 
 export default {
     component: StockChart,
-    title: "Features/Full Screen",
+    title: "Introduction/Intro",
 };
 
 export const daily = () => <StockChart />;
