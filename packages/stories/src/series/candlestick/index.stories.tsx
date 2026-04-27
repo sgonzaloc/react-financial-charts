@@ -4,7 +4,7 @@ import { Daily, Intraday } from "./BasicCandlestick";
 
 export default {
     component: CandlestickSeries,
-    title: "Visualization/Series/Candles",
+    title: "Chart Types/Candles",
 };
 
 export const daily = () => <Daily />;

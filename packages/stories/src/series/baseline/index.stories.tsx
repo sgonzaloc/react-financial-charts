@@ -8,7 +8,7 @@ import { Daily, Intraday } from "./BasicBaselineSeries";
 
 export default {
     component: AlternatingFillAreaSeries,
-    title: "Visualization/Series/Baseline",
+    title: "Chart Types/Baseline",
     args: {
         fillStyle: undefined,
         strokeStyle: undefined,

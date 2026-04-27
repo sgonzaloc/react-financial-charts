@@ -1,11 +1,11 @@
 import { Story } from "@storybook/react";
 import * as React from "react";
-import { Cursor, CursorProps } from "../../../../coordinates/src/Cursor";
+import { Cursor, CursorProps } from "@react-financial-charts/coordinates/src/Cursor";
 import Cursors from "./Cursors";
 
 export default {
     component: Cursor,
-    title: "Features/Cursors",
+    title: "User Interactions/Crosshair & Cursors",
     argTypes: {
         strokeStyle: { control: "color" },
         xCursorShapeFillStyle: { control: "color" },

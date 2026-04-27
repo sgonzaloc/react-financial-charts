@@ -3,7 +3,7 @@ import { ElderRaySeries } from "../../../../series/src/ElderRaySeries";
 import ElderRayIndicator from "./ElderRayIndicator";
 
 export default {
-    title: "Visualization/Indicator/Elder Ray",
+    title: "Technical Indicators/Elder Ray",
     component: ElderRaySeries,
 };
 

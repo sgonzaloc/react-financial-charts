@@ -5,7 +5,7 @@ import { Daily, Intraday } from "./BasicBarSeries";
 
 export default {
     component: BarSeries,
-    title: "Visualization/Series/Bar",
+    title: "Chart Types/Bar",
     argTypes: {
         fillStyle: { control: "color" },
     },

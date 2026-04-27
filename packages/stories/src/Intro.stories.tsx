@@ -1,5 +1,5 @@
 import * as React from "react";
-import StockChart from "./introduction/Intro";
+import TimeResolutions from "./handlingDataEdgeCases/timeResolutions/TimeResolutions";
 import { CandlestickChart, TrendingUp, PenTool, Braces, Activity, Settings, ZoomIn, Gauge } from "lucide-react";
 
 export default {
@@ -109,7 +109,7 @@ export const intro = () => (
         <div>
             <h2 style={{ fontSize: 24, marginBottom: 20, fontWeight: 600 }}>Live Demo</h2>
             <div style={{ background: "white", border: "1px solid #e9ecef", borderRadius: 8, padding: 20 }}>
-                <StockChart />
+                <TimeResolutions />
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@ import { StochasticSeries } from "../../../../series/src/StochasticSeries";
 import StoIndicator from "./StoIndicator";
 
 export default {
-    title: "Visualization/Indicator/Stochastic Oscillator",
+    title: "Technical Indicators/Stochastic Oscillator",
     component: StochasticSeries,
 };
 

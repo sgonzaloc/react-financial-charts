@@ -2,7 +2,7 @@ import * as React from "react";
 import { Updating } from "./BasicLineSeries";
 
 export default {
-    title: "Features/Updating",
+    title: "Handling Data & Edge Cases/Updating",
 };
 
 export const continuous = () => <Updating />;

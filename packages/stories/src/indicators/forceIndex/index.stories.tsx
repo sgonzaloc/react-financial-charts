@@ -3,7 +3,7 @@ import { forceIndex } from "@react-financial-charts/indicators";
 import ForceIndicator from "./ForceIndicator";
 
 export default {
-    title: "Visualization/Indicator/Force Index",
+    title: "Technical Indicators/Force Index",
     component: forceIndex,
     parameters: {
         componentSubtitle: `The Force Index is an indicator that uses price

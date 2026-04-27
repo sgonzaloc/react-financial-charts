@@ -1,9 +1,9 @@
 import * as React from "react";
-import StockChart, { MinutesStockChart, SecondsStockChart } from "./Intro";
+import StockChart, { MinutesStockChart, SecondsStockChart } from "./TimeResolutions";
 
 export default {
     component: StockChart,
-    title: "Introduction/Intro",
+    title: "Handling Data & Edge Cases/Time Resolutions",
 };
 
 export const daily = () => <StockChart />;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import BasicLineSeries from "./BasicLineSeries";
 
 export default {
-    title: "Features/EdgeCases",
+    title: "Handling Data Edge Cases/EdgeCases",
 };
 
 export const noData = () => <BasicLineSeries data={[]} />;

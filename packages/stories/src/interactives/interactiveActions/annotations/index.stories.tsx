@@ -1,11 +1,11 @@
 import { Story } from "@storybook/react";
 import * as React from "react";
-import { Label, LabelProps } from "../../../../annotations/src/Label";
+import { Label, LabelProps } from "@react-financial-charts/annotations/src/Label";
 import Annotations from "./Annotations";
 
 export default {
     component: Label,
-    title: "Features/Annotations",
+    title: "Interactive Drawing Tools/Interactive Actions/Annotations",
     argTypes: {
         fillStyle: { control: "color" },
         text: {

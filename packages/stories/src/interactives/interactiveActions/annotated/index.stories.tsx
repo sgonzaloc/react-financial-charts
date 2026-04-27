@@ -4,7 +4,7 @@ import Annotated from "./Annotated";
 
 export default {
     component: Annotate,
-    title: "Features/Annotate",
+    title: "Interactive Drawing Tools/Interactive Actions/Annotate",
 };
 
 export const labels = () => <Annotated labelAnnotation />;

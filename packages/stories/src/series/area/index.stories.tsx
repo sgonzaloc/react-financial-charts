@@ -4,7 +4,7 @@ import { AreaSeries, AreaSeriesProps } from "../../../../series/src/AreaSeries";
 import { Daily, Intraday } from "./BasicAreaSeries";
 
 export default {
-    title: "Visualization/Series/Area",
+    title: "Chart Types/Area",
     component: AreaSeries,
     argTypes: {
         fillStyle: { control: "color" },

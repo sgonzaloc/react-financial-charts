@@ -3,7 +3,7 @@ import { SARSeries } from "../../../../series/src/SARSeries";
 import SARIndicator from "./SarIndicator";
 
 export default {
-    title: "Visualization/Indicator/SAR",
+    title: "Technical Indicators/SAR",
     component: SARSeries,
 };
 

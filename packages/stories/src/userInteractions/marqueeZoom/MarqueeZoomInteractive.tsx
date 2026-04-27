@@ -3,7 +3,7 @@ import { Chart, ChartCanvas } from "@react-financial-charts/core";
 import { XAxis, YAxis } from "@react-financial-charts/axes";
 import { discontinuousTimeScaleProviderBuilder } from "@react-financial-charts/scales";
 import { CandlestickSeries } from "@react-financial-charts/series";
-import { IOHLCData, withOHLCData } from "../../../data";
+import { IOHLCData, withOHLCData } from "../../data";
 import { withDeviceRatio, withSize } from "@react-financial-charts/utils";
 import { MarqueeZoom } from "@react-financial-charts/interactive";
 import { format } from "d3-format";

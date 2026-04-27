@@ -3,7 +3,7 @@ import * as React from "react";
 import { Daily } from "./Scales";
 
 export default {
-    title: "Features/Scales",
+    title: "Chart Setup/Scales",
 };
 
 export const continuousScale = () => <Daily />;

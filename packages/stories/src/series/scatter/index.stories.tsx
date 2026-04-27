@@ -4,7 +4,7 @@ import BasicScatterSeries from "./BasicScatterSeries";
 
 export default {
     component: ScatterSeries,
-    title: "Visualization/Series/Scatter",
+    title: "Chart Types/Scatter",
 };
 
 export const bubble = () => <BasicScatterSeries />;

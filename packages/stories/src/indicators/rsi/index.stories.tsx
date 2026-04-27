@@ -3,7 +3,7 @@ import { RSISeries } from "../../../../series/src/RSISeries";
 import RSIIndicator from "./RsiIndicator";
 
 export default {
-    title: "Visualization/Indicator/RSI",
+    title: "Technical Indicators/RSI",
     component: RSISeries,
 };
 

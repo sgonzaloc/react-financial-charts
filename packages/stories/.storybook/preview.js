@@ -2,7 +2,15 @@ export const parameters = {
     controls: { hideNoControlsWarning: true },
     options: {
         storySort: {
-            order: ["Intro", "Features", "Visualization"],
+            order: [
+                "Intro",
+                "Chart Types",
+                "Interactive Drawing Tools",
+                "Technical Indicators",
+                "Chart Setup",
+                "User Interactions",
+                "Handling Data & Edge Cases",
+            ],
         },
     },
 };

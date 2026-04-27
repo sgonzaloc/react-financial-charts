@@ -5,7 +5,7 @@ import AxisExample from "./Axis";
 
 export default {
     component: YAxis,
-    title: "Features/Axis",
+    title: "Chart Setup/Axis",
     argTypes: {
         axisAt: {
             control: {

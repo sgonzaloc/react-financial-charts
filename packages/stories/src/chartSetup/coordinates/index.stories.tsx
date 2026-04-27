@@ -4,7 +4,7 @@ import Coordinates from "./Coordinates";
 
 export default {
     component: MouseCoordinateY,
-    title: "Features/Coordinates",
+    title: "Chart Setup/Coordinates",
 };
 
 export const edge = () => <Coordinates />;

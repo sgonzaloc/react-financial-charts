@@ -3,7 +3,7 @@ import { VolumeProfileSeries } from "../../../../series/src/VolumeProfileSeries"
 import VolumeProfile from "./VolumeProfile";
 
 export default {
-    title: "Visualization/Indicator/Volume Profile",
+    title: "Technical Indicators/Volume Profile",
     component: VolumeProfileSeries,
 };
 

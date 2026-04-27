@@ -4,7 +4,7 @@ import { Daily, Intraday } from "./BasicKagiSeries";
 
 export default {
     component: KagiSeries,
-    title: "Visualization/Series/Kagi",
+    title: "Chart Types/Kagi",
 };
 
 export const daily = () => <Daily />;

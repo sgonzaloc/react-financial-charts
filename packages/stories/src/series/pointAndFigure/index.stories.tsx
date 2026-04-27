@@ -4,7 +4,7 @@ import { Daily } from "./BasicPointAndFigureSeries";
 
 export default {
     component: PointAndFigureSeries,
-    title: "Visualization/Series/Point & Figure",
+    title: "Chart Types/Point & Figure",
 };
 
 export const daily = () => <Daily />;

@@ -4,7 +4,7 @@ import { Daily, Intraday } from "./BasicOHLCSeries";
 
 export default {
     component: OHLCSeries,
-    title: "Visualization/Series/OHLC",
+    title: "Chart Types/OHLC",
 };
 
 export const daily = () => <Daily />;

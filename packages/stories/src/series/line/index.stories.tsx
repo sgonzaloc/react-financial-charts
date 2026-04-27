@@ -5,7 +5,7 @@ import { Daily, Intraday } from "./BasicLineSeries";
 
 export default {
     component: LineSeries,
-    title: "Visualization/Series/Line",
+    title: "Chart Types/Line",
     argTypes: {
         strokeStyle: { control: "color" },
     },

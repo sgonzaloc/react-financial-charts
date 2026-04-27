@@ -3,7 +3,7 @@ import { MACDSeries } from "../../../../series/src/MACDSeries";
 import MACDIndicator from "./MacdIndicator";
 
 export default {
-    title: "Visualization/Indicator/MACD",
+    title: "Technical Indicators/MACD",
     component: MACDSeries,
 };
 

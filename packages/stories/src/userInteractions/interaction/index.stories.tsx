@@ -4,12 +4,12 @@ import {
     mouseBasedZoomAnchor,
     rightDomainBasedZoomAnchor,
 } from "@react-financial-charts/core";
-import { ChartCanvas } from "../../../../core/src/ChartCanvas";
+import { ChartCanvas } from "@react-financial-charts/core/src/ChartCanvas";
 import Interaction from "./Interaction";
 
 export default {
     component: ChartCanvas,
-    title: "Features/Interaction",
+    title: "User Interactions/Zoom & Pan",
 };
 
 export const clamp = () => <Interaction clamp />;

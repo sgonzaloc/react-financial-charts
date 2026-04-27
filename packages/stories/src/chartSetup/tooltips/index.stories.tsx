@@ -3,7 +3,7 @@ import { HoverTooltip } from "../../../../tooltip/src/HoverTooltip";
 import Tooltips from "./Tooltips";
 
 export default {
-    title: "Features/Tooltips",
+    title: "Chart Setup/Tooltips",
     component: HoverTooltip,
 };
 

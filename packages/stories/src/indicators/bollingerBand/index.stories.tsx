@@ -4,7 +4,7 @@ import { BollingerSeries, BollingerSeriesProps } from "../../../../series/src/Bo
 import BollingerIndicator from "./BollingerIndicator";
 
 export default {
-    title: "Visualization/Indicator/Bollinger Band",
+    title: "Technical Indicators/Bollinger Band",
     component: BollingerSeries,
     argTypes: {
         fillStyle: { control: "color" },

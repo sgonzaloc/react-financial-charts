@@ -4,7 +4,7 @@ import { Daily, Intraday } from "./BasicRenkoSeries";
 
 export default {
     component: RenkoSeries,
-    title: "Visualization/Series/Renko",
+    title: "Chart Types/Renko",
 };
 
 export const daily = () => <Daily />;
