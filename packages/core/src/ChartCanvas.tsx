@@ -883,7 +883,7 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
     public yAxisZoom = (chartId: string, newDomain: any) => {
         const { chartConfigs: initialChartConfig } = this.state;
         const chartConfigs = initialChartConfig.map((each: any) => {
-            if (each.id === chartId) {
+            if (String(each.id) === chartId) {
                 const { yScale } = each;
                 return {
                     ...each,
