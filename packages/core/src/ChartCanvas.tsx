@@ -714,9 +714,7 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
         if (!this.waitingForPinchZoomAnimationFrame) {
             this.waitingForPinchZoomAnimationFrame = true;
             const state = this.pinchZoomHelper(initialPinch, finalPinch);
-
             this.triggerEvent("pinchzoom", state, e);
-
             this.finalPinch = finalPinch;
 
             requestAnimationFrame(() => {
@@ -737,18 +735,18 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
 
             this.finalPinch = undefined;
 
-            this.clearThreeCanvas();
             const firstItem = head(fullData);
             const scale_start = head(xScale.domain());
             const data_start = xAccessor(firstItem);
-
             const lastItem = last(fullData);
             const scale_end = last(xScale.domain());
             const data_end = xAccessor(lastItem);
-
             const { onLoadAfter, onLoadBefore } = this.props;
 
             this.setState(state, () => {
+                this.clearThreeCanvas();
+                this.draw({ force: true });
+
                 if (scale_start < data_start) {
                     if (onLoadBefore !== undefined) {
                         onLoadBefore(scale_start, data_start);
@@ -793,12 +791,9 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
         const currentItem = getCurrentItem(xScale, xAccessor, mouseXY, plotData);
         const currentCharts = getCurrentCharts(chartConfigs, mouseXY);
 
-        this.clearThreeCanvas();
-
         const firstItem = head(fullData);
         const scale_start = head(xScale.domain());
         const data_start = xAccessor!(firstItem);
-
         const lastItem = last(fullData);
         const scale_end = last(xScale.domain());
         const data_end = xAccessor!(lastItem);
@@ -832,6 +827,9 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
                 chartConfigs,
             },
             () => {
+                this.clearThreeCanvas();
+                this.draw({ force: true });
+
                 if (scale_start < data_start) {
                     if (onLoadBefore !== undefined) {
                         onLoadBefore(scale_start, data_start);
@@ -848,17 +846,14 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
 
     public xAxisZoom = (newDomain: any) => {
         const { xScale, plotData, chartConfigs } = this.calculateStateForDomain(newDomain);
-        this.clearThreeCanvas();
 
         const { xAccessor, fullData } = this.state;
         const firstItem = head(fullData);
         const scale_start = head(xScale.domain());
         const data_start = xAccessor!(firstItem);
-
         const lastItem = last(fullData);
         const scale_end = last(xScale.domain());
         const data_end = xAccessor!(lastItem);
-
         const { onLoadAfter, onLoadBefore } = this.props;
 
         this.setState(
@@ -868,6 +863,9 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
                 chartConfigs,
             },
             () => {
+                this.clearThreeCanvas();
+                this.draw({ force: true });
+
                 if (scale_start < data_start) {
                     if (onLoadBefore !== undefined) {
                         onLoadBefore(scale_start, data_start);
@@ -883,7 +881,6 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
     };
 
     public yAxisZoom = (chartId: string, newDomain: any) => {
-        this.clearThreeCanvas();
         const { chartConfigs: initialChartConfig } = this.state;
         const chartConfigs = initialChartConfig.map((each: any) => {
             if (each.id === chartId) {
@@ -893,13 +890,13 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
                     yScale: yScale.copy().domain(newDomain),
                     yPanEnabled: true,
                 };
-            } else {
-                return each;
             }
+            return each;
         });
 
-        this.setState({
-            chartConfigs,
+        this.setState({ chartConfigs }, () => {
+            this.clearThreeCanvas();
+            this.draw({ force: true });
         });
     };
 
@@ -922,7 +919,6 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
     };
 
     public redraw = () => {
-        this.clearThreeCanvas();
         this.draw({ force: true });
     };
 
@@ -1022,27 +1018,19 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
         const state = this.panHelper(mousePosition, panStartXScale, dxdy, chartsToPan);
         this.hackyWayToStopPanBeyondBounds__plotData = null;
         this.hackyWayToStopPanBeyondBounds__domain = null;
-
         this.panInProgress = false;
-
         const { xScale, plotData, chartConfigs } = state;
-
         this.triggerEvent("panend", state, e);
 
         requestAnimationFrame(() => {
             const { xAccessor, fullData } = this.state;
-
             const firstItem = head(fullData);
             const scale_start = head(xScale.domain());
             const data_start = xAccessor!(firstItem);
-
             const lastItem = last(fullData);
             const scale_end = last(xScale.domain());
             const data_end = xAccessor!(lastItem);
-
             const { onLoadAfter, onLoadBefore } = this.props;
-
-            this.clearThreeCanvas();
 
             this.setState(
                 {
@@ -1051,6 +1039,9 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
                     chartConfigs,
                 },
                 () => {
+                    this.clearThreeCanvas();
+                    this.draw({ force: true });
+
                     if (scale_start < data_start) {
                         if (onLoadBefore !== undefined) {
                             onLoadBefore(scale_start, data_start);
@@ -1224,9 +1215,9 @@ export class ChartCanvas<TXAxis extends number | Date> extends React.Component<
         });
 
         if (changed) {
-            this.clearThreeCanvas();
-            this.setState({
-                chartConfigs: newChartConfig,
+            this.setState({ chartConfigs: newChartConfig }, () => {
+                this.clearThreeCanvas();
+                this.draw({ force: true });
             });
         }
     };
